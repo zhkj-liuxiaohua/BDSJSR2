@@ -55,5 +55,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="netjs\example.js" />
+    <Content Include="netjs\testcase.js" />
+    <Content Include="netjs\visitor.js" />
+    <Content Include="netjs\帮助.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

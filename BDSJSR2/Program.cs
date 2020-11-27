@@ -662,6 +662,7 @@ namespace BDSJSR2
             eng.AddHostObject("removePlayerSidebar", cs_removePlayerSidebar);
             eng.AddHostObject("getPlayerPermissionAndGametype", cs_getPlayerPermissionAndGametype);
             eng.AddHostObject("setPlayerPermissionAndGametype", cs_setPlayerPermissionAndGametype);
+            eng.AddHostObject("disconnectClient", cs_disconnectClient);
         }
 
         /// <summary>
