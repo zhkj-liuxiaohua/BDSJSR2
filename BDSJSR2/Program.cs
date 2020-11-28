@@ -40,7 +40,7 @@ namespace BDSJSR2
         delegate object REMOVESHAREDATA(object key);
         delegate void REQUEST(object url, object mode, object param, ScriptObject f);
         delegate void SETTIMEOUT(object o, object ms);
-        delegate void MKDIR(object dirname);
+        delegate bool MKDIR(object dirname);
         delegate string GETWORKINGPATH();
 
         /// <summary>
@@ -222,11 +222,19 @@ namespace BDSJSR2
         /// </summary>
         static MKDIR cs_mkdir = (dirname) =>
         {
+            DirectoryInfo dir = null;
             if (dirname != null) 
             {
-                Directory.CreateDirectory(JSString(dirname));
+                try
+                {
+                    dir = Directory.CreateDirectory(JSString(dirname));
+                } catch{}
             }
+            return dir != null;
         };
+        /// <summary>
+        /// 获取工作目录
+        /// </summary>
         static GETWORKINGPATH cs_getWorkingPath = () =>
         {
             return AppDomain.CurrentDomain.BaseDirectory;
