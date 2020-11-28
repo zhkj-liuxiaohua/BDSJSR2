@@ -40,6 +40,8 @@ namespace BDSJSR2
         delegate object REMOVESHAREDATA(object key);
         delegate void REQUEST(object url, object mode, object param, ScriptObject f);
         delegate void SETTIMEOUT(object o, object ms);
+        delegate void MKDIR(object dirname);
+        delegate string GETWORKINGPATH();
 
         /// <summary>
         /// 标准输出流打印消息
@@ -214,6 +216,20 @@ namespace BDSJSR2
                     
                 }).Start();
             }
+        };
+        /// <summary>
+        /// 创建文件夹
+        /// </summary>
+        static MKDIR cs_mkdir = (dirname) =>
+        {
+            if (dirname != null) 
+            {
+                Directory.CreateDirectory(JSString(dirname));
+            }
+        };
+        static GETWORKINGPATH cs_getWorkingPath = () =>
+        {
+            return AppDomain.CurrentDomain.BaseDirectory;
         };
         #endregion
 
@@ -621,6 +637,8 @@ namespace BDSJSR2
             eng.AddHostObject("removeShareData", cs_removeShareData);
             eng.AddHostObject("request", cs_request);
             eng.AddHostObject("setTimeout", cs_setTimeout);
+            eng.AddHostObject("mkdir", cs_mkdir);
+            eng.AddHostObject("getWorkingPath", cs_getWorkingPath);
 
             eng.AddHostObject("addBeforeActListener", cs_addBeforeActListener);
             eng.AddHostObject("removeBeforeActListener", cs_removeBeforeActListener);
