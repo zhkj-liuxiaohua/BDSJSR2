@@ -94,7 +94,7 @@ namespace BDSJSR2
         static TIMENOW cs_TimeNow = () =>
         {
             var t = DateTime.Now;
-            return t.ToString("yyyy-MM-dd HH:mm::ss");
+            return t.ToString("yyyy-MM-dd HH:mm:ss");
         };
         /// <summary>
         /// 存入共享数据
