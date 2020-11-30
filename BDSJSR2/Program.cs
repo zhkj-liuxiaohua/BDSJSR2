@@ -278,6 +278,8 @@ namespace BDSJSR2
                 return ret;
             };
             mapi.addBeforeActListener(JSString(k), cb);
+            var cbk = "" + Marshal.GetFunctionPointerForDelegate<MCCSAPI.EventCab>(cb);
+            f.SetProperty(cbk, cbk);
             KeyValuePair<ScriptObject, MCCSAPI.EventCab> s = new KeyValuePair<ScriptObject, MCCSAPI.EventCab>(f, cb);
             ls.Add(s);
             beforelistens[JSString(k)] = ls;
@@ -308,10 +310,23 @@ namespace BDSJSR2
                 return ret;
             };
             mapi.addAfterActListener(JSString(k), cb);
+            var cbk = "" + Marshal.GetFunctionPointerForDelegate<MCCSAPI.EventCab>(cb);
+            f.SetProperty(cbk, cbk);
             KeyValuePair<ScriptObject, MCCSAPI.EventCab> s = new KeyValuePair<ScriptObject, MCCSAPI.EventCab>(f, cb);
             ls.Add(s);
             afterlistens[JSString(k)] = ls;
         };
+
+        static bool checkFuncEquals(ScriptObject a, ScriptObject b, MCCSAPI.EventCab cb)
+        {
+            if (a != null && b != null)
+            {
+                var k = "" + Marshal.GetFunctionPointerForDelegate<MCCSAPI.EventCab>(cb);
+                return (a.GetProperty(k).ToString() == k) && (b.GetProperty(k).ToString() == k);
+            }
+            return false;
+        }
+
         /// <summary>
         /// 移除事件发生前监听
         /// </summary>
@@ -321,12 +336,14 @@ namespace BDSJSR2
             ArrayList ls = (ArrayList)(beforelistens[JSString(k)] ?? new ArrayList());
             if (ls.Count > 0)
             {
-                foreach (KeyValuePair<ScriptObject, MCCSAPI.EventCab> s in ls)
+                for (int m = ls.Count; m > 0; --m)
                 {
-                    if (s.Key == f)
+                    var s = (KeyValuePair<ScriptObject, MCCSAPI.EventCab>)ls[m - 1];
+                    if (checkFuncEquals(s.Key, f, s.Value))
                     {
                         if (mapi.removeBeforeActListener(JSString(k), s.Value))
                         {
+                            f.DeleteProperty("" + Marshal.GetFunctionPointerForDelegate<MCCSAPI.EventCab>(s.Value));
                             ls.Remove(s);
                             ret = true;
                         }
@@ -345,12 +362,14 @@ namespace BDSJSR2
             ArrayList ls = (ArrayList)(afterlistens[JSString(k)] ?? new ArrayList());
             if (ls.Count > 0)
             {
-                foreach (KeyValuePair<ScriptObject, MCCSAPI.EventCab> s in ls)
+                for (int m = ls.Count; m > 0; --m)
                 {
-                    if (s.Key == f)
+                    var s = (KeyValuePair<ScriptObject, MCCSAPI.EventCab>)ls[m - 1];
+                    if (checkFuncEquals(s.Key, f, s.Value))
                     {
-                        if (mapi.removeAfterActListener(JSString(k), s.Value))
+                        if (mapi.removeBeforeActListener(JSString(k), s.Value))
                         {
+                            f.DeleteProperty("" + Marshal.GetFunctionPointerForDelegate<MCCSAPI.EventCab>(s.Value));
                             ls.Remove(s);
                             ret = true;
                         }
