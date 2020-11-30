@@ -367,7 +367,7 @@ namespace BDSJSR2
                     var s = (KeyValuePair<ScriptObject, MCCSAPI.EventCab>)ls[m - 1];
                     if (checkFuncEquals(s.Key, f, s.Value))
                     {
-                        if (mapi.removeBeforeActListener(JSString(k), s.Value))
+                        if (mapi.removeAfterActListener(JSString(k), s.Value))
                         {
                             f.DeleteProperty("" + Marshal.GetFunctionPointerForDelegate<MCCSAPI.EventCab>(s.Value));
                             ls.Remove(s);
