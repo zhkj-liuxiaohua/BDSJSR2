@@ -141,6 +141,7 @@ namespace BDSJSR2
             req.Method = mode;
             if (mode == "POST")
             {
+                req.ContentType = "application/x-www-form-urlencoded";
                 if (!string.IsNullOrEmpty(p))
                 {
                     byte[] payload = Encoding.UTF8.GetBytes(p);
