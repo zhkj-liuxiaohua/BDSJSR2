@@ -40,7 +40,7 @@ function _visitor_tellrawmsg(pname, msg) {
 // 将玩家名写入权限配置文件，并更新权限
 function _visitor_permission(pname) {
 	let plstr = getOnLinePlayers();
-	if (plstr != null) {
+	if (plstr != null && plstr != "") {
 		let xuid = "";
 		jpl = JSON.parse(plstr);
 		if (jpl != null) {
