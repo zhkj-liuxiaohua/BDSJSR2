@@ -212,7 +212,7 @@ namespace BDSJSR2
                     }
                     catch
                     {
-                        Console.WriteLine("[JS] Script err by call [setTimeout].");
+                        Console.WriteLine("[JS] File " + jsengines[eng] + " Script err by call [setTimeout].");
                     }
                     
                 }).Start();
@@ -744,9 +744,10 @@ namespace BDSJSR2
                         try
                         {
                             eng.Execute(jsfiles[n].ToString());
-                        } catch (Exception e)
+                        } catch
                         {
-                            Console.WriteLine(e.StackTrace);
+                            //Console.WriteLine(e.StackTrace);
+                            Console.WriteLine("[JS] File " + n + " Script err by loading [runtime].");
                         }
                     }
                 }
