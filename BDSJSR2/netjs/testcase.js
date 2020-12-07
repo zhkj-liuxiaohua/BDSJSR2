@@ -157,6 +157,16 @@ function testcasefunc(p) {
 														{ "ck": "id", "cv": { "tt": 2, "tv": 10 } },
 														{ "ck": "lvl", "cv": { "tt": 2, "tv": 9999 } }]
 											}]}
+										},
+										{ "ck": "display", "cv": { "tt": 10, "tv": [
+														{ "ck": "Name", "cv": { "tt": 8, "tv": "这是自定义Name" } },
+														{ "ck": "Lore", "cv": {
+															"tt": 9, "tv": [
+																{ "tt": 8, "tv": "第一行Lore注释" },
+																{ "tt": 8, "tv": "第二行Lore注释" },
+																{ "tt": 8, "tv": "§e颜色自拟的注释" }]
+														}}]
+												}
 										}]}
 								}]
 						};
