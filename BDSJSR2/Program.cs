@@ -305,7 +305,7 @@ namespace BDSJSR2
                     }
                     catch
                     {
-                        Console.WriteLine("[JS] File " + jsengines[f.Engine] + " Script err by call [addBeforeActListener] [{0}].", JSString(k));
+                        Console.WriteLine("[JS] File " + jsengines[f.Engine] + " Script err by call [addAfterActListener] [{0}].", JSString(k));
                     }
                 }
                 return ret;
