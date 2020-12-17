@@ -214,7 +214,7 @@ namespace BDSJSR2
                     {
                         Console.WriteLine("[JS] File " + jsengines[eng] + " Script err by call [setTimeout].");
                     }
-                    
+
                 }).Start();
             }
         };
@@ -224,12 +224,12 @@ namespace BDSJSR2
         static MKDIR cs_mkdir = (dirname) =>
         {
             DirectoryInfo dir = null;
-            if (dirname != null) 
+            if (dirname != null)
             {
                 try
                 {
                     dir = Directory.CreateDirectory(JSString(dirname));
-                } catch{}
+                } catch { }
             }
             return dir != null;
         };
@@ -241,6 +241,18 @@ namespace BDSJSR2
             return AppDomain.CurrentDomain.BaseDirectory;
         };
         #endregion
+
+        // 断言商业版
+        static bool assertCommercial(string fn)
+        {
+            if (!mapi.COMMERCIAL)
+            {
+                string err = string.Format("[JS] COMMERCIAL api needed by call [{0}].", fn);
+                Console.WriteLine(err);
+                throw new Exception(err);
+            }
+            return mapi.COMMERCIAL;
+        }
 
         #region MC核心玩法相关功能
         static Hashtable beforelistens = new Hashtable();
@@ -413,6 +425,7 @@ namespace BDSJSR2
         /// </summary>
         static GETSTRUCTURE cs_getStructure = (did, posa, posb, exent, exblk) =>
         {
+            assertCommercial("getStructure");
             return mapi.getStructure(int.Parse(JSString(did)), JSString(posa), JSString(posb), object.Equals(exent, true), object.Equals(exblk, true));
         };
         /// <summary>
@@ -420,6 +433,7 @@ namespace BDSJSR2
         /// </summary>
         static SETSTRUCTURE cs_setStructure = (jdata, did, jsonposa, rot, exent, exblk) =>
         {
+            assertCommercial("setStructure");
             return mapi.setStructure(JSString(jdata), int.Parse(JSString(did)), JSString(jsonposa), byte.Parse(JSString(rot)),
                 object.Equals(exent, true), object.Equals(exblk, true));
         };
@@ -440,6 +454,8 @@ namespace BDSJSR2
         delegate uint SENDCUSTOMFORM(object uuid, object json);
         delegate bool RELEASEFORM(object formid);
         delegate bool SETPLAYERSIDEBAR(object uuid, object title, object list);
+        delegate int GETSCOREBOARD(object uuid, object stitle);
+
 
         /// <summary>
         /// 重命名一个指定的玩家名
@@ -453,6 +469,7 @@ namespace BDSJSR2
         /// </summary>
         static GETPLAYERABILITIES cs_getPlayerAbilities = (uuid) =>
         {
+            assertCommercial("getPlayerAbilities");
             return mapi.getPlayerAbilities(JSString(uuid));
         };
         /// <summary>
@@ -460,6 +477,7 @@ namespace BDSJSR2
         /// </summary>
         static SETPLAYERABILITIES cs_setPlayerAbilities = (uuid, a) =>
         {
+            assertCommercial("setPlayerAbilities");
             return mapi.setPlayerAbilities(JSString(uuid), JSString(a));
         };
         /// <summary>
@@ -467,6 +485,7 @@ namespace BDSJSR2
         /// </summary>
         static GETPLAYERABILITIES cs_getPlayerAttributes = (uuid) =>
         {
+            assertCommercial("getPlayerAttributes");
             return mapi.getPlayerAttributes(JSString(uuid));
         };
         /// <summary>
@@ -474,6 +493,7 @@ namespace BDSJSR2
         /// </summary>
         static SETPLAYERABILITIES cs_setPlayerTempAttributes = (uuid, a) =>
         {
+            assertCommercial("setPlayerTempAttributes");
             return mapi.setPlayerTempAttributes(JSString(uuid), JSString(a));
         };
         /// <summary>
@@ -481,6 +501,7 @@ namespace BDSJSR2
         /// </summary>
         static GETPLAYERABILITIES cs_getPlayerMaxAttributes = (uuid) =>
         {
+            assertCommercial("getPlayerMaxAttributes");
             return mapi.getPlayerMaxAttributes(JSString(uuid));
         };
         /// <summary>
@@ -488,6 +509,7 @@ namespace BDSJSR2
         /// </summary>
         static SETPLAYERABILITIES cs_setPlayerMaxAttributes = (uuid, a) =>
         {
+            assertCommercial("setPlayerMaxAttributes");
             return mapi.setPlayerMaxAttributes(JSString(uuid), JSString(a));
         };
         /// <summary>
@@ -495,6 +517,7 @@ namespace BDSJSR2
         /// </summary>
         static GETPLAYERABILITIES cs_getPlayerItems = (uuid) =>
         {
+            assertCommercial("getPlayerItems");
             return mapi.getPlayerItems(JSString(uuid));
         };
         /// <summary>
@@ -502,6 +525,7 @@ namespace BDSJSR2
         /// </summary>
         static GETPLAYERABILITIES cs_getPlayerSelectedItem = (uuid) =>
         {
+            assertCommercial("getPlayerSelectedItem");
             return mapi.getPlayerSelectedItem(JSString(uuid));
         };
         /// <summary>
@@ -509,6 +533,7 @@ namespace BDSJSR2
         /// </summary>
         static SETPLAYERABILITIES cs_setPlayerItems = (uuid, a) =>
         {
+            assertCommercial("setPlayerItems");
             return mapi.setPlayerItems(JSString(uuid), JSString(a));
         };
         /// <summary>
@@ -516,6 +541,7 @@ namespace BDSJSR2
         /// </summary>
         static SETPLAYERABILITIES cs_addPlayerItemEx = (uuid, a) =>
         {
+            assertCommercial("addPlayerItemEx");
             return mapi.addPlayerItemEx(JSString(uuid), JSString(a));
         };
         /// <summary>
@@ -530,6 +556,7 @@ namespace BDSJSR2
         /// </summary>
         static GETPLAYERABILITIES cs_getPlayerEffects = (uuid) =>
         {
+            assertCommercial("getPlayerEffects");
             return mapi.getPlayerEffects(JSString(uuid));
         };
         /// <summary>
@@ -537,6 +564,7 @@ namespace BDSJSR2
         /// </summary>
         static SETPLAYERABILITIES cs_setPlayerEffects = (uuid, a) =>
         {
+            assertCommercial("setPlayerEffects");
             return mapi.setPlayerEffects(JSString(uuid), JSString(a));
         };
         /// <summary>
@@ -544,6 +572,7 @@ namespace BDSJSR2
         /// </summary>
         static SETPLAYERBOSSBAR cs_setPlayerBossBar = (uuid, title, percent) =>
         {
+            assertCommercial("setPlayerBossBar");
             return mapi.setPlayerBossBar(JSString(uuid), JSString(title), float.Parse(JSString(percent)));
         };
         /// <summary>
@@ -551,6 +580,7 @@ namespace BDSJSR2
         /// </summary>
         static REMOVEPLAYERBOSSBAR cs_removePlayerBossBar = (uuid) =>
         {
+            assertCommercial("removePlayerBossBar");
             return mapi.removePlayerBossBar(JSString(uuid));
         };
         /// <summary>
@@ -565,6 +595,7 @@ namespace BDSJSR2
         /// </summary>
         static TRANSFERSERVER cs_transferserver = (uuid, addr, port) =>
         {
+            assertCommercial("transferserver");
             return mapi.transferserver(JSString(uuid), JSString(addr), int.Parse(JSString(port)));
         };
         /// <summary>
@@ -572,6 +603,7 @@ namespace BDSJSR2
         /// </summary>
         static TELEPORT cs_teleport = (uuid, x, y, z, did) =>
         {
+            assertCommercial("teleport");
             return mapi.teleport(JSString(uuid), float.Parse(JSString(x)), float.Parse(JSString(y)), float.Parse(JSString(z)), int.Parse(JSString(did)));
         };
         /// <summary>
@@ -621,6 +653,7 @@ namespace BDSJSR2
         /// </summary>
         static SETPLAYERSIDEBAR cs_setPlayerSidebar = (uuid, title, list) =>
         {
+            assertCommercial("setPlayerSidebar");
             return mapi.setPlayerSidebar(JSString(uuid), JSString(title), JSString(list));
         };
         /// <summary>
@@ -628,6 +661,7 @@ namespace BDSJSR2
         /// </summary>
         static REMOVEPLAYERBOSSBAR cs_removePlayerSidebar = (uuid) =>
         {
+            assertCommercial("removePlayerSidebar");
             return mapi.removePlayerSidebar(JSString(uuid));
         };
         /// <summary>
@@ -635,6 +669,7 @@ namespace BDSJSR2
         /// </summary>
         static GETPLAYERABILITIES cs_getPlayerPermissionAndGametype = (uuid) =>
         {
+            assertCommercial("getPlayerPermissionAndGametype");
             return mapi.getPlayerPermissionAndGametype(JSString(uuid));
         };
         /// <summary>
@@ -642,6 +677,7 @@ namespace BDSJSR2
         /// </summary>
         static SETPLAYERABILITIES cs_setPlayerPermissionAndGametype = (uuid, a) =>
         {
+            assertCommercial("setPlayerPermissionAndGametype");
             return mapi.setPlayerPermissionAndGametype(JSString(uuid), JSString(a));
         };
         /// <summary>
@@ -650,6 +686,55 @@ namespace BDSJSR2
         static SETPLAYERABILITIES cs_disconnectClient = (uuid, a) =>
         {
             return mapi.disconnectClient(JSString(uuid), JSString(a));
+        };
+        /// <summary>
+        /// 发送一个原始显示文本给玩家
+        /// </summary>
+        static SETPLAYERABILITIES cs_sendText = (uuid, a) =>
+        {
+            return mapi.sendText(JSString(uuid), JSString(a));
+        };
+        /// <summary>
+        /// 获取指定玩家指定计分板上的数值<br/>
+		/// 注：特定情况下会自动创建计分板
+        /// </summary>
+        static GETSCOREBOARD cs_getscoreboard = (uuid, a) =>
+        {
+            return mapi.getscoreboard(JSString(uuid), JSString(a));
+        };
+        /// <summary>
+        /// 设置指定玩家指定计分板上的数值
+        /// </summary>
+        static TRANSFERSERVER cs_setscoreboard = (uuid, stitle, count) =>
+        {
+            return mapi.setscoreboard(JSString(uuid), JSString(stitle), int.Parse(JSString(count)));
+        };
+        /// <summary>
+        /// 获取玩家IP
+        /// </summary>
+        static GETPLAYERABILITIES cs_getPlayerIP = (uuid) =>
+        {
+            var data = mapi.selectPlayer(JSString(uuid));
+            if (!string.IsNullOrEmpty(data))
+            {
+                var pinfo = ser.Deserialize<Dictionary<string, object>>(data);
+                if (pinfo != null)
+                {
+                    object pptr;
+                    if (pinfo.TryGetValue("playerptr", out pptr))
+                    {
+                        var ptr = (IntPtr)Convert.ToInt64(pptr);
+                        if (ptr != IntPtr.Zero)
+                        {
+                            CsPlayer p = new CsPlayer(mapi, ptr);
+                            var ipport = p.IpPort;
+                            var ip = ipport.Substring(0, ipport.IndexOf('|'));
+                            return ip;
+                        }
+                    }
+                }
+            }
+            return string.Empty;
         };
         #endregion
 
@@ -709,6 +794,10 @@ namespace BDSJSR2
             eng.AddHostObject("getPlayerPermissionAndGametype", cs_getPlayerPermissionAndGametype);
             eng.AddHostObject("setPlayerPermissionAndGametype", cs_setPlayerPermissionAndGametype);
             eng.AddHostObject("disconnectClient", cs_disconnectClient);
+            eng.AddHostObject("sendText", cs_sendText);
+            eng.AddHostObject("getscoreboard", cs_getscoreboard);
+            eng.AddHostObject("setscoreboard", cs_setscoreboard);
+            eng.AddHostObject("getPlayerIP", cs_getPlayerIP);
         }
 
         /// <summary>

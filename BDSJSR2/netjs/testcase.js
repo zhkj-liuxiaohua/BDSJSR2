@@ -28,9 +28,11 @@ function getUuid(p) {
 	return null;
 }
 
-const strtest = ['后台指令tell', '前缀/去前缀名', '穿墙能力开/关', '传送至梦之故里大厅', '跨维传送至末地祭坛', '模拟喊话', '模拟执行me指令',
-	'查询当前状态至后台', '读当前属性值至后台', '临时攻击+10,生命+2,附命+2,抗飞+1,等级+5,食物+2', '读属性上限值至后台', '攻限+10,命限+10,食限+10',
-	'读当前选中物品至后台', '给32个白桦木', '给1个附魔叉', '替换副手为一个叉子', '保存玩家所有物品列表至pit.json并清空',
+const strtest = ['后台指令tell', '前缀/去前缀名', '模拟喊话', '模拟执行me指令', '后台指令输出Hello', '查询当前状态至后台',
+	'给32个白桦木', '断开自身连接', '发送一条原始文本至玩家聊天框', '获取玩家计分板项money的值', '设置玩家计分板项money的值+1',
+	'读当前玩家IP至后台','穿墙能力开/关', '传送至梦之故里大厅', '跨维传送至末地祭坛',
+	'读当前属性值至后台', '临时攻击+10,生命+2,附命+2,抗飞+1,等级+5,食物+2', '读属性上限值至后台', '攻限+10,命限+10,食限+10',
+	'读当前选中物品至后台', '给1个附魔叉', '替换副手为一个叉子', '保存玩家所有物品列表至pit.json并清空',
 	'读pit.json到当前玩家', '读玩家当前效果列表到后台', '设置玩家临时存储的效果列表', '显示欢迎一个血条', '清除欢迎血条',
 	'显示一个带统计的自定义侧边栏', '移除自定义侧边栏', '读当前权限与游戏模式至后台', '切换op/visitor，生存/生存观察者模式',
 	'导出当前位置+长宽高x10的结构到st1.json','读结构st1.json到当前位置'];
@@ -64,6 +66,46 @@ function testcasefunc(p) {
 					reNameByUuid(uuid, cusName(p));
 					break;
 				case "2":
+					talkAs(uuid, '你好 js');
+					break;
+				case "3":
+					runcmdAs(uuid, '/me 你好 js');
+					break;
+				case "4":
+					logout("Hello js!");
+					break;
+				case "5":
+					{
+						let ope = selectPlayer(uuid);
+						if (ope != null) {
+							let opje = JSON.parse(ope);
+							var str = '玩家 ' + opje.playername + ' 已于 ' + opje.dimension +
+								' (' + opje.XYZ.x + ',' + opje.XYZ.y + ',' + opje.XYZ.z + ') 处被查询，当前生命值为'
+								+ opje.health + '。';
+							logout(str);
+						}
+					}
+					break;
+				case "6":
+					addPlayerItem(uuid, 17, 2, 32);
+					break;
+				case "7":
+					disconnectClient(uuid, '这个消息来自测试');
+					break;
+				case "8":
+					sendText(uuid, '这个文本来自测试');
+					break;
+				case "9":
+					log('玩家' + p + '计分板money项数值为：' + getscoreboard(uuid, 'money'));
+					break;
+				case "10":
+					if (setscoreboard(uuid, 'money', getscoreboard(uuid, 'money') + 1))
+						log('[testcase] 已成功设置计分板项。');
+					break;
+				case "11":
+					log('当前玩家IP=' + getPlayerIP(uuid));
+					break;
+				case "12":
 					{
 						let sa = getPlayerAbilities(uuid);
 						if (sa != null) {
@@ -74,34 +116,16 @@ function testcasefunc(p) {
                         }
 					}
 					break;
-				case "3":
+				case "13":
 					transferserver(uuid, 'www.xiafox.com', 19132);
 					break;
-				case "4":
+				case "14":
 					teleport(uuid, 10, 99, 10, 2);
 					break;
-				case "5":
-					talkAs(uuid, '你好 js');
-					break;
-				case "6":
-					runcmdAs(uuid, '/me 你好 js');
-					break;
-				case "7":
-					{
-						let ope = selectPlayer(uuid);
-						if (ope != null) {
-							let opje = JSON.parse(ope);
-							var str = '玩家 ' + opje.playername + ' 已于 ' + opje.dimension +
-								' (' + opje.XYZ.x + ',' + opje.XYZ.y + ',' + opje.XYZ.z + ') 处被查询，当前生命值为'
-								+ opje.health + '。';
-							logout(str);
-                        }
-					}
-					break;
-				case "8":
+				case "15":
 					logout(getPlayerAttributes(uuid));
 					break;
-				case "9":
+				case "16":
 					{
 						let sa = getPlayerAttributes(uuid);
 						if (sa != null) {
@@ -113,15 +137,14 @@ function testcasefunc(p) {
 							cja.knockback_resistance = ja.knockback_resistance + 1;
 							cja.level = ja.level + 5;
 							cja.hunger = ja.hunger + 2;
-							// setPlayerAttributes(uuid, JSON.stringify(cja));	// 过期方法，不推荐
 							setPlayerTempAttributes(uuid, JSON.stringify(cja));
 						}
                     }
 					break;
-				case "10":
+				case "17":
 					logout(getPlayerMaxAttributes(uuid));
 					break;
-				case "11":
+				case "18":
 					{
 						let sa = getPlayerMaxAttributes(uuid);
 						if (sa != null) {
@@ -134,13 +157,11 @@ function testcasefunc(p) {
 						}
 					}
 					break;
-				case "12":
+				case "19":
 					logout(getPlayerSelectedItem(uuid));
 					break;
-				case "13":
-						addPlayerItem(uuid, 17, 2, 32);
-						break;
-				case "14":
+				
+				case "20":
 					{
 						// tt - TAG_TYPE		标签数据类型，总计11种类型
 						// tv - TAG_VALUE		标签值，由类型决定
@@ -173,7 +194,7 @@ function testcasefunc(p) {
 						addPlayerItemEx(uuid, JSON.stringify(jitem));
                     }
 					break;
-				case "15":
+				case "21":
 					{
 						let jtem = {
 							"Offhand": { "tt": 9, "tv": [
@@ -195,7 +216,7 @@ function testcasefunc(p) {
 						setPlayerItems(uuid, JSON.stringify(jtem));
                     }
 					break;
-				case "16":
+				case "22":
 					{
 						let its = getPlayerItems(uuid);
 						fileWriteAllText('pit.json', its);
@@ -217,7 +238,7 @@ function testcasefunc(p) {
 						runcmd('clear "' + p + '"');
 					}
 					break;
-				case "17":
+				case "23":
 					{
 						let its = fileReadAllText('pit.json');
 						if (its != null) {
@@ -225,25 +246,25 @@ function testcasefunc(p) {
                         }
                     }
 					break;
-				case "18":
+				case "24":
 					{
 						let efs = getPlayerEffects(uuid);
 						tmpeff = efs;
 						log(efs);
 					}
 					break;
-				case "19":
+				case "25":
 					{
 						setPlayerEffects(uuid, tmpeff);
 					}
 					break;
-				case "20":
+				case "26":
 					setPlayerBossBar(uuid, '欢迎使用JSRunner自定义血条！', Math.random());
 					break;
-				case "21":
+				case "27":
 					removePlayerBossBar(uuid);
 					break;
-				case "22":
+				case "28":
 					if (sidecount[uuid] == null) {
 						sidecount[uuid] = 0;
 					}
@@ -256,13 +277,13 @@ function testcasefunc(p) {
 					list.push("§e颜色自拟 ");
 					setPlayerSidebar(uuid, p + '的侧边栏', JSON.stringify(list));
 					break;
-				case "23":
+				case "29":
 					removePlayerSidebar(uuid);
 					break;
-				case "24":
+				case "30":
 					log(getPlayerPermissionAndGametype(uuid));
 					break;
-				case "25":
+				case "31":
 					let st = getPlayerPermissionAndGametype(uuid);
 					let t = JSON.parse(st);
 					if (t != null) {
@@ -278,7 +299,7 @@ function testcasefunc(p) {
 						setPlayerPermissionAndGametype(uuid, JSON.stringify(t));
                     }
 					break;
-				case "26":
+				case "32":
 					{
 						let posa = e.XYZ;
 						let posb = {};
@@ -292,7 +313,7 @@ function testcasefunc(p) {
 						fileWriteAllText('st1.json', data);
                     }
 					break;
-				case "27":
+				case "33":
 					{
 						let data = fileReadAllText('st1.json');
 						setStructure(data, e.dimensionid, JSON.stringify(e.XYZ), 0, true, true);
