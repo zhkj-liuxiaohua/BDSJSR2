@@ -439,13 +439,6 @@
 // 参数详解：code - 待延时执行的指令字符串/函数对象，millisec - 延时毫秒数
 [例] setTimeout('log("你好 js")', 1000)
 
-// 函数名：setTimeout
-// 功能：延时执行一条指令
-// 参数个数：2个
-// 参数类型：字符串/函数，整型
-// 参数详解：code - 待延时执行的指令字符串/函数对象，millisec - 延时毫秒数
-[例] setTimeout('log("你好 js")', 1000)
-
 // 函数名：mkdir
 // 功能：创建文件夹
 // 参数个数：1个
@@ -513,4 +506,6 @@ e - 回传数据
  "onChat" - 聊天监听
  "onEquippedArmor" - 玩家切换护甲监听
  "onLevelUp" - 玩家升级监听
- 
+ "onPistonPush" - 活塞推方块监听
+ "onChestPair" - 箱子合并监听
+ "onMobSpawnCheck" - 生物生成检查监听
