@@ -627,10 +627,10 @@
 
 <h2><a name="register">三、注册机制</a></h2>
 　　
-本JS插件运行平台采用事件驱动机制与游戏进行内容交互。注册监听关键字，通过特定事件被触发后的回传结果，进行判断、执行额外指令来实现插件功能。
+本JS插件运行平台采用事件驱动机制与游戏进行内容交互。注册监听关键字，通过特定事件被触发后的回传结果，进行判断、执行额外指令来实现插件功能。所有事件同BDSNetRunner。
 
 <h3><a name="reg_t1">1.注册范例</a></h3>
-[例] setBeforeActListener(key, <span class="codelet">function</span> (e) { })<br/>
+[例] addBeforeActListener(key, <span class="codelet">function</span> (e) { })<br/>
 <br/>
 <span class="codestring">key</span> - 关键字<br/>
 &nbsp;"onUseItem" - 使用物品回调<br/>
