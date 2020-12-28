@@ -7,5 +7,7 @@ csr.dll以及其依赖的相关dll文件放置入BDS主程序所在的CSR文件�
 如何编译：
 使用Visual Studio打开本工程，管理本工程nuget包，搜索并安装microsoft.ClearScript包后重新生成即可。
 
+
+开发指导：参考 [在线文档](https://zhkj-liuxiaohua.github.io/BDSJSR2/)
 #### Commercial License
 MIT

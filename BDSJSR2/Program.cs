@@ -265,6 +265,7 @@ namespace BDSJSR2
         delegate string GETONLINEPLAYERS();
         delegate string GETSTRUCTURE(object did, object jsonposa, object jsonposb, object exent, object exblk);
         delegate bool SETSTRUCTURE(object jdata, object did, object jsonposa, object rot, object exent, object exblk);
+        delegate bool SETSERVERMOTD(object motd, object isShow);
         /// <summary>
         /// 设置事件发生前监听
         /// </summary>
@@ -436,6 +437,14 @@ namespace BDSJSR2
             assertCommercial("setStructure");
             return mapi.setStructure(JSString(jdata), int.Parse(JSString(did)), JSString(jsonposa), byte.Parse(JSString(rot)),
                 object.Equals(exent, true), object.Equals(exblk, true));
+        };
+        /// <summary>
+        /// 设置服务器的显示名信息<br/>
+		/// （注：服务器名称加载时机在地图完成载入之后）
+        /// </summary>
+        static SETSERVERMOTD cs_setServerMotd = (motd, isShow) =>
+        {
+            return mapi.setServerMotd(JSString(motd), object.Equals(isShow, true));
         };
 
         #endregion
@@ -763,6 +772,7 @@ namespace BDSJSR2
             eng.AddHostObject("getOnLinePlayers", cs_getOnLinePlayers);
             eng.AddHostObject("getStructure", cs_getStructure);
             eng.AddHostObject("setStructure", cs_setStructure);
+            eng.AddHostObject("setServerMotd", cs_setServerMotd);
 
             eng.AddHostObject("reNameByUuid", cs_reNameByUuid);
             eng.AddHostObject("getPlayerAbilities", cs_getPlayerAbilities);
