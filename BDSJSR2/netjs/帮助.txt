@@ -518,3 +518,6 @@ e - 回传数据
  "onPistonPush" - 活塞推方块监听
  "onChestPair" - 箱子合并监听
  "onMobSpawnCheck" - 生物生成检查监听
+ "onDropItem" - 玩家丢物品监听
+ "onPickUpItem" - 玩家捡起物品监听
+ "onScoreChanged" - 计分板数值改变监听
