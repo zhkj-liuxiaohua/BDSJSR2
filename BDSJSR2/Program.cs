@@ -266,6 +266,8 @@ namespace BDSJSR2
         delegate string GETSTRUCTURE(object did, object jsonposa, object jsonposb, object exent, object exblk);
         delegate bool SETSTRUCTURE(object jdata, object did, object jsonposa, object rot, object exent, object exblk);
         delegate bool SETSERVERMOTD(object motd, object isShow);
+        delegate void JSERUNSCRIPT(object js, ScriptObject f);
+        delegate void JSEFIRECUSTOMEVENT(object ename, object jdata, ScriptObject f);
         /// <summary>
         /// 设置事件发生前监听
         /// </summary>
@@ -445,6 +447,29 @@ namespace BDSJSR2
         static SETSERVERMOTD cs_setServerMotd = (motd, isShow) =>
         {
             return mapi.setServerMotd(JSString(motd), object.Equals(isShow, true));
+        };
+        /// <summary>
+        /// 使用官方脚本引擎新增一段行为包脚本并执行<br/>
+		/// （注：每次调用都会新增脚本环境，请避免多次重复调用此方法）
+        /// </summary>
+        static JSERUNSCRIPT cs_JSErunScript = (js, f) =>
+        {
+            MCCSAPI.JSECab p = (r) =>
+            {
+                f.Invoke(false, r);
+            };
+            mapi.JSErunScript(JSString(js), (f == null ? null : p));
+        };
+        /// <summary>
+        /// 使用官方脚本引擎发送一个自定义事件广播（自定义事件名称不能以minecraft:开头）
+        /// </summary>
+        static JSEFIRECUSTOMEVENT cs_JSEfireCustomEvent = (ename, jdata, f) =>
+        {
+            MCCSAPI.JSECab p = (r) =>
+            {
+                f.Invoke(false, r);
+            };
+            mapi.JSEfireCustomEvent(JSString(ename), JSString(jdata), (f == null ? null : p));
         };
 
         #endregion
@@ -773,6 +798,8 @@ namespace BDSJSR2
             eng.AddHostObject("getStructure", cs_getStructure);
             eng.AddHostObject("setStructure", cs_setStructure);
             eng.AddHostObject("setServerMotd", cs_setServerMotd);
+            eng.AddHostObject("JSErunScript", cs_JSErunScript);
+            eng.AddHostObject("JSEfireCustomEvent", cs_JSEfireCustomEvent);
 
             eng.AddHostObject("reNameByUuid", cs_reNameByUuid);
             eng.AddHostObject("getPlayerAbilities", cs_getPlayerAbilities);

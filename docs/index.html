@@ -287,9 +287,28 @@
 [例] <span class="codelet">let</span> r = setServerMotd(<span class="codestring">'本服内容很劲爆内详'</span>, 
 <span class="codelet">true</span>)
 
+<p>（24）JSErunScript</p>
+<span class="zhushi">// 函数名：JSErunScript<br/>
+// 功能：使用官方脚本引擎新增一段行为包脚本并执行<br/>
+// 参数个数：2个<br/>
+// 参数类型：字符串，函数<br/>
+// 参数详解：js - 脚本文本，cb - 执行结果回调<br/>
+// （备注：每次调用都会新增脚本环境，请避免多次重复调用此方法）<br/></span>
+[例] JSErunScript(<span class="codestring">'console.log("来自行为包的日志")'</span>, 
+(r)=&gt;{<span class="zhushi">/* 此处r表示是否执行成功 */</span>})
+
+<p>（25）JSEfireCustomEvent</p>
+<span class="zhushi">// 函数名：JSEfireCustomEvent<br/>
+// 功能：使用官方脚本引擎发送一个自定义事件广播<br/>
+// 参数个数：3个<br/>
+// 参数类型：字符串，字符串，函数<br/>
+// 参数详解：ename - 自定义事件名称（不能以minecraft:开头），jdata - 事件内容文本，cb - 执行结果回调<br/></span>
+[例] JSEfireCustomEvent(<span class="codestring">'mytest:testevent'</span>, <span class="codestring">'一个自定义信息'</span>,
+(r)=&gt;{<span class="zhushi">/* 此处r表示是否执行成功 */</span>})
+
 <h3><a name="api_t3">3.MC玩家互动相关功能</a></h3>
 
-<p>（24）reNameByUuid</p>
+<p>（26）reNameByUuid</p>
 <span class="zhushi">// 函数名：reNameByUuid<br/>
 // 功能：重命名一个指定的玩家名<br/>
 // 参数个数：2个<br/>
@@ -300,7 +319,7 @@
 [例] <span class="codelet">let</span> r = reNameByUuid(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'请叫我LiuXiaohua'</span>)
 
-<p>（25）getPlayerAbilities</p>
+<p>（27）getPlayerAbilities</p>
 <span class="zhushi">// 函数名：getPlayerAbilities<br/>
 // 功能：获取玩家能力表<br/>
 // 参数个数：1个<br/>
@@ -310,7 +329,7 @@
 [例] <span class="codelet">let</span> a = getPlayerAbilities(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)<br/>
 （注：含总计18种能力值）
 
-<p>（26）setPlayerAbilities</p>
+<p>（28）setPlayerAbilities</p>
 <span class="zhushi">// 函数名：setPlayerAbilities<br/>
 // 功能：设置玩家能力表<br/>
 // 参数个数：2个<br/>
@@ -321,7 +340,7 @@
 [例] <span class="codelet">let</span> r = setPlayerAbilities(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"opencontainers": false}'</span>)
 
-<p>（27）getPlayerAttributes</p>
+<p>（29）getPlayerAttributes</p>
 <span class="zhushi">// 函数名：getPlayerAttributes<br/>
 // 功能：获取玩家属性表<br/>
 // 参数个数：1个<br/>
@@ -331,7 +350,7 @@
 [例] <span class="codelet">let</span> t = getPlayerAttributes(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)<br/>
 （注：总计14种生物属性，含部分有效玩家属性）
 
-<p>（28）setPlayerTempAttributes</p>
+<p>（30）setPlayerTempAttributes</p>
 <span class="zhushi">// 函数名：setPlayerTempAttributes<br/>
 // 功能：设置玩家属性临时值表<br/>
 // 参数个数：2个<br/>
@@ -342,7 +361,7 @@
 [例] <span class="codelet">let</span> r = setPlayerTempAttributes(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"hunger": 10}'</span>)
 
-<p>（29）getPlayerMaxAttributes</p>
+<p>（31）getPlayerMaxAttributes</p>
 <span class="zhushi">// 函数名：getPlayerMaxAttributes<br/>
 // 功能：获取玩家属性上限值表<br/>
 // 参数个数：1个<br/>
@@ -351,7 +370,7 @@
 // 返回值：属性上限值json字符串</span><br/>
 [例] <span class="codelet">let</span> m = getPlayerMaxAttributes(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)
 
-<p>（30）setPlayerMaxAttributes</p>
+<p>（32）setPlayerMaxAttributes</p>
 <span class="zhushi">// 函数名：setPlayerMaxAttributes<br/>
 // 功能：设置玩家属性上限值表<br/>
 // 参数个数：2个<br/>
@@ -362,7 +381,7 @@
 [例] <span class="codelet">let</span> r = setPlayerMaxAttributes(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"maxhealth": 200}'</span>)
 
-<p>（31）getPlayerItems</p>
+<p>（33）getPlayerItems</p>
 <span class="zhushi">// 函数名：getPlayerItems<br/>
 // 功能：获取玩家所有物品列表<br/>
 // 参数个数：1个<br/>
@@ -372,7 +391,7 @@
 [例] <span class="codelet">let</span> t = getPlayerItems(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)<br/>
 （注：玩家物品包括末影箱、装备、副手和背包四项物品的nbt描述型数据列表。nbt被序列化数据类型的tag所描述，总计12种有效tag，所对应值可序列化为json数据，亦可反序列化为nbt）
 
-<p>（32）getPlayerSelectedItem</p>
+<p>（34）getPlayerSelectedItem</p>
 <span class="zhushi">// 函数名：getPlayerSelectedItem<br/>
 // 功能：获取玩家当前选中项信息<br/>
 // 参数个数：1个<br/>
@@ -382,7 +401,7 @@
 [例] <span class="codelet">let</span> i = getPlayerSelectedItem(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)<br/>
 （注：选中项包含选中框所处位置，以及选中物品的nbt描述型数据）
 
-<p>（33）setPlayerItems</p>
+<p>（35）setPlayerItems</p>
 <span class="zhushi">// 函数名：setPlayerItems<br/>
 // 功能：设置玩家所有物品列表<br/>
 // 参数个数：2个<br/>
@@ -393,7 +412,7 @@
 [例] <span class="codelet">let</span> r = setPlayerItems(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"Offhand":{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"Count","cv":{"tt":1,"tv":1}},{"ck":"Damage","cv":{"tt":2,"tv":0}},{"ck":"Name","cv":{"tt":8,"tv":"minecraft:trident"}},{"ck":"tag","cv":{"tt":10,"tv":[{"ck":"ench","cv":{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"id","cv":{"tt":2,"tv":7}},{"ck":"lvl","cv":{"tt":2,"tv":8888}}]}]}}]}}]}]}}'</span>)
 
-<p>（34）addPlayerItemEx</p>
+<p>（36）addPlayerItemEx</p>
 <span class="zhushi">// 函数名：addPlayerItemEx<br/>
 // 功能：增加玩家一个物品<br/>
 // 参数个数：2个<br/>
@@ -404,7 +423,7 @@
 [例] <span class="codelet">let</span> r = addPlayerItemEx(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"tt":10,"tv":[{"ck":"Count","cv":{"tt":1,"tv":1}},{"ck":"Damage","cv":{"tt":2,"tv":0}},{"ck":"Name","cv":{"tt":8,"tv":"minecraft:trident"}},{"ck":"tag","cv":{"tt":10,"tv":[{"ck":"ench","cv":{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"id","cv":{"tt":2,"tv":10}},{"ck":"lvl","cv":{"tt":2,"tv":9999}}]}]}}]}}]}'</span>)
 
-<p>（35）addPlayerItem</p>
+<p>（37）addPlayerItem</p>
 <span class="zhushi">// 函数名：addPlayerItem<br/>
 // 功能：增加玩家一个物品<br/>
 // 参数个数：4个<br/>
@@ -414,7 +433,7 @@
 // （备注：特定条件下可能不会变更游戏内实际物品）</span><br/>
 [例] <span class="codelet">let</span> r = addPlayerItem(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 9, 0, 32)
 
-<p>（36）getPlayerEffects</p>
+<p>（38）getPlayerEffects</p>
 <span class="zhushi">// 函数名：getPlayerEffects<br/>
 // 功能：获取玩家所有效果列表<br/>
 // 参数个数：1个<br/>
@@ -424,7 +443,7 @@
 [例] <span class="codelet">let</span> e = getPlayerEffects(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)<br/>
 （注：效果为nbt描述型数据）
 
-<p>（37）setPlayerEffects</p>
+<p>（39）setPlayerEffects</p>
 <span class="zhushi">// 函数名：setPlayerEffects<br/>
 // 功能：设置玩家所有效果列表<br/>
 // 参数个数：2个<br/>
@@ -434,7 +453,7 @@
 [例] <span class="codelet">let</span> r = setPlayerEffects(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"Ambient","cv":{"tt":1,"tv":0}},{"ck":"Amplifier","cv":{"tt":1,"tv":0}},{"ck":"DisplayOnScreenTextureAnimation","cv":{"tt":1,"tv":0}},{"ck":"Duration","cv":{"tt":3,"tv":3461}},{"ck":"DurationEasy","cv":{"tt":3,"tv":3461}},{"ck":"DurationHard","cv":{"tt":3,"tv":3461}},{"ck":"DurationNormal","cv":{"tt":3,"tv":3461}},{"ck":"Id","cv":{"tt":1,"tv":16}},{"ck":"ShowParticles","cv":{"tt":1,"tv":1}}]}]}'</span>)
 
-<p>（38）setPlayerBossBar</p>
+<p>（40）setPlayerBossBar</p>
 <span class="zhushi">// 函数名：setPlayerBossBar<br/>
 // 功能：设置玩家自定义血条<br/>
 // 参数个数：3个<br/>
@@ -444,7 +463,7 @@
 [例] <span class="codelet">let</span> r = setPlayerBossBar(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'欢迎来到梦之故里'</span>, 1.00)
 
-<p>（39）removePlayerBossBar</p>
+<p>（41）removePlayerBossBar</p>
 <span class="zhushi">// 函数名：removePlayerBossBar<br/>
 // 功能：清除玩家自定义血条<br/>
 // 参数个数：1个<br/>
@@ -453,7 +472,7 @@
 // 返回值：是否清除成功</span><br/>
 [例] <span class="codelet">let</span> r = removePlayerBossBar(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)
 
-<p>（40）selectPlayer</p>
+<p>（42）selectPlayer</p>
 <span class="zhushi">// 函数名：selectPlayer<br/>
 // 功能：查询在线玩家基本信息<br/>
 // 参数个数：1个<br/>
@@ -462,7 +481,7 @@
 // 返回值：玩家基本信息json字符串</span><br/>
 [例] <span class="codelet">let</span> e = selectPlayer(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)
 
-<p>（41）transferserver</p>
+<p>（43）transferserver</p>
 <span class="zhushi">// 函数名：transferserver<br/>
 // 功能：传送玩家至指定服务器<br/>
 // 参数个数：3个<br/>
@@ -472,7 +491,7 @@
 [例] <span class="codelet">let</span> t = transferserver(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'www.xiafox.com'</span>, 19132)
 
-<p>（42）teleport</p>
+<p>（44）teleport</p>
 <span class="zhushi">// 函数名：teleport<br/>
 // 功能：传送玩家至指定坐标和维度<br/>
 // 参数个数：5个<br/>
@@ -481,7 +500,7 @@
 // 返回值：是否传送成功</span><br/>
 [例] <span class="codelet">let</span> t = teleport(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 10, 99, 10, 2)
 
-<p>（43）talkAs</p>
+<p>（45）talkAs</p>
 <span class="zhushi">// 函数名：talkAs<br/>
 // 功能：模拟玩家发送一个文本<br/>
 // 参数个数：2个<br/>
@@ -491,7 +510,7 @@
 [例] <span class="codelet">let</span> t = talkAs(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'你好 js'</span>)
 
-<p>（44）runcmdAs</p>
+<p>（46）runcmdAs</p>
 <span class="zhushi">// 函数名：runcmdAs<br/>
 // 功能：模拟玩家执行一个指令<br/>
 // 参数个数：2个<br/>
@@ -501,7 +520,7 @@
 [例] <span class="codelet">let</span> t = runcmdAs(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'/me 你好 js'</span>)
 
-<p>（45）sendSimpleForm</p>
+<p>（47）sendSimpleForm</p>
 <span class="zhushi">// 函数名：sendSimpleForm<br/>
 // 功能：向指定的玩家发送一个简单表单<br/>
 // 参数个数：4个<br/>
@@ -512,7 +531,7 @@
 <span class="codestring">'致命选项'</span>, <span class="codestring">'请选择：'</span>, 
 <span class="codestring">'["生存","死亡","求助"]'</span>)
 
-<p>（46）sendModalForm</p>
+<p>（48）sendModalForm</p>
 <span class="zhushi">// 函数名：sendModalForm<br/>
 // 功能：向指定的玩家发送一个模式对话框<br/>
 // 参数个数：5个<br/>
@@ -523,7 +542,7 @@
 <span class="codestring">'没有第三个选项'</span>, <span class="codestring">'请选择：'</span>, 
 <span class="codestring">'生存'</span>, <span class="codestring">'死亡'</span>)
 
-<p>（47）sendCustomForm</p>
+<p>（49）sendCustomForm</p>
 <span class="zhushi">// 函数名：sendCustomForm<br/>
 // 功能：向指定的玩家发送一个自定义表单<br/>
 // 参数个数：2个<br/>
@@ -533,7 +552,7 @@
 [例] <span class="codelet">let</span> fid = sendCustomForm(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="ctitle1">'{"content":[{"type":"label","text":"这是一个文本标签"},{"placeholder":"水印文本","default":"","type":"input","text":""},{"default":true,"type":"toggle","text":"开关~或许是吧"},{"min":0.0,"max":10.0,"step":2.0,"default":3.0,"type":"slider","text":"游标滑块！？"},{"default":1,"steps":["Step 1","Step 2","Step 3"],"type":"step_slider","text":"矩阵滑块？!"},{"default":1,"options":["Option 1","Option 2","Option 3"],"type":"dropdown","text":"如你所见，下拉框"}], "type":"custom_form","title":"这是一个自定义窗体"}'</span>)
 
-<p>（48）releaseForm</p>
+<p>（50）releaseForm</p>
 <span class="zhushi">// 函数名：releaseForm<br/>
 // 功能：放弃一个表单<br/>
 // 参数个数：1个<br/>
@@ -543,7 +562,7 @@
 //（备注：已被接收到的表单会被自动释放）</span><br/>
 [例] <span class="codelet">let</span> r = releaseForm(1000)
 
-<p>（49）setPlayerSidebar</p>
+<p>（51）setPlayerSidebar</p>
 <span class="zhushi">// 函数名：setPlayerSidebar<br/>
 // 功能：设置玩家自定义侧边栏临时计分板<br/>
 // 参数个数：3个<br/>
@@ -554,7 +573,7 @@
 </span>[例] <span class="codelet">let</span> r = setPlayerSidebar(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'自定义侧边栏'</span>, <span class="codestring">'["第一行", "第二行", "我在哪行?    "]'</span>)<br/>
 
-<p>（50）removePlayerSidebar</p>
+<p>（52）removePlayerSidebar</p>
 <span class="zhushi">// 函数名：removePlayerSidebar<br/>
 // 功能：清除玩家自定义侧边栏<br/>
 // 参数个数：1个<br/>
@@ -563,7 +582,7 @@
 // 返回值：是否清除成功<br/>
 </span>[例] <span class="codelet">let</span> r = removePlayerSidebar(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)
 
-<p>（51）getPlayerPermissionAndGametype</p>
+<p>（53）getPlayerPermissionAndGametype</p>
 <span class="zhushi">// 函数名：getPlayerPermissionAndGametype<br/>
 // 功能：获取玩家权限与游戏模式<br/>
 // 参数个数：1个<br/>
@@ -573,7 +592,7 @@
 </span>[例] <span class="codelet">let</span> t = getPlayerPermissionAndGametype(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)<br/>
 （注：OP命令等级包含6个有效等级[op-permission-level]，权限包含3种有效权限[permissions.json]，游戏模式包含5种有效模式[gamemode]）
 
-<p>（52）setPlayerPermissionAndGametype</p>
+<p>（54）setPlayerPermissionAndGametype</p>
 <span class="zhushi">// 函数名：setPlayerPermissionAndGametype<br/>
 // 功能：设置玩家权限与游戏模式<br/>
 // 参数个数：2个<br/>
@@ -584,7 +603,7 @@
 [例] <span class="codelet">let</span> r = setPlayerPermissionAndGametype(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"gametype" : 3}'</span>)
 
-<p>（53）disconnectClient</p>
+<p>（55）disconnectClient</p>
 <span class="zhushi">// 函数名：disconnectClient<br/>
 // 功能：断开一个玩家的连接<br/>
 // 参数个数：2个<br/>
@@ -594,7 +613,7 @@
 [例] <span class="codelet">let</span> r = disconnectClient(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'这个消息来自测试'</span>)
 
-<p>（54）sendText</p>
+<p>（56）sendText</p>
 <span class="zhushi">// 函数名：sendText<br/>
 // 功能：发送一个原始显示文本给玩家<br/>
 // 参数个数：2个<br/>
@@ -604,7 +623,7 @@
 [例] <span class="codelet">let</span> r = sendText(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'这个文本来自测试'</span>)
 
-<p>（55）getscoreboard</p>
+<p>（57）getscoreboard</p>
 <span class="zhushi">// 函数名：getscoreboard<br/>
 // 功能：获取指定玩家指定计分板上的数值<br/>
 // 参数个数：2个<br/>
@@ -614,7 +633,7 @@
 [例] <span class="codelet">let</span> m = getscoreboard(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'money'</span>)
 
-<p>（56）setscoreboard</p>
+<p>（58）setscoreboard</p>
 <span class="zhushi">// 函数名：setscoreboard<br/>
 // 功能：设置指定玩家指定计分板上的数值<br/>
 // 参数个数：3个<br/>
@@ -625,7 +644,7 @@
 [例] <span class="codelet">let</span> t = setscoreboard(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'money'</span>, 3)
 
-<p>（57）getPlayerIP</p>
+<p>（59）getPlayerIP</p>
 <span class="zhushi">// 函数名：getPlayerIP<br/>
 // 功能：获取玩家IP<br/>
 // 参数个数：1个<br/>
@@ -1034,6 +1053,23 @@
  <span class="codestring">scoreboardid</span> – 计分板ID值<br/>
  <span class="codestring">score</span> – 分数
 
+<p class="listen">（35）"onScriptEngineInit" - 官方脚本引擎初始化监听</p>
+拦截可否：否<br/>
+回传数据：<br/>
+ <span class="codestring">jseptr</span> – 引擎指针
+
+<p class="listen">（36）"onScriptEngineLog" - 官方脚本接收日志监听</p>
+拦截可否：是<br/>
+回传数据：<br/>
+ <span class="codestring">jseptr</span> – 引擎指针<br/>
+ <span class="codestring">log</span> – 官方脚本引擎输出信息（当脚本引擎开启日志功能时可捕获此内容）
+
+<p class="listen">（37）"onScriptEngineCmd" - 官方脚本引擎执行指令监听</p>
+拦截可否：是<br/>
+回传数据：<br/>
+ <span class="codestring">jseptr</span> – 引擎指针<br/>
+ <span class="codestring">cmd</span> – 将被执行的指令
+ 
 <br/>
 <br/>
 <br/>
