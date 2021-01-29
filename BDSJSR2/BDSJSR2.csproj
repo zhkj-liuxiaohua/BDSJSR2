@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="netjs\example.js" />
+    <Content Include="netjs\JSEApiTest.js" />
     <Content Include="netjs\testcase.js" />
     <Content Include="netjs\visitor.js" />
     <Content Include="netjs\帮助.txt" />
