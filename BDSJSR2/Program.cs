@@ -179,9 +179,13 @@ namespace BDSJSR2
                     {
                         f.Invoke(false, new string[] { ret });
                     }
-                    catch
+                    catch(Exception e)
                     {
                         Console.WriteLine("[JS] File " + jsengines[f.Engine] + " Script err by call [request].");
+                        if (e is ScriptEngineException ex)
+                        {
+                            Console.WriteLine(ex.ErrorDetails);
+                        }
                     }
                 }
             }).Start();
@@ -210,9 +214,13 @@ namespace BDSJSR2
                                 so.Invoke(false);
                         }
                     }
-                    catch
+                    catch (Exception e)
                     {
                         Console.WriteLine("[JS] File " + jsengines[eng] + " Script err by call [setTimeout].");
+                        if (e is ScriptEngineException ex)
+                        {
+                            Console.WriteLine(ex.ErrorDetails);
+                        }
                     }
 
                 }).Start();
@@ -268,6 +276,8 @@ namespace BDSJSR2
         delegate bool SETSERVERMOTD(object motd, object isShow);
         delegate void JSERUNSCRIPT(object js, ScriptObject f);
         delegate void JSEFIRECUSTOMEVENT(object ename, object jdata, ScriptObject f);
+        delegate int GETSCOREBYID(object id, object stitle);
+        delegate int SETSCOREBYID(object id, object stitle, object count);
         /// <summary>
         /// 设置事件发生前监听
         /// </summary>
@@ -286,9 +296,13 @@ namespace BDSJSR2
                         object oret = f.Invoke(false, new string[] { info });
                         ret = !object.Equals(oret, false);
                     }
-                    catch
+                    catch (Exception ae)
                     {
                         Console.WriteLine("[JS] File " + jsengines[f.Engine] + " Script err by call [addBeforeActListener] [{0}].", JSString(k));
+                        if (ae is ScriptEngineException aex)
+                        {
+                            Console.WriteLine(aex.ErrorDetails);
+                        }
                     }
                 }
                 return ret;
@@ -318,9 +332,13 @@ namespace BDSJSR2
                         object oret = f.Invoke(false, new string[] { info });
                         ret = !object.Equals(oret, false);
                     }
-                    catch
+                    catch(Exception ae)
                     {
                         Console.WriteLine("[JS] File " + jsengines[f.Engine] + " Script err by call [addAfterActListener] [{0}].", JSString(k));
+                        if (ae is ScriptEngineException aex)
+                        {
+                            Console.WriteLine(aex.ErrorDetails);
+                        }
                     }
                 }
                 return ret;
@@ -471,7 +489,37 @@ namespace BDSJSR2
             };
             mapi.JSEfireCustomEvent(JSString(ename), JSString(jdata), (f == null ? null : p));
         };
-
+        /// <summary>
+        /// 获取指定ID对应于计分板上的数值
+        /// </summary>
+        static GETSCOREBYID cs_getscoreById = (id, stitle) =>
+        {
+            return mapi.getscoreById(long.Parse(JSString(id)), JSString(stitle));
+        };
+        /// <summary>
+        /// 设置指定id对应于计分板上的数值
+        /// </summary>
+        static SETSCOREBYID cs_setscoreById = (id, stitle, count) =>
+        {
+            return mapi.setscoreById(long.Parse(JSString(id)), JSString(stitle), int.Parse(JSString(count)));
+        };
+        /// <summary>
+        /// 获取所有计分板计分项
+        /// </summary>
+        static GETONLINEPLAYERS cs_getAllScore = () =>
+        {
+            assertCommercial("getAllScore");
+            return mapi.getAllScore();
+        };
+        /// <summary>
+        /// 设置所有计分板计分项<br/>
+		/// 注：设置过程会清空原有数据
+        /// </summary>
+        static RUNCMD cs_setAllScore = (jdata) =>
+        {
+            assertCommercial("setAllScore");
+            return mapi.setAllScore(JSString(jdata));
+        };
         #endregion
 
         #region MC玩家互动相关功能
@@ -772,7 +820,7 @@ namespace BDSJSR2
         };
         #endregion
 
-        static void initJsEngine(V8ScriptEngine eng)
+        static void initJsEngine(ScriptEngine eng)
         {
             eng.AddHostObject("log", cs_log);
             eng.AddHostObject("fileReadAllText", cs_fileReadAllText);
@@ -800,6 +848,10 @@ namespace BDSJSR2
             eng.AddHostObject("setServerMotd", cs_setServerMotd);
             eng.AddHostObject("JSErunScript", cs_JSErunScript);
             eng.AddHostObject("JSEfireCustomEvent", cs_JSEfireCustomEvent);
+            eng.AddHostObject("getscoreById", cs_getscoreById);
+            eng.AddHostObject("setscoreById", cs_setscoreById);
+            eng.AddHostObject("getAllScore", cs_getAllScore);
+            eng.AddHostObject("setAllScore", cs_setAllScore);
 
             eng.AddHostObject("reNameByUuid", cs_reNameByUuid);
             eng.AddHostObject("getPlayerAbilities", cs_getPlayerAbilities);
@@ -870,10 +922,13 @@ namespace BDSJSR2
                         try
                         {
                             eng.Execute(jsfiles[n].ToString());
-                        } catch
+                        } catch(Exception e)
                         {
-                            //Console.WriteLine(e.StackTrace);
                             Console.WriteLine("[JS] File " + n + " Script err by loading [runtime].");
+                            if (e is ScriptEngineException ex)
+                            {
+                                Console.WriteLine(ex.ErrorDetails);
+                            }
                         }
                     }
                 }
