@@ -477,6 +477,44 @@
 // 参数详解：ename - 自定义事件名称（不能以minecraft:开头），jdata - 事件内容文本，cb - 执行结果回调
 [例] JSEfireCustomEvent('mytest:testevent', '一个自定义信息', (r)=>{/* 此处r表示是否发送成功 */})
 
+// 函数名：postTick
+// 功能：发送一个函数至下一tick运行
+// 参数个数：1个
+// 参数类型：函数
+// 参数详解：func - 待置入下一tick执行的函数
+[例] postTick(()=>{ /* TODO */ })
+
+// 函数名：getscoreById
+// 功能：获取指定ID对应于计分板上的数值
+// 参数个数：2个
+// 参数类型：长整型，字符串
+// 参数详解：id - 离线计分板的ID，objname - 计分板登记的名称（若不存在则自动添加）
+// 返回值：获取的目标值，若目标不存在则返回0
+[例] let s = getscoreById(1, 'money')
+
+// 函数名：setscoreById
+// 功能：设置指定ID对应于计分板上的数值
+// 参数个数：3个
+// 参数类型：长整型，字符串，整型
+// 参数详解：id - 离线计分板的ID，objname - 计分板登记的名称（若不存在则自动添加），count - 待设置的值
+// 返回值：设置后的目标值，若未成功则返回0
+[例] let s = setscoreById(1, 'money', 100)
+
+// 函数名：getAllScore
+// 功能：获取所有计分板计分项
+// 参数个数：0个
+// 返回值：NBT格式的计分板json字符串
+[例] let j = getAllScore()
+
+// 函数名：setAllScore
+// 功能：设置所有计分板计分项
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：jdata - NBT格式的计分板json字符串
+// 返回值：是否设置成功
+// （备注：设置过程会清空原有数据；特定情况下可能不会立即生效）
+[例] setAllScore(fileReadAllText('data.json'))
+
 三、注册机制:
 
 /******************************** 注册接口及回调数据说明 ********************************/
@@ -539,3 +577,4 @@ e - 回传数据
  "onScriptEngineInit" - 官方脚本引擎初始化监听
  "onScriptEngineLog" - 官方脚本接收日志监听
  "onScriptEngineCmd" - 官方脚本引擎执行指令监听
+ "onScoreboardInit" - 系统计分板初始化监听
