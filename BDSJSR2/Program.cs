@@ -267,6 +267,7 @@ namespace BDSJSR2
         static Hashtable afterlistens = new Hashtable();
         delegate void ADDACTLISTENER(object k, ScriptObject f);
         delegate bool REMOVEACTLISTENER(object k, ScriptObject f);
+        delegate void POSTTICK(ScriptObject f);
         delegate void SETCOMMANDDESCRIBE(object c, object s);
         delegate bool RUNCMD(object cmd);
         delegate void LOGOUT(object l);
@@ -412,6 +413,28 @@ namespace BDSJSR2
             }
             afterlistens[JSString(k)] = ls;
             return ret;
+        };
+        /// <summary>
+        /// 发送一个方法至tick
+        /// </summary>
+        static POSTTICK cs_postTick = (f) =>
+        {
+            if (f != null)
+                mapi.postTick(() =>
+                {
+                    try
+                    {
+                        f.Invoke(false);
+                    }
+                    catch (Exception ae)
+                    {
+                        Console.WriteLine("[JS] File " + jsengines[f.Engine] + " Script err by call [postTick].");
+                        if (ae is ScriptEngineException aex)
+                        {
+                            Console.WriteLine(aex.ErrorDetails);
+                        }
+                    }
+                });
         };
         /// <summary>
         /// 设置一个全局指令描述
@@ -839,6 +862,7 @@ namespace BDSJSR2
             eng.AddHostObject("removeBeforeActListener", cs_removeBeforeActListener);
             eng.AddHostObject("addAfterActListener", cs_addAfterActListener);
             eng.AddHostObject("removeAfterActListener", cs_removeAfterActListener);
+            eng.AddHostObject("postTick", cs_postTick);
             eng.AddHostObject("setCommandDescribe", cs_setCommandDescribe);
             eng.AddHostObject("runcmd", cs_runcmd);
             eng.AddHostObject("logout", cs_logout);
