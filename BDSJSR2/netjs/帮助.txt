@@ -515,6 +515,41 @@
 // （备注：设置过程会清空原有数据；特定情况下可能不会立即生效）
 [例] setAllScore(fileReadAllText('data.json'))
 
+// 函数名：getMapColors
+// 功能：获取一个指定位置处区块的颜色数据
+// 参数个数：4个
+// 参数类型：整型，整型，整型，整型
+// 参数详解：x - X，y - Y，z - Z，did - 待读取的维度
+// 返回值：区块位置及颜色数据内容
+// （备注：如区块未处于活动状态，可能返回无效颜色数据）
+[例] let m = getMapColors(0, 0, 0, 0)
+
+// 函数名：startLocalHttpListen
+// 功能：开启一个本地http监听
+// 参数个数：2个
+// 参数类型：整型，函数
+// 参数详解：port - 待监听的端口，func - HTTP监听处理函数(参数为request请求信息，回传为返回response内容文本)
+// 返回值：开启成功将为监听器ID，开启失败则为-1
+// （备注：仅限本地服务使用localhost或127.0.0.1访问）
+[例] let h = startLocalHttpListen(8081, function(req){ return 'OK' })
+
+// 函数名：stopLocalHttpListen
+// 功能：关闭一个http监听
+// 参数个数：1个
+// 参数类型：整型
+// 参数详解：id - 待关闭的http监听器ID
+// 返回值：是否关闭成功
+[例] let r = stopLocalHttpListen(12345678)
+
+// 函数名：resetLocalHttpListener
+// 功能：重设一个监听器的处理函数
+// 参数个数：2个
+// 参数类型：整型，函数
+// 参数详解：id - 待重设方法的http监听器ID，func - 新的监听处理函数
+// 返回值：是否重设成功
+[例] let r = resetLocalHttpListener(12345678, function(req){ return 'FAIL' })
+
+
 三、注册机制:
 
 /******************************** 注册接口及回调数据说明 ********************************/

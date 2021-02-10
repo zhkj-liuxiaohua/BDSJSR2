@@ -42,6 +42,9 @@ namespace BDSJSR2
         delegate void SETTIMEOUT(object o, object ms);
         delegate bool MKDIR(object dirname);
         delegate string GETWORKINGPATH();
+        delegate int STARTLOCALHTTPLISTEN(object port, ScriptObject f);
+        delegate bool RESETLOCALHTTPLISTENER(object lisid, ScriptObject f);
+        delegate bool STOPLOCALHTTPLISTEN(object lisid);
 
         /// <summary>
         /// 标准输出流打印消息
@@ -248,7 +251,216 @@ namespace BDSJSR2
         {
             return AppDomain.CurrentDomain.BaseDirectory;
         };
+        // 本地侦听器
+        static Hashtable httplis = new Hashtable();
+        // 侦听函数
+        static Hashtable httpfuncs = new Hashtable();
+        // 读输入流
+        static string readStream(Stream s, Encoding c)
+        {
+            try
+            {
+                var byteList = new List<byte>();
+                var byteArr = new byte[2048];
+                int readLen = 0;
+                int len = 0;
+                do
+                {
+                    readLen = s.Read(byteArr, 0, byteArr.Length);
+                    len += readLen;
+                    byteList.AddRange(byteArr);
+                } while (readLen != 0);
+                return c.GetString(byteList.ToArray(), 0, len);
+            } catch(Exception e){ Console.WriteLine(e.StackTrace);}
+            return string.Empty;
+        }
+        // 读url携带参数
+        static ArrayList readQueryString(System.Collections.Specialized.NameValueCollection q)
+        {
+            if (q != null)
+            {
+                ArrayList ol = new ArrayList();
+                if (q.Count > 0)
+                {
+                    foreach (string k in q.Keys)
+                    {
+                        ol.Add(new KeyValuePair<string, object>(k, q[k]));
+                    }
+                }
+                return ol;
+            }
+            return null;
+        }
+        // 返回一个脚本监听器对应的方法构造
+        static AsyncCallback makeReqCallback(ScriptObject f)
+        {
+            AsyncCallback cb = (x) =>
+            {
+                HttpListener listener = (HttpListener)x.AsyncState;
+                try
+                {
+                    //If we are not listening this line throws a ObjectDisposedException.
+                    HttpListenerContext context = listener.EndGetContext(x);
+                    // 此处处理自定义方法
+                    if (f != null)
+                    {
+                        var req = context.Request;
+                        var resp = context.Response;
+                        try
+                        {
+                            var ret = f.Invoke(false, ser.Serialize(new
+                            {
+                                AcceptTypes = req.AcceptTypes,
+                                ContentEncoding = req.ContentEncoding,
+                                ContentLength64 = req.ContentLength64,
+                                ContentType = req.ContentType,
+                                Cookies = req.Cookies,
+                                HasEntityBody = req.HasEntityBody,
+                                Headers = req.Headers,
+                                HttpMethod = req.HttpMethod,
+                                InputStream = readStream(req.InputStream, req.ContentEncoding),
+                                IsAuthenticated = req.IsAuthenticated,
+                                IsLocal = req.IsLocal,
+                                IsSecureConnection = req.IsSecureConnection,
+                                IsWebSocketRequest = req.IsWebSocketRequest,
+                                KeepAlive = req.KeepAlive,
+                                LocalEndPoint = new
+                                {
+                                    Address = req.LocalEndPoint.Address.ToString(),
+                                    AddressFamily = req.LocalEndPoint.AddressFamily,
+                                    Port = req.LocalEndPoint.Port
+                                },
+                                ProtocolVersion = req.ProtocolVersion,
+                                QueryString = readQueryString(req.QueryString),
+                                RawUrl = req.RawUrl,
+                                RemoteEndPoint = new
+                                {
+                                    Address = req.RemoteEndPoint.Address.ToString(),
+                                    AddressFamily = req.RemoteEndPoint.AddressFamily,
+                                    Port = req.RemoteEndPoint.Port
+                                },
+                                RequestTraceIdentifier = req.RequestTraceIdentifier,
+                                ServiceName = req.ServiceName,
+                                TransportContext = req.TransportContext,
+                                Url = req.Url,
+                                UrlReferrer = req.UrlReferrer,
+                                UserAgent = req.UserAgent,
+                                UserHostAddress = req.UserHostAddress,
+                                UserHostName = req.UserHostName,
+                                UserLanguages = req.UserLanguages
+                            }));
+                            if (ret != null)
+                            {
+                                resp.ContentType = "text/plain;charset=UTF-8";//告诉客户端返回的ContentType类型为纯文本格式，编码为UTF-8
+                                resp.AddHeader("Access-Control-Allow-Origin", "*");
+                                resp.AddHeader("Content-type", "text/plain");//添加响应头信息
+                                resp.ContentEncoding = Encoding.UTF8;
+                                resp.StatusDescription = "200";//获取或设置返回给客户端的 HTTP 状态代码的文本说明。
+                                resp.StatusCode = 200;// 获取或设置返回给客户端的 HTTP 状态代码。
+                                var d = Encoding.UTF8.GetBytes(JSString(ret));
+                                resp.OutputStream.Write(d, 0, d.Length);
+                            }
+                            else
+                            {
+                                resp.StatusDescription = "404";
+                                resp.StatusCode = 404;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            if (!(e is HttpListenerException))
+                            {
+                                Console.WriteLine("Exception type:" + e.GetType());
+                                Console.WriteLine(e.StackTrace);
+                            }
+                            resp.StatusDescription = "404";
+                            resp.StatusCode = 404;
+                        }
+                    }
+                    context.Response.Close();
+                }
+                catch (Exception e)
+                {
+                    if (!(e is HttpListenerException))
+                    {
+                        Console.WriteLine("Exception type:" + e.GetType());
+                        Console.WriteLine(e.StackTrace);
+                    }
+                    //Intentionally not doing anything with the exception.
+                    //httpfuncs.Remove(h);
+                }
+                var mcb = httpfuncs[listener] as AsyncCallback;
+                if (mcb != null)
+                    listener.BeginGetContext(mcb, listener);
+            };
+            return cb;
+        }
+        /// <summary>
+        /// 开启一个本地http监听（仅限localhost和127.0.0.1访问）
+        /// </summary>
+        static STARTLOCALHTTPLISTEN cs_startLocalHttpListen = (port, f) =>
+        {
+            int hid = -1;
+            try
+            {
+                HttpListener h = new HttpListener();
+                string local1 = "localhost:";
+                string local2 = "127.0.0.1:";
+                string head = "http://";
+                int iport = int.Parse(JSString(port));
+                h.Prefixes.Add(head + local1 + iport + '/');
+                h.Prefixes.Add(head + local2 + iport + '/');
+                h.Start();
+                AsyncCallback cb = makeReqCallback(f);
+                httpfuncs[h] = cb;
+                h.BeginGetContext(cb, h);
+                hid = new Random().Next();
+                httplis[hid] = h;
+            } catch (Exception e) {
+                if (!(e is HttpListenerException))
+                    Console.WriteLine(e.StackTrace);
+            }
+            return hid;
+        };
+        /// <summary>
+        /// 关闭一个http端口侦听
+        /// </summary>
+        static STOPLOCALHTTPLISTEN cs_stopLocalHttpListen = (hid) =>
+        {
+            var h = httplis[hid] as HttpListener;
+            if (h != null)
+            {
+                try
+                {
+                    httpfuncs.Remove(h);
+                    httplis.Remove(hid);
+                    h.Stop();
+                    return true;
+                }
+                catch { }
+            }
+            return false;
+        };
+        /// <summary>
+        /// 重设已有侦听器的监听
+        /// </summary>
+        static RESETLOCALHTTPLISTENER cs_resetLocalHttpListener = (hid, f) =>
+        {
+            var h = httplis[hid] as HttpListener;
+            if (h != null)
+            {
+                try
+                {
+                    AsyncCallback cb = makeReqCallback(f);
+                    httpfuncs[h] = cb;
+                    return true;
+                }
+                catch { }
+            }
+            return false;
+        };
         #endregion
+
 
         // 断言商业版
         static bool assertCommercial(string fn)
@@ -279,6 +491,8 @@ namespace BDSJSR2
         delegate void JSEFIRECUSTOMEVENT(object ename, object jdata, ScriptObject f);
         delegate int GETSCOREBYID(object id, object stitle);
         delegate int SETSCOREBYID(object id, object stitle, object count);
+        delegate string GETMAPCOLORS(object x, object y, object z, object did);
+
         /// <summary>
         /// 设置事件发生前监听
         /// </summary>
@@ -542,6 +756,15 @@ namespace BDSJSR2
         {
             assertCommercial("setAllScore");
             return mapi.setAllScore(JSString(jdata));
+        };
+        /// <summary>
+        /// 获取一个指定位置处区块的颜色数据<br/>
+		/// 注：如区块未处于活动状态，可能返回无效颜色数据
+        /// </summary>
+        static GETMAPCOLORS cs_getMapColors = (x, y, z, did) =>
+        {
+            assertCommercial("getMapColors");
+            return mapi.getMapColors(int.Parse(JSString(x)), int.Parse(JSString(y)), int.Parse(JSString(z)), int.Parse(JSString(did)));
         };
         #endregion
 
@@ -857,6 +1080,9 @@ namespace BDSJSR2
             eng.AddHostObject("setTimeout", cs_setTimeout);
             eng.AddHostObject("mkdir", cs_mkdir);
             eng.AddHostObject("getWorkingPath", cs_getWorkingPath);
+            eng.AddHostObject("startLocalHttpListen", cs_startLocalHttpListen);
+            eng.AddHostObject("resetLocalHttpListener", cs_resetLocalHttpListener);
+            eng.AddHostObject("stopLocalHttpListen", cs_stopLocalHttpListen);
 
             eng.AddHostObject("addBeforeActListener", cs_addBeforeActListener);
             eng.AddHostObject("removeBeforeActListener", cs_removeBeforeActListener);
@@ -876,6 +1102,7 @@ namespace BDSJSR2
             eng.AddHostObject("setscoreById", cs_setscoreById);
             eng.AddHostObject("getAllScore", cs_getAllScore);
             eng.AddHostObject("setAllScore", cs_setAllScore);
+            eng.AddHostObject("getMapColors", cs_getMapColors);
 
             eng.AddHostObject("reNameByUuid", cs_reNameByUuid);
             eng.AddHostObject("getPlayerAbilities", cs_getPlayerAbilities);
