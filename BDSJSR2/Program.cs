@@ -766,6 +766,22 @@ namespace BDSJSR2
             assertCommercial("getMapColors");
             return mapi.getMapColors(int.Parse(JSString(x)), int.Parse(JSString(y)), int.Parse(JSString(z)), int.Parse(JSString(did)));
         };
+        /// <summary>
+        /// 导出地图离线玩家数据
+        /// </summary>
+        static GETONLINEPLAYERS cs_exportPlayersData = () =>
+        {
+            assertCommercial("exportPlayersData");
+            return mapi.exportPlayersData();
+        };
+        /// <summary>
+        /// 导入玩家数据至地图
+        /// </summary>
+        static RUNCMD cs_importPlayersData = (jstr) =>
+        {
+            assertCommercial("importPlayersData");
+            return mapi.importPlayersData(JSString(jstr));
+        };
         #endregion
 
         #region MC玩家互动相关功能
@@ -1103,6 +1119,8 @@ namespace BDSJSR2
             eng.AddHostObject("getAllScore", cs_getAllScore);
             eng.AddHostObject("setAllScore", cs_setAllScore);
             eng.AddHostObject("getMapColors", cs_getMapColors);
+            eng.AddHostObject("exportPlayersData", cs_exportPlayersData);
+            eng.AddHostObject("importPlayersData", cs_importPlayersData);
 
             eng.AddHostObject("reNameByUuid", cs_reNameByUuid);
             eng.AddHostObject("getPlayerAbilities", cs_getPlayerAbilities);

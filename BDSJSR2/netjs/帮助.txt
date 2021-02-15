@@ -549,6 +549,20 @@
 // 返回值：是否重设成功
 [例] let r = resetLocalHttpListener(12345678, function(req){ return 'FAIL' })
 
+// 函数名：exportPlayersData
+// 功能：导出地图所有离线玩家数据
+// 参数个数：0个
+// 返回值：玩家数据信息集
+[例] let d = exportPlayersData()
+
+// 函数名：importPlayersData
+// 功能：导入玩家数据至地图
+// 参数个数：1个
+// 参数类型：字符串
+// 参数详解：jdata - 玩家信息集json字符串
+// 返回值：是否设置成功
+// （备注：设置过程会替换原有玩家数据；在线情况下可能不会生效）
+[例] let r = importPlayersData(fileReadAllText('players.json'))
 
 三、注册机制:
 
