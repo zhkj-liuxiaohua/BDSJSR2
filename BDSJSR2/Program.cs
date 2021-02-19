@@ -308,7 +308,7 @@ namespace BDSJSR2
                         var resp = context.Response;
                         try
                         {
-                            var ret = f.Invoke(false, ser.Serialize(new
+                            var ret = f.Invoke(false, Encoding.UTF8.GetString(req.ContentEncoding.GetBytes(ser.Serialize(new
                             {
                                 AcceptTypes = req.AcceptTypes,
                                 ContentEncoding = req.ContentEncoding,
@@ -348,7 +348,7 @@ namespace BDSJSR2
                                 UserHostAddress = req.UserHostAddress,
                                 UserHostName = req.UserHostName,
                                 UserLanguages = req.UserLanguages
-                            }));
+                            }))));
                             if (ret != null)
                             {
                                 resp.ContentType = "text/plain;charset=UTF-8";//告诉客户端返回的ContentType类型为纯文本格式，编码为UTF-8
