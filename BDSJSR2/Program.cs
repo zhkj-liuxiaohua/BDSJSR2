@@ -10,6 +10,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using System.Web;
 using System.Web.Script.Serialization;
 
 namespace BDSJSR2
@@ -144,7 +145,7 @@ namespace BDSJSR2
             req.Method = mode;
             if (mode == "POST")
             {
-                req.ContentType = "application/x-www-form-urlencoded";
+                req.ContentType = "application/x-www-form-urlencoded;charset=UTF-8";
                 if (!string.IsNullOrEmpty(p))
                 {
                     byte[] payload = Encoding.UTF8.GetBytes(p);
@@ -275,16 +276,20 @@ namespace BDSJSR2
             return string.Empty;
         }
         // 读url携带参数
-        static ArrayList readQueryString(System.Collections.Specialized.NameValueCollection q)
+        static ArrayList readQueryString(System.Collections.Specialized.NameValueCollection q, string url)
         {
             if (q != null)
             {
                 ArrayList ol = new ArrayList();
                 if (q.Count > 0)
                 {
-                    foreach (string k in q.Keys)
+                    var d = HttpUtility.ParseQueryString(url.Substring(url.IndexOf('?')));
+                    if (d != null && d.Count > 0)
                     {
-                        ol.Add(new KeyValuePair<string, object>(k, q[k]));
+                        foreach (string k in d.Keys)
+                        {
+                            ol.Add(new KeyValuePair<string, object>(k, d[k]));
+                        }
                     }
                 }
                 return ol;
@@ -308,7 +313,7 @@ namespace BDSJSR2
                         var resp = context.Response;
                         try
                         {
-                            var ret = f.Invoke(false, Encoding.UTF8.GetString(req.ContentEncoding.GetBytes(ser.Serialize(new
+                            var ret = f.Invoke(false, ser.Serialize(new
                             {
                                 AcceptTypes = req.AcceptTypes,
                                 ContentEncoding = req.ContentEncoding,
@@ -331,7 +336,7 @@ namespace BDSJSR2
                                     Port = req.LocalEndPoint.Port
                                 },
                                 ProtocolVersion = req.ProtocolVersion,
-                                QueryString = readQueryString(req.QueryString),
+                                QueryString = readQueryString(req.QueryString, req.RawUrl),
                                 RawUrl = req.RawUrl,
                                 RemoteEndPoint = new
                                 {
@@ -348,7 +353,7 @@ namespace BDSJSR2
                                 UserHostAddress = req.UserHostAddress,
                                 UserHostName = req.UserHostName,
                                 UserLanguages = req.UserLanguages
-                            }))));
+                            }));
                             if (ret != null)
                             {
                                 resp.ContentType = "text/plain;charset=UTF-8";//告诉客户端返回的ContentType类型为纯文本格式，编码为UTF-8
