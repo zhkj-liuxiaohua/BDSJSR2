@@ -35,6 +35,11 @@ namespace BDSJSR2
         delegate string FILEREADALLTEXT(object f);
         delegate bool FILEWRITEALLTEXT(object f, object c);
         delegate bool FILEWRITELINE(object f, object c);
+        delegate bool FILEEXISTS(object f);
+        delegate bool FILEDELETE(object f);
+        delegate bool FILECOPY(object f, object t, object o);
+        delegate bool FILEMOVE(object f, object t);
+        delegate bool DIREXISTS(object d);
         delegate string TIMENOW();
         delegate void SETSHAREDATA(object key, object o);
         delegate object GETSHAREDATA(object key);
@@ -88,6 +93,69 @@ namespace BDSJSR2
             {
                 File.AppendAllLines(JSString(f), new string[] { JSString(c) });
                 return true;
+            }
+            catch { }
+            return false;
+        };
+        /// <summary>
+        /// 判断文件是否存在
+        /// </summary>
+        static FILEEXISTS cs_fileExists = (f) =>
+        {
+            try
+            {
+                return File.Exists(JSString(f));
+            }
+            catch { }
+            return false;
+        };
+        /// <summary>
+        /// 删除指定文件
+        /// </summary>
+        static FILEDELETE cs_fileDelete = (f) =>
+        {
+            try
+            {
+                File.Delete(JSString(f));
+                return true;
+            }
+            catch { }
+            return false;
+        };
+        /// <summary>
+        /// 复制文件
+        /// </summary>
+        static FILECOPY cs_fileCopy = (f, t, o) =>
+        {
+            try
+            {
+                File.Copy(JSString(f), JSString(t),bool.Parse(JSString(o)));
+                return true;
+            }
+            catch { }
+            return false;
+        };
+        /// <summary>
+        /// 移动文件
+        /// </summary>
+        static FILEMOVE cs_fileMove = (f, t) =>
+        {
+            try
+            {
+                File.Move(JSString(f), JSString(t));
+                return true;
+            }
+            catch { }
+            return false;
+        };
+        /// <summary>
+        /// 判断目录是否存在
+        /// </summary>
+        static DIREXISTS cs_dirExists = (d) =>
+        {
+            try
+            {
+                return Directory.Exists(JSString(d));
             }
             catch { }
             return false;
@@ -1093,6 +1161,12 @@ namespace BDSJSR2
             eng.AddHostObject("fileReadAllText", cs_fileReadAllText);
             eng.AddHostObject("fileWriteAllText", cs_fileWriteAllText);
             eng.AddHostObject("fileWriteLine", cs_fileWriteLine);
+            eng.AddHostObject("fileExists", cs_fileExists);
+            eng.AddHostObject("fileDelete", cs_fileDelete);
+            eng.AddHostObject("fileCopy", cs_fileCopy);
+            eng.AddHostObject("fileMove", cs_fileMove);
+            eng.AddHostObject("dirExists", cs_dirExists);
+
             eng.AddHostObject("TimeNow", cs_TimeNow);
             eng.AddHostObject("setShareData", cs_setShareData);
             eng.AddHostObject("getShareData", cs_getShareData);
