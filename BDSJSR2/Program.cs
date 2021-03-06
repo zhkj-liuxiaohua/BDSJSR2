@@ -1237,6 +1237,21 @@ namespace BDSJSR2
             eng.AddHostObject("getPlayerIP", cs_getPlayerIP);
         }
 
+        [DllImport("Kernel32.dll")]
+        static extern int GetPrivateProfileStringA(
+            string lpAppName,
+            string lpKeyName,
+            string lpDefault,
+            byte[] lpReturnedString,
+            int nSize,
+            string lpFileName);
+        [DllImport("Kernel32.dll")]
+        static extern uint WritePrivateProfileStringA(
+            string lpAppName,
+            string lpKeyName,
+            string lpString,
+            string lpFileName);
+
         /// <summary>
         /// JSR初始化
         /// </summary>
@@ -1244,13 +1259,32 @@ namespace BDSJSR2
         public static void init(MCCSAPI api)
         {
             mapi = api;
+            string plugins = "plugins/";
+            string settingdir = plugins + "settings/";          // 固定配置文件目录 - plugins/settings
+            string settingpath = settingdir + "netjs.ini";      // 固定配置文件 - netjs.ini
+            string JSPATH = "";
+            var path = new byte[256];
+            int len = 0;
+            if ((len = GetPrivateProfileStringA("NETJS", "jsdir", null, path, 256, settingpath)) < 1)
+            {
+                Console.WriteLine("[JSR] 未能读取插件库配置文件，使用默认配置[详见" + settingpath +
+                    "]");
+                JSPATH = "NETJS";
+                try
+                {
+                    Directory.CreateDirectory(plugins);
+                    Directory.CreateDirectory(settingdir);
+                    WritePrivateProfileStringA("NETJS", "jsdir", JSPATH, settingpath);
+                }
+                catch { }
+            } else
+                JSPATH = Encoding.UTF8.GetString(path, 0, len);
             // 此处装载所有js文件
-            const string JSPATH = "NETJS";
             try
             {
                 if (!Directory.Exists(JSPATH))
                 {
-                    Console.WriteLine("未检测到netjs插件库。请将js文件放置入BDS所在目录的NETJS文件夹内。");
+                    Console.WriteLine("[JSR] 未检测到js插件库。请将js文件放置入" + JSPATH + "文件夹内。[配置详见" + settingpath + "]");
                     return;
                 }
                 string[] jss = Directory.GetFiles(JSPATH, "*.js");
