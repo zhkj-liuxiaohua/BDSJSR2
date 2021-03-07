@@ -74,7 +74,7 @@
 // 功能：文件输入流读取一个文本<br/>
 // 参数个数：1个<br/>
 // 参数类型：字符串<br/>
-// 参数详解：fname - 文件名（相对BDS位置）<br/>
+// 参数详解：fname - 文件路径（相对BDS位置）<br/>
 // 返回值：字符串</span><br/>
 </span>
 [例] <span class="codelet">let</span> t = fileReadAllText(<span class="codestring">'outjs.js'</span>)
@@ -84,7 +84,7 @@
 // 功能：文件输出流全新写入一个字符串<br/>
 // 参数个数：2个<br/>
 // 参数类型：字符串，字符串<br/>
-// 参数详解：fname - 文件名（相对BDS位置），content - 文本内容<br/>
+// 参数详解：fname - 文件路径（相对BDS位置），content - 文本内容<br/>
 // 返回值：是否写成功</span><br/>
 [例] <span class="codelet">let</span> w = fileWriteAllText(<span class="codestring">'jslog.txt'</span>, 
 <span class="codestring">'测试字符'</span>)
@@ -94,12 +94,88 @@
 // 功能：文件输出流追加一行字符串<br/>
 // 参数个数：2个<br/>
 // 参数类型：字符串，字符串<br/>
-// 参数详解：fname - 文件名（相对BDS位置），content - 追加内容<br/>
+// 参数详解：fname - 文件路径（相对BDS位置），content - 追加内容<br/>
 // 返回值：是否写成功</span><br/>
 [例] <span class="codelet">let</span> w = fileWriteLine(<span class="codestring">'jslog.txt'</span>, 
 <span class="codestring">'下一行测试字符'</span>)
 
-<p>（4）log</p>
+<p>（4）fileExists</p>
+<span class="zhushi">// 函数名：fileExists<br/>
+// 功能：判断文件是否存在<br/>
+// 参数个数：1个<br/>
+// 参数类型：字符串<br/>
+// 参数详解：fname - 文件路径（相对BDS位置）<br/>
+// 返回值：True - 文件存在，False - 文件不存在</span><br/>
+[例] <span class="codelet">let</span> e = fileExists(<span class="codestring">'config.json'</span>)
+
+<p>（5）fileDelete</p>
+<span class="zhushi">// 函数名：fileDelete<br/>
+// 功能：删除指定文件<br/>
+// 参数个数：1个<br/>
+// 参数类型：字符串<br/>
+// 参数详解：fname - 文件路径（相对BDS位置）<br/>
+// 返回值：True - 删除文件成功，False - 删除失败</span><br/>
+[例] <span class="codelet">let</span> e = fileDelete(<span class="codestring">'jslog.txt'</span>)
+
+<p>（6）fileCopy</p>
+<span class="zhushi">// 函数名：fileCopy<br/>
+// 功能：复制指定文件<br/>
+// 参数个数：2个<br/>
+// 参数类型：字符串，字符串<br/>
+// 参数详解：from - 待复制的文件路径（相对BDS位置），to - 目标位置（相对BDS位置）<br/>
+// 返回值：True - 复制文件成功，False - 复制失败</span><br/>
+[例] <span class="codelet">let</span> w = fileCopy(<span class="codestring">'jslog.txt'</span>, 
+<span class="codestring">'.\\log\\output.log</span>)
+
+<p>（7）fileMove</p>
+<span class="zhushi">// 函数名：fileMove<br/>
+// 功能：移动指定文件<br/>
+// 参数个数：2个<br/>
+// 参数类型：字符串，字符串<br/>
+// 参数详解：from - 待移动的文件路径（相对BDS位置），to - 目标位置（相对BDS位置）<br/>
+// 返回值：True - 移动文件成功，False - 移动失败</span><br/>
+[例] <span class="codelet">let</span> w = fileMove(<span class="codestring">'jslog.txt'</span>, 
+<span class="codestring">'.\\log\\output.log</span>)
+
+<p>（8）dirCreate</p>
+<span class="zhushi">
+// 函数名：dirCreate<br/>
+// 功能：创建文件夹<br/>
+// 参数个数：1个<br/>
+// 参数类型：字符串<br/>
+// 参数详解：dirname - 待创建的文件夹路径（相对BDS位置）<br/>
+// 返回值：True - 目录创建成功/已存在，False - 创建失败</span><br/>
+[例] <span class="codelet">let</span> r = dirCreate(<span class="codestring">'C:\\newdir'</span>)
+
+<p>（9）dirExists</p>
+<span class="zhushi">// 函数名：dirExists<br/>
+// 功能：判断文件夹是否存在<br/>
+// 参数个数：1个<br/>
+// 参数类型：字符串<br/>
+// 参数详解：dirname - 文件夹路径（相对BDS位置）<br/>
+// 返回值：True - 文件夹存在，False - 文件夹不存在</span><br/>
+[例] <span class="codelet">let</span> e = dirExists(<span class="codestring">'C:\\config'</span>)
+
+<p>（10）dirDelete</p>
+<span class="zhushi">// 函数名：dirDelete<br/>
+// 功能：删除指定文件夹，如果其中有内容将一并删除<br/>
+// 参数个数：1个<br/>
+// 参数类型：字符串<br/>
+// 参数详解：dirname - 文件夹路径（相对BDS位置）<br/>
+// 返回值：True - 删除文件夹成功，False - 删除失败</span><br/>
+[例] <span class="codelet">let</span> e = dirDelete(<span class="codestring">'C:\\config'</span>)
+
+<p>（11）dirMove</p>
+<span class="zhushi">// 函数名：dirMove<br/>
+// 功能：移动指定文件夹<br/>
+// 参数个数：2个<br/>
+// 参数类型：字符串，字符串<br/>
+// 参数详解：from - 待移动的文件夹路径（相对BDS位置），to - 目标位置（相对BDS位置）<br/>
+// 返回值：True - 移动文件夹成功，False - 移动失败</span><br/>
+[例] <span class="codelet">let</span> w = dirMove(<span class="codestring">'C:\\config'</span>, 
+<span class="codestring">'C:\\bak\\conf</span>)
+
+<p>（12）log</p>
 <span class="zhushi">// 函数名：log<br/>
 // 功能：标准输出流打印消息<br/>
 // 参数个数：1个<br/>
@@ -107,14 +183,14 @@
 // 参数详解：待输出至标准流字符串</span><br/>
 [例] log(<span class="codestring">'你好 js'</span>)
 
-<p>（5）TimeNow</p>
+<p>（13）TimeNow</p>
 <span class="zhushi">// 函数名：TimeNow<br/>
 // 功能：返回一个当前时间的字符串<br/>
 // 参数个数：0个<br/>
 // 返回值：字符串</span><br/>
 [例] <span class="codelet">let</span> t = TimeNow()
 
-<p>（6）setShareData</p>
+<p>（14）setShareData</p>
 <span class="zhushi">// 函数名：setShareData<br/>
 // 功能：存入共享数据<br/>
 // 参数个数：2个<br/>
@@ -123,7 +199,7 @@
 [例] setShareData(<span class="codestring">'TEXT_HELLO'</span>, 
 <span class="codestring">'你好 js'</span>)
 
-<p>（7）getShareData</p>
+<p>（15）getShareData</p>
 <span class="zhushi">// 函数名：getShareData<br/>
 // 功能：获取共享数据<br/>
 // 参数个数：1个<br/>
@@ -132,7 +208,7 @@
 // 返回值：共享数据</span><br/>
 [例] <span class="codelet">let</span> t = getShareData(<span class="codestring">'TEXT_HELLO'</span>)
 
-<p>（8）removeShareData</p>
+<p>（16）removeShareData</p>
 <span class="zhushi">// 函数名：removeShareData<br/>
 // 功能：删除共享数据<br/>
 // 参数个数：1个<br/>
@@ -141,7 +217,7 @@
 // 返回值：旧数据</span><br/>
 [例] <span class="codelet">let</span> oldt = removeShareData(<span class="codestring">'TEXT_HELLO'</span>)
 
-<p>（<span lang="en-us">9</span>）request</p>
+<p>（17）request</p>
 <span class="zhushi">// 函数名：request<br/>
 // 功能：发起一个远程HTTP请求<br/>
 // 参数个数：4个<br/>
@@ -152,7 +228,7 @@
 <span class="codelet">function</span> (e) { })<br/>
 （注：mode可使用GET和POST两种方式）
 
-<p>（10）setTimeout</p>
+<p>（18）setTimeout</p>
 <span class="zhushi">
 // 函数名：setTimeout<br/>
 // 功能：延时执行一条指令<br/>
@@ -162,17 +238,17 @@
 </span>
 [例] setTimeout(<span class="codestring">'log("你好 js")'</span>, 1000)
 
-<p>（11）mkdir</p>
+<p>（19）mkdir (同dirCreate)</p>
 <span class="zhushi">
 // 函数名：mkdir<br/>
 // 功能：创建文件夹<br/>
 // 参数个数：1个<br/>
 // 参数类型：字符串<br/>
 // 参数详解：dirname - 待创建的文件夹路径<br/>
-// 返回值：True - 目录是否被创建成功/已存在，False - 创建失败</span><br/>
+// 返回值：True - 目录创建成功/已存在，False - 创建失败</span><br/>
 [例] <span class="codelet">let</span> r = mkdir(<span class="codestring">'C:\\newdir'</span>)
 
-<p>（12）getWorkingPath</p>
+<p>（20）getWorkingPath</p>
 <span class="zhushi">
 // 函数名：getWorkingPath<br/>
 // 功能：获取工作目录<br/>
@@ -180,7 +256,7 @@
 // 返回值：当前应用程序的工作目录</span><br/>
 [例] <span class="codelet">let</span> d = getWorkingPath()
 
-<p>（13）startLocalHttpListen</p>
+<p>（21）startLocalHttpListen</p>
 <span class="zhushi">
 // 函数名：startLocalHttpListen<br/>
 // 功能：开启一个本地http监听<br/>
@@ -192,7 +268,7 @@
 [例] <span class="codelet">let</span> h = startLocalHttpListen(8081, 
 <span class="codelet">function</span>(req){ return <span class="codestring">'OK'</span> })
 
-<p>（14）stopLocalHttpListen</p>
+<p>（22）stopLocalHttpListen</p>
 <span class="zhushi">
 // 函数名：stopLocalHttpListen<br/>
 // 功能：关闭一个http监听<br/>
@@ -202,7 +278,7 @@
 // 返回值：是否关闭成功<br/></span>
 [例] <span class="codelet">let</span> r = stopLocalHttpListen(12345678)
 
-<p>（15）resetLocalHttpListener</p>
+<p>（23）resetLocalHttpListener</p>
 <span class="zhushi">
 // 函数名：resetLocalHttpListener<br/>
 // 功能：重设一个监听器的处理函数<br/>
@@ -215,7 +291,7 @@
 
 <h3><a name="api_t2">2.MC核心玩法相关功能</a></h3>
 
-<p>（16）addBeforeActListener</p>
+<p>（1）addBeforeActListener</p>
 <span class="zhushi">// 函数名：addBeforeActListener<br/>
 // 功能：注册玩家事件加载前监听器<br/>
 // 参数个数：2个<br/>
@@ -224,7 +300,7 @@
 [例] addBeforeActListener(<span class="codestring">'onChat'</span>, 
 <span class="codelet">function</span> (e) { log(e) })
 
-<p>（17）removeBeforeActListener</p>
+<p>（2）removeBeforeActListener</p>
 <span class="zhushi">// 函数名：removeBeforeActListener<br/>
 // 功能：移除玩家事件监听器<br/>
 // 参数个数：1个<br/>
@@ -233,7 +309,7 @@
 // 返回值：旧的监听器</span><br/>
 [例] <span class="codelet">let</span> oldfunc = removeBeforeActListener(<span class="codestring">'onChat'</span>)
 
-<p>（18）addAfterActListener</p>
+<p>（3）addAfterActListener</p>
 <span class="zhushi">// 函数名：addAfterActListener<br/>
 // 功能：注册玩家事件加载后监听器<br/>
 // 参数个数：2个<br/>
@@ -242,7 +318,7 @@
 [例] addAfterActListener(<span class="codestring">'onChat'</span>, 
 <span class="codelet">function</span> (e) { log(e) })
 
-<p>（19）removeAfterActListener</p>
+<p>（4）removeAfterActListener</p>
 <span class="zhushi">// 函数名：removeAfterActListener<br/>
 // 功能：移除玩家事件加载后监听器<br/>
 // 参数个数：1个<br/>
@@ -251,7 +327,7 @@
 // 返回值：旧监听器</span><br/>
 [例] <span class="codelet">let</span> oldfunc = removeAfterActListener(<span class="codestring">'onChat'</span>)
 
-<p>（20）postTick</p>
+<p>（5）postTick</p>
 <span class="zhushi">// 函数名：postTick<br/>
 // 功能：发送一个函数至下一tick运行<br/>
 // 参数个数：1个<br/>
@@ -259,7 +335,7 @@
 // 参数详解：func - 待置入下一tick执行的函数</span><br/>
 [例] postTick(<span class="codelet">function</span> () { <span class="zhushi">/* TODO */</span> })
 
-<p>（21）setCommandDescribe</p>
+<p>（6）setCommandDescribe</p>
 <span class="zhushi">// 函数名：setCommandDescribe<br/>
 // 功能：设置一个全局指令说明<br/>
 // 参数个数：2个<br/>
@@ -269,7 +345,7 @@
 [例] setCommandDescribe(<span class="codestring">'testcase'</span>, 
 <span class="codestring">'这是一个测试用例指令说明'</span>)
 
-<p>（22）runcmd</p>
+<p>（7）runcmd</p>
 <span class="zhushi">// 函数名：runcmd<br/>
 // 功能：执行后台指令<br/>
 // 参数个数：1个<br/>
@@ -278,7 +354,7 @@
 // 返回值：是否正常执行</span><br/>
 [例] <span class="codelet">let</span> r = runcmd(<span class="codestring">'me 你好 js'</span>)
 
-<p>（23）logout</p>
+<p>（8）logout</p>
 <span class="zhushi">// 函数名：logout<br/>
 // 功能：发送一条命令输出消息（可被拦截）<br/>
 // 参数个数：1个<br/>
@@ -286,14 +362,14 @@
 // 参数详解：cmdout - 待发送的命令输出字符串</span><br/>
 [例] logout(<span class="codestring">'执行结果=正确'</span>)
 
-<p>（24）getOnLinePlayers</p>
+<p>（9）getOnLinePlayers</p>
 <span class="zhushi">// 函数名：getOnLinePlayers<br/>
 // 功能：获取在线玩家列表<br/>
 // 参数个数：0个<br/>
 // 返回值：玩家列表的Json字符串</span><br/>
 [例] <span class="codelet">let</span> v = getOnLinePlayers()
 
-<p>（25）getStructure</p>
+<p>（10）getStructure</p>
 <span class="zhushi">// 函数名：getStructure<br/>
 // 功能：获取一个结构<br/>
 // 参数个数：5个<br/>
@@ -305,7 +381,7 @@
 <span class="codestring">'{"x":10, "y":14, "z":10}'</span>, 
 <span class="codelet">false</span>, <span class="codelet">true</span>)
 
-<p>（26）setStructure</p>
+<p>（11）setStructure</p>
 <span class="zhushi">// 函数名：setStructure<br/>
 // 功能：设置一个结构到指定位置<br/>
 // 参数个数：6个<br/>
@@ -317,7 +393,7 @@
 <span class="codelet">true</span>, <span class="codelet">true</span>)<br/>
 （注：旋转类型包含4种有效旋转类型）
 
-<p>（27）setServerMotd</p>
+<p>（12）setServerMotd</p>
 <span class="zhushi">// 函数名：setServerMotd<br/>
 // 功能：设置服务器的显示名信息<br/>
 // 参数个数：2个<br/>
@@ -328,7 +404,7 @@
 [例] <span class="codelet">let</span> r = setServerMotd(<span class="codestring">'本服内容很劲爆内详'</span>, 
 <span class="codelet">true</span>)
 
-<p>（28）JSErunScript</p>
+<p>（13）JSErunScript</p>
 <span class="zhushi">// 函数名：JSErunScript<br/>
 // 功能：使用官方脚本引擎新增一段行为包脚本并执行<br/>
 // 参数个数：2个<br/>
@@ -338,7 +414,7 @@
 [例] JSErunScript(<span class="codestring">'console.log("来自行为包的日志")'</span>, 
 (r)=&gt;{<span class="zhushi">/* 此处r表示是否执行成功 */</span>})
 
-<p>（29）JSEfireCustomEvent</p>
+<p>（14）JSEfireCustomEvent</p>
 <span class="zhushi">// 函数名：JSEfireCustomEvent<br/>
 // 功能：使用官方脚本引擎发送一个自定义事件广播<br/>
 // 参数个数：3个<br/>
@@ -347,7 +423,7 @@
 [例] JSEfireCustomEvent(<span class="codestring">'mytest:testevent'</span>, <span class="codestring">'一个自定义信息'</span>,
 (r)=&gt;{<span class="zhushi">/* 此处r表示是否执行成功 */</span>})
 
-<p>（30）getscoreById</p>
+<p>（15）getscoreById</p>
 <span class="zhushi">// 函数名：getscoreById<br/>
 // 功能：获取指定ID对应于计分板上的数值<br/>
 // 参数个数：2个<br/>
@@ -356,7 +432,7 @@
 // 返回值：获取的目标值，若目标不存在则返回0<br/></span>
 [例] <span class="codelet">let</span> s = getscoreById(1, <span class="codestring">'money'</span>)
 
-<p>（31）setscoreById</p>
+<p>（16）setscoreById</p>
 <span class="zhushi">// 函数名：setscoreById<br/>
 // 功能：设置指定ID对应于计分板上的数值<br/>
 // 参数个数：3个<br/>
@@ -366,14 +442,14 @@
 [例] <span class="codelet">let</span> s = setscoreById(1, 
 <span class="codestring">'money'</span>, 100)
 
-<p>（32）getAllScore</p>
+<p>（17）getAllScore</p>
 <span class="zhushi">// 函数名：getAllScore<br/>
 // 功能：获取所有计分板计分项<br/>
 // 参数个数：0个<br/>
 // 返回值：NBT格式的计分板json字符串<br/></span>
 [例] <span class="codelet">let</span> j = getAllScore()
 
-<p>（33）setAllScore</p>
+<p>（18）setAllScore</p>
 <span class="zhushi">// 函数名：setAllScore<br/>
 // 功能：设置所有计分板计分项<br/>
 // 参数个数：1个<br/>
@@ -383,7 +459,7 @@
 // （备注：设置过程会清空原有数据；特定情况下可能不会立即生效）<br/></span>
 [例] <span class="codelet">let</span> r = setAllScore(fileReadAllText(<span class="codestring">'data.json'</span>))
 
-<p>（34）getMapColors</p>
+<p>（19）getMapColors</p>
 <span class="zhushi">// 函数名：getMapColors<br/>
 // 功能：获取一个指定位置处区块的颜色数据<br/>
 // 参数个数：4个<br/>
@@ -393,7 +469,7 @@
 // （备注：如区块未处于活动状态，可能返回无效颜色数据）<br/></span>
 [例] <span class="codelet">let</span> r = getMapColors(0, 0, 0, 0)
 
-<p>（35）exportPlayersData</p>
+<p>（20）exportPlayersData</p>
 <span class="zhushi">// 函数名：exportPlayersData<br/>
 // 功能：导出地图所有离线玩家数据<br/>
 // 参数个数：0个<br/>
@@ -401,7 +477,7 @@
 // （备注：调用时机在地图初始化完成之后生效）<br/></span>
 [例] <span class="codelet">let</span> d = exportPlayersData()
 
-<p>（36）importPlayersData</p>
+<p>（21）importPlayersData</p>
 <span class="zhushi">// 函数名：importPlayersData<br/>
 // 功能：导入玩家数据至地图<br/>
 // 参数个数：1个<br/>
@@ -413,7 +489,7 @@
 
 <h3><a name="api_t3">3.MC玩家互动相关功能</a></h3>
 
-<p>（37）reNameByUuid</p>
+<p>（1）reNameByUuid</p>
 <span class="zhushi">// 函数名：reNameByUuid<br/>
 // 功能：重命名一个指定的玩家名<br/>
 // 参数个数：2个<br/>
@@ -424,7 +500,7 @@
 [例] <span class="codelet">let</span> r = reNameByUuid(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'请叫我LiuXiaohua'</span>)
 
-<p>（38）getPlayerAbilities</p>
+<p>（2）getPlayerAbilities</p>
 <span class="zhushi">// 函数名：getPlayerAbilities<br/>
 // 功能：获取玩家能力表<br/>
 // 参数个数：1个<br/>
@@ -434,7 +510,7 @@
 [例] <span class="codelet">let</span> a = getPlayerAbilities(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)<br/>
 （注：含总计18种能力值）
 
-<p>（39）setPlayerAbilities</p>
+<p>（3）setPlayerAbilities</p>
 <span class="zhushi">// 函数名：setPlayerAbilities<br/>
 // 功能：设置玩家能力表<br/>
 // 参数个数：2个<br/>
@@ -445,7 +521,7 @@
 [例] <span class="codelet">let</span> r = setPlayerAbilities(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"opencontainers": false}'</span>)
 
-<p>（40）getPlayerAttributes</p>
+<p>（4）getPlayerAttributes</p>
 <span class="zhushi">// 函数名：getPlayerAttributes<br/>
 // 功能：获取玩家属性表<br/>
 // 参数个数：1个<br/>
@@ -455,7 +531,7 @@
 [例] <span class="codelet">let</span> t = getPlayerAttributes(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)<br/>
 （注：总计14种生物属性，含部分有效玩家属性）
 
-<p>（41）setPlayerTempAttributes</p>
+<p>（5）setPlayerTempAttributes</p>
 <span class="zhushi">// 函数名：setPlayerTempAttributes<br/>
 // 功能：设置玩家属性临时值表<br/>
 // 参数个数：2个<br/>
@@ -466,7 +542,7 @@
 [例] <span class="codelet">let</span> r = setPlayerTempAttributes(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"hunger": 10}'</span>)
 
-<p>（42）getPlayerMaxAttributes</p>
+<p>（6）getPlayerMaxAttributes</p>
 <span class="zhushi">// 函数名：getPlayerMaxAttributes<br/>
 // 功能：获取玩家属性上限值表<br/>
 // 参数个数：1个<br/>
@@ -475,7 +551,7 @@
 // 返回值：属性上限值json字符串</span><br/>
 [例] <span class="codelet">let</span> m = getPlayerMaxAttributes(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)
 
-<p>（43）setPlayerMaxAttributes</p>
+<p>（7）setPlayerMaxAttributes</p>
 <span class="zhushi">// 函数名：setPlayerMaxAttributes<br/>
 // 功能：设置玩家属性上限值表<br/>
 // 参数个数：2个<br/>
@@ -486,7 +562,7 @@
 [例] <span class="codelet">let</span> r = setPlayerMaxAttributes(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"maxhealth": 200}'</span>)
 
-<p>（44）getPlayerItems</p>
+<p>（8）getPlayerItems</p>
 <span class="zhushi">// 函数名：getPlayerItems<br/>
 // 功能：获取玩家所有物品列表<br/>
 // 参数个数：1个<br/>
@@ -496,7 +572,7 @@
 [例] <span class="codelet">let</span> t = getPlayerItems(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)<br/>
 （注：玩家物品包括末影箱、装备、副手和背包四项物品的nbt描述型数据列表。nbt被序列化数据类型的tag所描述，总计12种有效tag，所对应值可序列化为json数据，亦可反序列化为nbt）
 
-<p>（45）getPlayerSelectedItem</p>
+<p>（9）getPlayerSelectedItem</p>
 <span class="zhushi">// 函数名：getPlayerSelectedItem<br/>
 // 功能：获取玩家当前选中项信息<br/>
 // 参数个数：1个<br/>
@@ -506,7 +582,7 @@
 [例] <span class="codelet">let</span> i = getPlayerSelectedItem(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)<br/>
 （注：选中项包含选中框所处位置，以及选中物品的nbt描述型数据）
 
-<p>（46）setPlayerItems</p>
+<p>（10）setPlayerItems</p>
 <span class="zhushi">// 函数名：setPlayerItems<br/>
 // 功能：设置玩家所有物品列表<br/>
 // 参数个数：2个<br/>
@@ -517,7 +593,7 @@
 [例] <span class="codelet">let</span> r = setPlayerItems(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"Offhand":{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"Count","cv":{"tt":1,"tv":1}},{"ck":"Damage","cv":{"tt":2,"tv":0}},{"ck":"Name","cv":{"tt":8,"tv":"minecraft:trident"}},{"ck":"tag","cv":{"tt":10,"tv":[{"ck":"ench","cv":{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"id","cv":{"tt":2,"tv":7}},{"ck":"lvl","cv":{"tt":2,"tv":8888}}]}]}}]}}]}]}}'</span>)
 
-<p>（47）addPlayerItemEx</p>
+<p>（11）addPlayerItemEx</p>
 <span class="zhushi">// 函数名：addPlayerItemEx<br/>
 // 功能：增加玩家一个物品<br/>
 // 参数个数：2个<br/>
@@ -528,7 +604,7 @@
 [例] <span class="codelet">let</span> r = addPlayerItemEx(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"tt":10,"tv":[{"ck":"Count","cv":{"tt":1,"tv":1}},{"ck":"Damage","cv":{"tt":2,"tv":0}},{"ck":"Name","cv":{"tt":8,"tv":"minecraft:trident"}},{"ck":"tag","cv":{"tt":10,"tv":[{"ck":"ench","cv":{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"id","cv":{"tt":2,"tv":10}},{"ck":"lvl","cv":{"tt":2,"tv":9999}}]}]}}]}}]}'</span>)
 
-<p>（48）addPlayerItem</p>
+<p>（12）addPlayerItem</p>
 <span class="zhushi">// 函数名：addPlayerItem<br/>
 // 功能：增加玩家一个物品<br/>
 // 参数个数：4个<br/>
@@ -538,7 +614,7 @@
 // （备注：特定条件下可能不会变更游戏内实际物品）</span><br/>
 [例] <span class="codelet">let</span> r = addPlayerItem(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 9, 0, 32)
 
-<p>（49）getPlayerEffects</p>
+<p>（13）getPlayerEffects</p>
 <span class="zhushi">// 函数名：getPlayerEffects<br/>
 // 功能：获取玩家所有效果列表<br/>
 // 参数个数：1个<br/>
@@ -548,7 +624,7 @@
 [例] <span class="codelet">let</span> e = getPlayerEffects(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)<br/>
 （注：效果为nbt描述型数据）
 
-<p>（50）setPlayerEffects</p>
+<p>（14）setPlayerEffects</p>
 <span class="zhushi">// 函数名：setPlayerEffects<br/>
 // 功能：设置玩家所有效果列表<br/>
 // 参数个数：2个<br/>
@@ -558,7 +634,7 @@
 [例] <span class="codelet">let</span> r = setPlayerEffects(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"Ambient","cv":{"tt":1,"tv":0}},{"ck":"Amplifier","cv":{"tt":1,"tv":0}},{"ck":"DisplayOnScreenTextureAnimation","cv":{"tt":1,"tv":0}},{"ck":"Duration","cv":{"tt":3,"tv":3461}},{"ck":"DurationEasy","cv":{"tt":3,"tv":3461}},{"ck":"DurationHard","cv":{"tt":3,"tv":3461}},{"ck":"DurationNormal","cv":{"tt":3,"tv":3461}},{"ck":"Id","cv":{"tt":1,"tv":16}},{"ck":"ShowParticles","cv":{"tt":1,"tv":1}}]}]}'</span>)
 
-<p>（51）setPlayerBossBar</p>
+<p>（15）setPlayerBossBar</p>
 <span class="zhushi">// 函数名：setPlayerBossBar<br/>
 // 功能：设置玩家自定义血条<br/>
 // 参数个数：3个<br/>
@@ -568,7 +644,7 @@
 [例] <span class="codelet">let</span> r = setPlayerBossBar(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'欢迎来到梦之故里'</span>, 1.00)
 
-<p>（52）removePlayerBossBar</p>
+<p>（16）removePlayerBossBar</p>
 <span class="zhushi">// 函数名：removePlayerBossBar<br/>
 // 功能：清除玩家自定义血条<br/>
 // 参数个数：1个<br/>
@@ -577,7 +653,7 @@
 // 返回值：是否清除成功</span><br/>
 [例] <span class="codelet">let</span> r = removePlayerBossBar(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)
 
-<p>（53）selectPlayer</p>
+<p>（17）selectPlayer</p>
 <span class="zhushi">// 函数名：selectPlayer<br/>
 // 功能：查询在线玩家基本信息<br/>
 // 参数个数：1个<br/>
@@ -586,7 +662,7 @@
 // 返回值：玩家基本信息json字符串</span><br/>
 [例] <span class="codelet">let</span> e = selectPlayer(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)
 
-<p>（54）transferserver</p>
+<p>（18）transferserver</p>
 <span class="zhushi">// 函数名：transferserver<br/>
 // 功能：传送玩家至指定服务器<br/>
 // 参数个数：3个<br/>
@@ -596,7 +672,7 @@
 [例] <span class="codelet">let</span> t = transferserver(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'www.xiafox.com'</span>, 19132)
 
-<p>（55）teleport</p>
+<p>（19）teleport</p>
 <span class="zhushi">// 函数名：teleport<br/>
 // 功能：传送玩家至指定坐标和维度<br/>
 // 参数个数：5个<br/>
@@ -605,7 +681,7 @@
 // 返回值：是否传送成功</span><br/>
 [例] <span class="codelet">let</span> t = teleport(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 10, 99, 10, 2)
 
-<p>（56）talkAs</p>
+<p>（20）talkAs</p>
 <span class="zhushi">// 函数名：talkAs<br/>
 // 功能：模拟玩家发送一个文本<br/>
 // 参数个数：2个<br/>
@@ -615,7 +691,7 @@
 [例] <span class="codelet">let</span> t = talkAs(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'你好 js'</span>)
 
-<p>（57）runcmdAs</p>
+<p>（21）runcmdAs</p>
 <span class="zhushi">// 函数名：runcmdAs<br/>
 // 功能：模拟玩家执行一个指令<br/>
 // 参数个数：2个<br/>
@@ -625,7 +701,7 @@
 [例] <span class="codelet">let</span> t = runcmdAs(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'/me 你好 js'</span>)
 
-<p>（58）sendSimpleForm</p>
+<p>（22）sendSimpleForm</p>
 <span class="zhushi">// 函数名：sendSimpleForm<br/>
 // 功能：向指定的玩家发送一个简单表单<br/>
 // 参数个数：4个<br/>
@@ -636,7 +712,7 @@
 <span class="codestring">'致命选项'</span>, <span class="codestring">'请选择：'</span>, 
 <span class="codestring">'["生存","死亡","求助"]'</span>)
 
-<p>（59）sendModalForm</p>
+<p>（23）sendModalForm</p>
 <span class="zhushi">// 函数名：sendModalForm<br/>
 // 功能：向指定的玩家发送一个模式对话框<br/>
 // 参数个数：5个<br/>
@@ -647,7 +723,7 @@
 <span class="codestring">'没有第三个选项'</span>, <span class="codestring">'请选择：'</span>, 
 <span class="codestring">'生存'</span>, <span class="codestring">'死亡'</span>)
 
-<p>（60）sendCustomForm</p>
+<p>（24）sendCustomForm</p>
 <span class="zhushi">// 函数名：sendCustomForm<br/>
 // 功能：向指定的玩家发送一个自定义表单<br/>
 // 参数个数：2个<br/>
@@ -657,7 +733,7 @@
 [例] <span class="codelet">let</span> fid = sendCustomForm(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="ctitle1">'{"content":[{"type":"label","text":"这是一个文本标签"},{"placeholder":"水印文本","default":"","type":"input","text":""},{"default":true,"type":"toggle","text":"开关~或许是吧"},{"min":0.0,"max":10.0,"step":2.0,"default":3.0,"type":"slider","text":"游标滑块！？"},{"default":1,"steps":["Step 1","Step 2","Step 3"],"type":"step_slider","text":"矩阵滑块？!"},{"default":1,"options":["Option 1","Option 2","Option 3"],"type":"dropdown","text":"如你所见，下拉框"}], "type":"custom_form","title":"这是一个自定义窗体"}'</span>)
 
-<p>（61）releaseForm</p>
+<p>（25）releaseForm</p>
 <span class="zhushi">// 函数名：releaseForm<br/>
 // 功能：放弃一个表单<br/>
 // 参数个数：1个<br/>
@@ -667,7 +743,7 @@
 //（备注：已被接收到的表单会被自动释放）</span><br/>
 [例] <span class="codelet">let</span> r = releaseForm(1000)
 
-<p>（62）setPlayerSidebar</p>
+<p>（26）setPlayerSidebar</p>
 <span class="zhushi">// 函数名：setPlayerSidebar<br/>
 // 功能：设置玩家自定义侧边栏临时计分板<br/>
 // 参数个数：3个<br/>
@@ -678,7 +754,7 @@
 </span>[例] <span class="codelet">let</span> r = setPlayerSidebar(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'自定义侧边栏'</span>, <span class="codestring">'["第一行", "第二行", "我在哪行?    "]'</span>)<br/>
 
-<p>（63）removePlayerSidebar</p>
+<p>（27）removePlayerSidebar</p>
 <span class="zhushi">// 函数名：removePlayerSidebar<br/>
 // 功能：清除玩家自定义侧边栏<br/>
 // 参数个数：1个<br/>
@@ -687,7 +763,7 @@
 // 返回值：是否清除成功<br/>
 </span>[例] <span class="codelet">let</span> r = removePlayerSidebar(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)
 
-<p>（64）getPlayerPermissionAndGametype</p>
+<p>（28）getPlayerPermissionAndGametype</p>
 <span class="zhushi">// 函数名：getPlayerPermissionAndGametype<br/>
 // 功能：获取玩家权限与游戏模式<br/>
 // 参数个数：1个<br/>
@@ -697,7 +773,7 @@
 </span>[例] <span class="codelet">let</span> t = getPlayerPermissionAndGametype(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)<br/>
 （注：OP命令等级包含6个有效等级[op-permission-level]，权限包含3种有效权限[permissions.json]，游戏模式包含5种有效模式[gamemode]）
 
-<p>（65）setPlayerPermissionAndGametype</p>
+<p>（29）setPlayerPermissionAndGametype</p>
 <span class="zhushi">// 函数名：setPlayerPermissionAndGametype<br/>
 // 功能：设置玩家权限与游戏模式<br/>
 // 参数个数：2个<br/>
@@ -708,7 +784,7 @@
 [例] <span class="codelet">let</span> r = setPlayerPermissionAndGametype(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'{"gametype" : 3}'</span>)
 
-<p>（66）disconnectClient</p>
+<p>（30）disconnectClient</p>
 <span class="zhushi">// 函数名：disconnectClient<br/>
 // 功能：断开一个玩家的连接<br/>
 // 参数个数：2个<br/>
@@ -718,7 +794,7 @@
 [例] <span class="codelet">let</span> r = disconnectClient(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'这个消息来自测试'</span>)
 
-<p>（67）sendText</p>
+<p>（31）sendText</p>
 <span class="zhushi">// 函数名：sendText<br/>
 // 功能：发送一个原始显示文本给玩家<br/>
 // 参数个数：2个<br/>
@@ -728,7 +804,7 @@
 [例] <span class="codelet">let</span> r = sendText(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'这个文本来自测试'</span>)
 
-<p>（68）getscoreboard</p>
+<p>（32）getscoreboard</p>
 <span class="zhushi">// 函数名：getscoreboard<br/>
 // 功能：获取指定玩家指定计分板上的数值<br/>
 // 参数个数：2个<br/>
@@ -738,7 +814,7 @@
 [例] <span class="codelet">let</span> m = getscoreboard(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'money'</span>)
 
-<p>（69）setscoreboard</p>
+<p>（33）setscoreboard</p>
 <span class="zhushi">// 函数名：setscoreboard<br/>
 // 功能：设置指定玩家指定计分板上的数值<br/>
 // 参数个数：3个<br/>
@@ -749,7 +825,7 @@
 [例] <span class="codelet">let</span> t = setscoreboard(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
 <span class="codestring">'money'</span>, 3)
 
-<p>（70）getPlayerIP</p>
+<p>（34）getPlayerIP</p>
 <span class="zhushi">// 函数名：getPlayerIP<br/>
 // 功能：获取玩家IP<br/>
 // 参数个数：1个<br/>
