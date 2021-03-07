@@ -37,9 +37,13 @@ namespace BDSJSR2
         delegate bool FILEWRITELINE(object f, object c);
         delegate bool FILEEXISTS(object f);
         delegate bool FILEDELETE(object f);
-        delegate bool FILECOPY(object f, object t, object o);
+        delegate bool FILECOPY(object f, object t);
         delegate bool FILEMOVE(object f, object t);
+        delegate bool DIRCREATE(object d);
         delegate bool DIREXISTS(object d);
+        delegate bool DIRDELETE(object d);
+        delegate bool DIRMOVE(object f, object t);
+
         delegate string TIMENOW();
         delegate void SETSHAREDATA(object key, object o);
         delegate object GETSHAREDATA(object key);
@@ -125,11 +129,11 @@ namespace BDSJSR2
         /// <summary>
         /// 复制文件
         /// </summary>
-        static FILECOPY cs_fileCopy = (f, t, o) =>
+        static FILECOPY cs_fileCopy = (f, t) =>
         {
             try
             {
-                File.Copy(JSString(f), JSString(t),bool.Parse(JSString(o)));
+                File.Copy(JSString(f), JSString(t));                                                                                            
                 return true;
             }
             catch { }
@@ -149,13 +153,55 @@ namespace BDSJSR2
             return false;
         };
         /// <summary>
-        /// 判断目录是否存在
+        /// 创建文件夹
+        /// </summary>
+        static DIRCREATE cs_dirCreate = (d) =>
+        {
+            DirectoryInfo dir = null;
+            if (d != null)
+            {
+                try
+                {
+                    dir = Directory.CreateDirectory(JSString(d));
+                }
+                catch { }
+            }
+            return dir != null;
+        };
+        /// <summary>
+        /// 判断文件夹是否存在
         /// </summary>
         static DIREXISTS cs_dirExists = (d) =>
         {
             try
             {
                 return Directory.Exists(JSString(d));
+            }
+            catch { }
+            return false;
+        };
+        /// <summary>
+        /// 删除指定文件夹
+        /// </summary>
+        static DIRDELETE cs_dirDelete = (d) =>
+        {
+            try
+            {
+                Directory.Delete(JSString(d),true);
+                return true;
+            }
+            catch { }
+            return false;
+        };
+        /// <summary>
+        /// 移动文件夹
+        /// </summary>
+        static DIRMOVE cs_dirMove = (f, t) =>
+        {
+            try
+            {
+                Directory.Move(JSString(f), JSString(t));
+                return true;
             }
             catch { }
             return false;
@@ -303,15 +349,7 @@ namespace BDSJSR2
         /// </summary>
         static MKDIR cs_mkdir = (dirname) =>
         {
-            DirectoryInfo dir = null;
-            if (dirname != null)
-            {
-                try
-                {
-                    dir = Directory.CreateDirectory(JSString(dirname));
-                } catch { }
-            }
-            return dir != null;
+            return cs_dirCreate(dirname);
         };
         /// <summary>
         /// 获取工作目录
@@ -1119,6 +1157,7 @@ namespace BDSJSR2
         {
             return mapi.getscoreboard(JSString(uuid), JSString(a));
         };
+
         /// <summary>
         /// 设置指定玩家指定计分板上的数值
         /// </summary>
@@ -1165,7 +1204,10 @@ namespace BDSJSR2
             eng.AddHostObject("fileDelete", cs_fileDelete);
             eng.AddHostObject("fileCopy", cs_fileCopy);
             eng.AddHostObject("fileMove", cs_fileMove);
+            eng.AddHostObject("dirCreate", cs_dirCreate);
             eng.AddHostObject("dirExists", cs_dirExists);
+            eng.AddHostObject("dirDelete", cs_dirDelete);
+            eng.AddHostObject("dirMove", cs_dirMove);
 
             eng.AddHostObject("TimeNow", cs_TimeNow);
             eng.AddHostObject("setShareData", cs_setShareData);
