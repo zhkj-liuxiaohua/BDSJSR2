@@ -61,7 +61,7 @@ https://www.w3school.com.cn/jsref/index.asp
 // 参数类型：字符串，字符串
 // 参数详解：from - 待复制的文件路径（相对BDS位置），to - 目标位置（相对BDS位置）
 // 返回值：True - 复制文件成功，False - 复制失败
-[例] let w = fileCopy('jslog.txt', '.\\log\\output.log)
+[例] let w = fileCopy('jslog.txt', '.\\log\\output.log')
 
 （7）fileMove
 // 函数名：fileMove
@@ -70,7 +70,7 @@ https://www.w3school.com.cn/jsref/index.asp
 // 参数类型：字符串，字符串
 // 参数详解：from - 待移动的文件路径（相对BDS位置），to - 目标位置（相对BDS位置）
 // 返回值：True - 移动文件成功，False - 移动失败
-[例] let w = fileMove('jslog.txt', '.\\log\\output.log)
+[例] let w = fileMove('jslog.txt', '.\\log\\output.log')
 
 （8）dirCreate
 // 函数名：dirCreate
@@ -106,9 +106,18 @@ https://www.w3school.com.cn/jsref/index.asp
 // 参数类型：字符串，字符串
 // 参数详解：from - 待移动的文件夹路径（相对BDS位置），to - 目标位置（相对BDS位置）
 // 返回值：True - 移动文件夹成功，False - 移动失败
-[例] let w = dirMove('C:\\config', 'C:\\bak\\conf)
+[例] let w = dirMove('C:\\config', 'C:\\bak\\conf')
 
-（12）log
+（12）systemCmd
+// 函数名：systemCmd
+// 功能：调用系统命令提示符执行系统命令
+// 参数个数：2个
+// 参数类型：字符串，函数对象
+// 参数详解：cmd - 执行的命令，callback - 进程退出后的回调（包含exitcode、执行时间等）
+// 返回值：True - 执行成功，False - 执行失败
+[例] let w = systemCmd('del release-notes.txt', (e)=>{log(e);})
+
+（13）log
 // 函数名：log
 // 功能：标准输出流打印消息
 // 参数个数：1个
@@ -116,14 +125,14 @@ https://www.w3school.com.cn/jsref/index.asp
 // 参数详解：待输出至标准流字符串
 [例] log('你好 js')
 
-（13）TimeNow
+（14）TimeNow
 // 函数名：TimeNow
 // 功能：返回一个当前时间的字符串
 // 参数个数：0个
 // 返回值：字符串
 [例] let t = TimeNow()
 
-（14）setShareData
+（15）setShareData
 // 函数名：setShareData
 // 功能：存入共享数据
 // 参数个数：2个
@@ -131,7 +140,7 @@ https://www.w3school.com.cn/jsref/index.asp
 // 参数详解：key - 关键字，value - 共享数据
 [例] setShareData('TEXT_HELLO', '你好 js')
 
-（15）getShareData
+（16）getShareData
 // 函数名：getShareData
 // 功能：获取共享数据
 // 参数个数：1个
@@ -140,7 +149,7 @@ https://www.w3school.com.cn/jsref/index.asp
 // 返回值：共享数据
 [例] let t = getShareData('TEXT_HELLO')
 
-（16）removeShareData
+（17）removeShareData
 // 函数名：removeShareData
 // 功能：删除共享数据
 // 参数个数：1个
@@ -149,7 +158,7 @@ https://www.w3school.com.cn/jsref/index.asp
 // 返回值：旧数据
 [例] let oldt = removeShareData('TEXT_HELLO')
 
-（17）request
+（18）request
 // 函数名：request
 // 功能：发起一个远程HTTP请求
 // 参数个数：4个
@@ -158,7 +167,7 @@ https://www.w3school.com.cn/jsref/index.asp
 [例] request('http://www.baidu.com', 'GET', 'name=act', function (e) { })
 （注：mode可使用GET和POST两种方式）
 
-（18）setTimeout
+（19）setTimeout
 // 函数名：setTimeout
 // 功能：延时执行一条指令
 // 参数个数：2个
@@ -166,7 +175,7 @@ https://www.w3school.com.cn/jsref/index.asp
 // 参数详解：code - 待延时执行的指令字符串/函数对象，millisec - 延时毫秒数
 [例] setTimeout('log("你好 js")', 1000)
 
-（19）mkdir (同dirCreate)
+（20）mkdir (同dirCreate)
 // 函数名：mkdir
 // 功能：创建文件夹
 // 参数个数：1个
@@ -175,14 +184,14 @@ https://www.w3school.com.cn/jsref/index.asp
 // 返回值：True - 目录创建成功/已存在，False - 创建失败
 [例] let r = mkdir('C:\\newdir')
 
-（20）getWorkingPath
+（21）getWorkingPath
 // 函数名：getWorkingPath
 // 功能：获取工作目录
 // 参数个数：0个
 // 返回值：当前应用程序的工作目录
 [例] let d = getWorkingPath()
 
-（21）startLocalHttpListen
+（22）startLocalHttpListen
 // 函数名：startLocalHttpListen
 // 功能：开启一个本地http监听
 // 参数个数：2个
@@ -192,7 +201,7 @@ https://www.w3school.com.cn/jsref/index.asp
 // （备注：仅限本地服务使用localhost或127.0.0.1访问）
 [例] let h = startLocalHttpListen(8081, function(req){ return 'OK' })
 
-（22）stopLocalHttpListen
+（23）stopLocalHttpListen
 // 函数名：stopLocalHttpListen
 // 功能：关闭一个http监听
 // 参数个数：1个
@@ -201,7 +210,7 @@ https://www.w3school.com.cn/jsref/index.asp
 // 返回值：是否关闭成功
 [例] let r = stopLocalHttpListen(12345678)
 
-（23）resetLocalHttpListener
+（24）resetLocalHttpListener
 // 函数名：resetLocalHttpListener
 // 功能：重设一个监听器的处理函数
 // 参数个数：2个
