@@ -64,7 +64,7 @@ namespace BDSJSR2
         delegate bool DIREXISTS(object d);
         delegate bool DIRDELETE(object d);
         delegate bool DIRMOVE(object f, object t);
-        delegate bool SYSTEMCMD(object f, object t);
+        delegate bool SYSTEMCMD(object f, ScriptObject t);
 
         delegate string TIMENOW();
         delegate void SETSHAREDATA(object key, object o);
