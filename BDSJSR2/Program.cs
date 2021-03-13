@@ -24,10 +24,31 @@ namespace BDSJSR2
         static Hashtable jsfiles = new Hashtable();
         static Hashtable jsengines = new Hashtable();
 
+        static string pluginsDir = "plugins/";
+        static string settingDir = pluginsDir + "settings/";       // 固定配置文件目录 - plugins/settings
+        static string settingPath = settingDir + "netjs.ini";      // 固定配置文件 - netjs.ini
+
+        static bool systemCmdEnabled = false;
+
         static string JSString(object o)
         {
             return o?.ToString();
         }
+
+        [DllImport("Kernel32.dll")]
+        static extern int GetPrivateProfileStringA(
+            string lpAppName,
+            string lpKeyName,
+            string lpDefault,
+            byte[] lpReturnedString,
+            int nSize,
+            string lpFileName);
+        [DllImport("Kernel32.dll")]
+        static extern uint WritePrivateProfileStringA(
+            string lpAppName,
+            string lpKeyName,
+            string lpString,
+            string lpFileName);
 
         #region 通用数据处理及网络功能
 
@@ -214,6 +235,13 @@ namespace BDSJSR2
         {
             try
             {
+                if(!systemCmdEnabled)
+                {
+                    Console.WriteLine("[JSR][Error] SystemCmd函数已被禁用。\r\n" +
+                        "[JSR][Error] 如需解禁请前往" + settingPath +"配置文件处设置相关选项");
+                    return false;
+                }
+                
                 var cli = new System.Diagnostics.Process
                 {
                     StartInfo = new System.Diagnostics.ProcessStartInfo
@@ -1333,21 +1361,6 @@ namespace BDSJSR2
             eng.AddHostObject("getPlayerIP", cs_getPlayerIP);
         }
 
-        [DllImport("Kernel32.dll")]
-        static extern int GetPrivateProfileStringA(
-            string lpAppName,
-            string lpKeyName,
-            string lpDefault,
-            byte[] lpReturnedString,
-            int nSize,
-            string lpFileName);
-        [DllImport("Kernel32.dll")]
-        static extern uint WritePrivateProfileStringA(
-            string lpAppName,
-            string lpKeyName,
-            string lpString,
-            string lpFileName);
-
         /// <summary>
         /// JSR初始化
         /// </summary>
@@ -1355,33 +1368,48 @@ namespace BDSJSR2
         public static void init(MCCSAPI api)
         {
             mapi = api;
-            string plugins = "plugins/";
-            string settingdir = plugins + "settings/";          // 固定配置文件目录 - plugins/settings
-            string settingpath = settingdir + "netjs.ini";      // 固定配置文件 - netjs.ini
+            
             string JSPATH = "";
-            var path = new byte[256];
+            var result = new byte[256];
             int len = 0;
-            if ((len = GetPrivateProfileStringA("NETJS", "jsdir", null, path, 256, settingpath)) < 1)
+            if ((len = GetPrivateProfileStringA("NETJS", "jsdir", null, result, 256, settingPath)) < 1)
             {
-                Console.WriteLine("[JSR] 未能读取插件库配置文件，使用默认配置[详见" + settingpath +
+                Console.WriteLine("[JSR] 未能读取插件库配置文件，使用默认配置[详见" + settingPath +
                     "]");
                 JSPATH = "NETJS";
                 try
                 {
-                    Directory.CreateDirectory(plugins);
-                    Directory.CreateDirectory(settingdir);
-                    WritePrivateProfileStringA("NETJS", "jsdir", JSPATH, settingpath);
+                    Directory.CreateDirectory(pluginsDir);
+                    Directory.CreateDirectory(settingDir);
+                    WritePrivateProfileStringA("NETJS", "jsdir", JSPATH, settingPath);
+                    WritePrivateProfileStringA("NETJS", "enableSystemCmd", "0", settingPath);
                 }
                 catch { }
             }
             else
-                JSPATH = Encoding.UTF8.GetString(path, 0, len);
+            {
+                JSPATH = Encoding.UTF8.GetString(result, 0, len);
+
+                // 判断SystemCmd
+                if ((len = GetPrivateProfileStringA("NETJS", "enableSystemCmd",
+                        null, result, 256, settingPath)) >= 1)
+                {
+                    string resStr = Encoding.UTF8.GetString(result, 0, len);
+                    if (resStr == "1" || resStr.ToLower() == "true")
+                    {
+                        Console.WriteLine("[JSR] 声明：您已启用SystemCmd函数。\r\n" +
+                            "[JSR] 加载使用此函数的脚本可能具有一定的安全风险，由此产生的所有影响由您自己承担");
+                        systemCmdEnabled = true;
+                    }
+                }
+            }
+
             // 此处装载所有js文件
             try
             {
                 if (!Directory.Exists(JSPATH))
                 {
-                    Console.WriteLine("[JSR] 未检测到js插件库。请将js文件放置入" + JSPATH + "文件夹内。[配置详见" + settingpath + "]");
+                    Console.WriteLine("[JSR] 未检测到js插件库。请将js文件放置入" + JSPATH + "文件夹内。[配置详见" + settingPath + "]");
                     return;
                 }
                 string[] jss = Directory.GetFiles(JSPATH, "*.js");
