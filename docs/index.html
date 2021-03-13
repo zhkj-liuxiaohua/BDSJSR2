@@ -86,7 +86,7 @@
 // 参数类型：字符串，字符串<br/>
 // 参数详解：fname - 文件路径（相对BDS位置），content - 文本内容<br/>
 // 返回值：是否写成功</span><br/>
-[例] <span class="codelet">let</span> w = fileWriteAllText(<span class="codestring">'jslog.txt'</span>, 
+[例] <span class="codelet">let</span> w = fileWriteAllText(<span class="codestring">'jslog.txt'</span>,
 <span class="codestring">'测试字符'</span>)
 
 <p>（3）fileWriteLine</p>
@@ -96,7 +96,7 @@
 // 参数类型：字符串，字符串<br/>
 // 参数详解：fname - 文件路径（相对BDS位置），content - 追加内容<br/>
 // 返回值：是否写成功</span><br/>
-[例] <span class="codelet">let</span> w = fileWriteLine(<span class="codestring">'jslog.txt'</span>, 
+[例] <span class="codelet">let</span> w = fileWriteLine(<span class="codestring">'jslog.txt'</span>,
 <span class="codestring">'下一行测试字符'</span>)
 
 <p>（4）fileExists</p>
@@ -124,7 +124,7 @@
 // 参数类型：字符串，字符串<br/>
 // 参数详解：from - 待复制的文件路径（相对BDS位置），to - 目标位置（相对BDS位置）<br/>
 // 返回值：True - 复制文件成功，False - 复制失败</span><br/>
-[例] <span class="codelet">let</span> w = fileCopy(<span class="codestring">'jslog.txt'</span>, 
+[例] <span class="codelet">let</span> w = fileCopy(<span class="codestring">'jslog.txt'</span>,
 <span class="codestring">'.\\log\\output.log</span>)
 
 <p>（7）fileMove</p>
@@ -134,7 +134,7 @@
 // 参数类型：字符串，字符串<br/>
 // 参数详解：from - 待移动的文件路径（相对BDS位置），to - 目标位置（相对BDS位置）<br/>
 // 返回值：True - 移动文件成功，False - 移动失败</span><br/>
-[例] <span class="codelet">let</span> w = fileMove(<span class="codestring">'jslog.txt'</span>, 
+[例] <span class="codelet">let</span> w = fileMove(<span class="codestring">'jslog.txt'</span>,
 <span class="codestring">'.\\log\\output.log</span>)
 
 <p>（8）dirCreate</p>
@@ -172,7 +172,7 @@
 // 参数类型：字符串，字符串<br/>
 // 参数详解：from - 待移动的文件夹路径（相对BDS位置），to - 目标位置（相对BDS位置）<br/>
 // 返回值：True - 移动文件夹成功，False - 移动失败</span><br/>
-[例] <span class="codelet">let</span> w = dirMove(<span class="codestring">'C:\\config'</span>, 
+[例] <span class="codelet">let</span> w = dirMove(<span class="codestring">'C:\\config'</span>,
 <span class="codestring">'C:\\bak\\conf</span>)
 
 <p>（12）systemCmd</p>
@@ -205,7 +205,7 @@
 // 参数个数：2个<br/>
 // 参数类型：字符串，数据/函数对象<br/>
 // 参数详解：key - 关键字，value - 共享数据</span><br/>
-[例] setShareData(<span class="codestring">'TEXT_HELLO'</span>, 
+[例] setShareData(<span class="codestring">'TEXT_HELLO'</span>,
 <span class="codestring">'你好 js'</span>)
 
 <p>（16）getShareData</p>
@@ -232,8 +232,8 @@
 // 参数个数：4个<br/>
 // 参数类型：字符串，字符串，字符串，函数对象<br/>
 // 参数详解：urlpath - 远程接口路径，mode - 访问方式，params - 附加数据，func - 获取结果回调</span><br/>
-[例] request(<span class="codestring">'http://www.baidu.com'</span>, 
-<span class="codestring">'GET'</span>, <span class="codestring">'name=act'</span>, 
+[例] request(<span class="codestring">'http://www.baidu.com'</span>,
+<span class="codestring">'GET'</span>, <span class="codestring">'name=act'</span>,
 <span class="codelet">function</span> (e) { })<br/>
 （注：mode可使用GET和POST两种方式）
 
@@ -247,7 +247,27 @@
 </span>
 [例] setTimeout(<span class="codestring">'log("你好 js")'</span>, 1000)
 
-<p>（20）mkdir (同dirCreate)</p>
+<p>（20）setInterval</p>
+<span class="zhushi">
+// 函数名：setInterval<br/>
+// 功能：计时器-循环执行一条指令<br/>
+// 参数个数：2个<br/>
+// 参数类型：字符串/函数，整型<br/>
+// 参数详解：code - 循环时执行的指令字符串/函数对象，millisec - 延时毫秒数<br/>
+</span>
+[例] setInterval(<span class="codestring">'log("你好 js")'</span>, 1000)
+
+<p>（21）clearInterval</p>
+<span class="zhushi">
+// 函数名：clearInterval<br/>
+// 功能：延时执行一条指令<br/>
+// 参数个数：1个<br/>
+// 参数类型：整型<br/>
+// 参数详解：id - 计时器返回的id<br/>
+</span>
+[例] clearInterval(id)
+
+<p>（22）mkdir (同dirCreate)</p>
 <span class="zhushi">
 // 函数名：mkdir<br/>
 // 功能：创建文件夹<br/>
@@ -257,7 +277,7 @@
 // 返回值：True - 目录创建成功/已存在，False - 创建失败</span><br/>
 [例] <span class="codelet">let</span> r = mkdir(<span class="codestring">'C:\\newdir'</span>)
 
-<p>（21）getWorkingPath</p>
+<p>（23）getWorkingPath</p>
 <span class="zhushi">
 // 函数名：getWorkingPath<br/>
 // 功能：获取工作目录<br/>
@@ -265,7 +285,7 @@
 // 返回值：当前应用程序的工作目录</span><br/>
 [例] <span class="codelet">let</span> d = getWorkingPath()
 
-<p>（22）startLocalHttpListen</p>
+<p>（24）startLocalHttpListen</p>
 <span class="zhushi">
 // 函数名：startLocalHttpListen<br/>
 // 功能：开启一个本地http监听<br/>
@@ -274,10 +294,10 @@
 // 参数详解：port - 待监听的端口，func - HTTP监听处理函数(参数为request请求信息，回传为返回response内容文本)<br/>
 // 返回值：开启成功将为监听器ID，开启失败则为-1<br/>
 // （备注：仅限本地服务使用localhost或127.0.0.1访问）<br/></span>
-[例] <span class="codelet">let</span> h = startLocalHttpListen(8081, 
+[例] <span class="codelet">let</span> h = startLocalHttpListen(8081,
 <span class="codelet">function</span>(req){ return <span class="codestring">'OK'</span> })
 
-<p>（23）stopLocalHttpListen</p>
+<p>（25）stopLocalHttpListen</p>
 <span class="zhushi">
 // 函数名：stopLocalHttpListen<br/>
 // 功能：关闭一个http监听<br/>
@@ -287,7 +307,7 @@
 // 返回值：是否关闭成功<br/></span>
 [例] <span class="codelet">let</span> r = stopLocalHttpListen(12345678)
 
-<p>（24）resetLocalHttpListener</p>
+<p>（26）resetLocalHttpListener</p>
 <span class="zhushi">
 // 函数名：resetLocalHttpListener<br/>
 // 功能：重设一个监听器的处理函数<br/>
@@ -295,7 +315,7 @@
 // 参数类型：整型，函数<br/>
 // 参数详解：id - 待重设方法的http监听器ID，func - 新的监听处理函数<br/>
 // 返回值：是否重设成功<br/></span>
-[例] <span class="codelet">let</span> r = resetLocalHttpListener(12345678, 
+[例] <span class="codelet">let</span> r = resetLocalHttpListener(12345678,
 <span class="codelet">function</span>(req){ return <span class="codestring">'FAIL'</span> })
 
 <h3><a name="api_t2">2.MC核心玩法相关功能</a></h3>
@@ -306,7 +326,7 @@
 // 参数个数：2个<br/>
 // 参数类型：字符串，函数对象<br/>
 // 参数详解：key - 注册用关键字，func - 供事件触发时的回调函数对象</span><br/>
-[例] addBeforeActListener(<span class="codestring">'onChat'</span>, 
+[例] addBeforeActListener(<span class="codestring">'onChat'</span>,
 <span class="codelet">function</span> (e) { log(e) })
 
 <p>（2）removeBeforeActListener</p>
@@ -324,7 +344,7 @@
 // 参数个数：2个<br/>
 // 参数类型：字符串，函数对象<br/>
 // 参数详解：key - 注册用关键字，func - 供事件触发时的回调函数对象</span><br/>
-[例] addAfterActListener(<span class="codestring">'onChat'</span>, 
+[例] addAfterActListener(<span class="codestring">'onChat'</span>,
 <span class="codelet">function</span> (e) { log(e) })
 
 <p>（4）removeAfterActListener</p>
@@ -351,7 +371,7 @@
 // 参数类型：字符串，字符串<br/>
 // 参数详解：cmd - 命令，description - 命令说明<br/>
 // 备注：延期注册的情况，可能不会改变客户端界面</span><br/>
-[例] setCommandDescribe(<span class="codestring">'testcase'</span>, 
+[例] setCommandDescribe(<span class="codestring">'testcase'</span>,
 <span class="codestring">'这是一个测试用例指令说明'</span>)
 
 <p>（7）runcmd</p>
@@ -385,9 +405,9 @@
 // 参数类型：整型，字符串，字符串，布尔型，布尔型<br/>
 // 参数详解：dimensionid - 地图维度，posa - 坐标JSON字符串，posb - 坐标JSON字符串，exent - 是否导出实体，exblk - 是否导出方块<br/>
 // 返回值：结构json字符串</span><br/>
-[例] <span class="codelet">let</span> d = getStructure(0, 
-<span class="codestring">'{"x":0, "y":4, "z":0}'</span>, 
-<span class="codestring">'{"x":10, "y":14, "z":10}'</span>, 
+[例] <span class="codelet">let</span> d = getStructure(0,
+<span class="codestring">'{"x":0, "y":4, "z":0}'</span>,
+<span class="codestring">'{"x":10, "y":14, "z":10}'</span>,
 <span class="codelet">false</span>, <span class="codelet">true</span>)
 
 <p>（11）setStructure</p>
@@ -397,8 +417,8 @@
 // 参数类型：字符串，整型，字符串，整型，布尔型，布尔型<br/>
 // 参数详解：strnbt - 结构JSON字符串，dimensionid - 地图维度，posa - 起始点坐标JSON字符串，rot - 旋转类型，exent - 是否导入实体，exblk - 是否导入方块<br/>
 // 返回值：是否设置成功</span><br/>
-[例] <span class="codelet">let</span> r = setStructure(fileReadAllText(<span class="codestring">'data.json'</span>), 0, 
-<span class="codestring">'{"x":0, "y":4, "z":0}'</span>, 0, 
+[例] <span class="codelet">let</span> r = setStructure(fileReadAllText(<span class="codestring">'data.json'</span>), 0,
+<span class="codestring">'{"x":0, "y":4, "z":0}'</span>, 0,
 <span class="codelet">true</span>, <span class="codelet">true</span>)<br/>
 （注：旋转类型包含4种有效旋转类型）
 
@@ -410,7 +430,7 @@
 // 参数详解：motd - 新服务器显示名信息，isShow - 是否公开显示<br/>
 // 返回值：是否设置成功<br/>
 // （备注：服务器名称加载时机在地图完成载入之后）<br/></span>
-[例] <span class="codelet">let</span> r = setServerMotd(<span class="codestring">'本服内容很劲爆内详'</span>, 
+[例] <span class="codelet">let</span> r = setServerMotd(<span class="codestring">'本服内容很劲爆内详'</span>,
 <span class="codelet">true</span>)
 
 <p>（13）JSErunScript</p>
@@ -420,7 +440,7 @@
 // 参数类型：字符串，函数<br/>
 // 参数详解：js - 脚本文本，cb - 执行结果回调<br/>
 // （备注：每次调用都会新增脚本环境，请避免多次重复调用此方法）<br/></span>
-[例] JSErunScript(<span class="codestring">'console.log("来自行为包的日志")'</span>, 
+[例] JSErunScript(<span class="codestring">'console.log("来自行为包的日志")'</span>,
 (r)=&gt;{<span class="zhushi">/* 此处r表示是否执行成功 */</span>})
 
 <p>（14）JSEfireCustomEvent</p>
@@ -448,7 +468,7 @@
 // 参数类型：长整型，字符串，整型<br/>
 // 参数详解：id - 离线计分板的ID，objname - 计分板登记的名称（若不存在则自动添加），count - 待设置的值<br/>
 // 返回值：设置后的目标值，若未成功则返回0<br/></span>
-[例] <span class="codelet">let</span> s = setscoreById(1, 
+[例] <span class="codelet">let</span> s = setscoreById(1,
 <span class="codestring">'money'</span>, 100)
 
 <p>（17）getAllScore</p>
@@ -506,7 +526,7 @@
 // 参数详解：uuid - 在线玩家的uuid字符串，newName - 新的名称<br/>
 // 返回值：是否命名成功<br/>
 // （备注：该函数可能不会变更客户端实际显示名）</span><br/>
-[例] <span class="codelet">let</span> r = reNameByUuid(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> r = reNameByUuid(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'请叫我LiuXiaohua'</span>)
 
 <p>（2）getPlayerAbilities</p>
@@ -527,7 +547,7 @@
 // 参数详解：uuid - 在线玩家的uuid字符串，newAbilities - 新能力json数据字符串<br/>
 // 返回值：是否设置成功<br/>
 // （备注：该函数可能不会变更客户端实际显示能力）</span><br/>
-[例] <span class="codelet">let</span> r = setPlayerAbilities(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> r = setPlayerAbilities(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'{"opencontainers": false}'</span>)
 
 <p>（4）getPlayerAttributes</p>
@@ -548,7 +568,7 @@
 // 参数详解：uuid - 在线玩家的uuid字符串，newTempAttributes - 新属性临时值json数据字符串<br/>
 // 返回值：是否设置成功<br/>
 // （备注：该函数可能不会变更客户端实际显示值）</span><br/>
-[例] <span class="codelet">let</span> r = setPlayerTempAttributes(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> r = setPlayerTempAttributes(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'{"hunger": 10}'</span>)
 
 <p>（6）getPlayerMaxAttributes</p>
@@ -568,7 +588,7 @@
 // 参数详解：uuid - 在线玩家的uuid字符串，newMaxAttributes - 新属性上限值json数据字符串<br/>
 // 返回值：是否设置成功<br/>
 // （备注：该函数可能不会变更客户端实际显示值）</span><br/>
-[例] <span class="codelet">let</span> r = setPlayerMaxAttributes(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> r = setPlayerMaxAttributes(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'{"maxhealth": 200}'</span>)
 
 <p>（8）getPlayerItems</p>
@@ -599,7 +619,7 @@
 // 参数详解：uuid - 在线玩家的uuid字符串，newItems - 新物品列表json数据字符串<br/>
 // 返回值：是否设置成功<br/>
 // （备注：特定条件下可能不会变更游戏内实际物品）</span><br/>
-[例] <span class="codelet">let</span> r = setPlayerItems(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> r = setPlayerItems(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'{"Offhand":{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"Count","cv":{"tt":1,"tv":1}},{"ck":"Damage","cv":{"tt":2,"tv":0}},{"ck":"Name","cv":{"tt":8,"tv":"minecraft:trident"}},{"ck":"tag","cv":{"tt":10,"tv":[{"ck":"ench","cv":{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"id","cv":{"tt":2,"tv":7}},{"ck":"lvl","cv":{"tt":2,"tv":8888}}]}]}}]}}]}]}}'</span>)
 
 <p>（11）addPlayerItemEx</p>
@@ -610,7 +630,7 @@
 // 参数详解：uuid - 在线玩家的uuid字符串，item - 物品json数据字符串<br/>
 // 返回值：是否添加成功<br/>
 // （备注：特定条件下可能不会变更游戏内实际物品）</span><br/>
-[例] <span class="codelet">let</span> r = addPlayerItemEx(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> r = addPlayerItemEx(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'{"tt":10,"tv":[{"ck":"Count","cv":{"tt":1,"tv":1}},{"ck":"Damage","cv":{"tt":2,"tv":0}},{"ck":"Name","cv":{"tt":8,"tv":"minecraft:trident"}},{"ck":"tag","cv":{"tt":10,"tv":[{"ck":"ench","cv":{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"id","cv":{"tt":2,"tv":10}},{"ck":"lvl","cv":{"tt":2,"tv":9999}}]}]}}]}}]}'</span>)
 
 <p>（12）addPlayerItem</p>
@@ -640,7 +660,7 @@
 // 参数类型：字符串，字符串<br/>
 // 参数详解：uuid - 在线玩家的uuid字符串，newEffects - 新效果列表json数据字符串<br/>
 // 返回值：是否设置成功</span><br/>
-[例] <span class="codelet">let</span> r = setPlayerEffects(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> r = setPlayerEffects(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'{"tt":9,"tv":[{"tt":10,"tv":[{"ck":"Ambient","cv":{"tt":1,"tv":0}},{"ck":"Amplifier","cv":{"tt":1,"tv":0}},{"ck":"DisplayOnScreenTextureAnimation","cv":{"tt":1,"tv":0}},{"ck":"Duration","cv":{"tt":3,"tv":3461}},{"ck":"DurationEasy","cv":{"tt":3,"tv":3461}},{"ck":"DurationHard","cv":{"tt":3,"tv":3461}},{"ck":"DurationNormal","cv":{"tt":3,"tv":3461}},{"ck":"Id","cv":{"tt":1,"tv":16}},{"ck":"ShowParticles","cv":{"tt":1,"tv":1}}]}]}'</span>)
 
 <p>（15）setPlayerBossBar</p>
@@ -650,7 +670,7 @@
 // 参数类型：字符串，字符串，浮点型<br/>
 // 参数详解：uuid - 在线玩家的uuid字符串，title - 血条标题，percent - 血条百分比<br/>
 // 返回值：是否设置成功</span><br/>
-[例] <span class="codelet">let</span> r = setPlayerBossBar(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> r = setPlayerBossBar(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'欢迎来到梦之故里'</span>, 1.00)
 
 <p>（16）removePlayerBossBar</p>
@@ -678,7 +698,7 @@
 // 参数类型：字符串，字符串，整型<br/>
 // 参数详解：uuid - 在线玩家的uuid字符串，addr - 待传服务器，port - 端口<br/>
 // 返回值：是否传送成功</span><br/>
-[例] <span class="codelet">let</span> t = transferserver(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> t = transferserver(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'www.xiafox.com'</span>, 19132)
 
 <p>（19）teleport</p>
@@ -697,7 +717,7 @@
 // 参数类型：字符串，字符串<br/>
 // 参数详解：uuid - 在线玩家的uuid字符串，msg - 待模拟发送的文本<br/>
 // 返回值：是否发送成功</span><br/>
-[例] <span class="codelet">let</span> t = talkAs(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> t = talkAs(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'你好 js'</span>)
 
 <p>（21）runcmdAs</p>
@@ -707,7 +727,7 @@
 // 参数类型：字符串，字符串<br/>
 // 参数详解：uuid - 在线玩家的uuid字符串，cmd - 待模拟执行的指令<br/>
 // 返回值：是否发送成功</span><br/>
-[例] <span class="codelet">let</span> t = runcmdAs(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> t = runcmdAs(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'/me 你好 js'</span>)
 
 <p>（22）sendSimpleForm</p>
@@ -717,8 +737,8 @@
 // 参数类型：字符串，字符串，字符串，字符串<br/>
 // 参数详解：uuid - 在线玩家的uuid字符串，title - 表单标题，content - 内容，buttons - 按钮文本数组字符串<br/>
 // 返回值：创建的表单id，为 0 表示发送失败</span><br/>
-[例] <span class="codelet">let</span> fid = sendSimpleForm(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
-<span class="codestring">'致命选项'</span>, <span class="codestring">'请选择：'</span>, 
+[例] <span class="codelet">let</span> fid = sendSimpleForm(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
+<span class="codestring">'致命选项'</span>, <span class="codestring">'请选择：'</span>,
 <span class="codestring">'["生存","死亡","求助"]'</span>)
 
 <p>（23）sendModalForm</p>
@@ -728,8 +748,8 @@
 // 参数类型：字符串，字符串，字符串，字符串，字符串<br/>
 // 参数详解：uuid - 在线玩家的uuid字符串，title - 表单标题，content - 内容，button1 按钮1标题（点击该按钮selected为true），button2 按钮2标题（点击该按钮selected为false）<br/>
 // 返回值：创建的表单id，为 0 表示发送失败</span><br/>
-[例] <span class="codelet">let</span> fid = sendModalForm(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
-<span class="codestring">'没有第三个选项'</span>, <span class="codestring">'请选择：'</span>, 
+[例] <span class="codelet">let</span> fid = sendModalForm(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
+<span class="codestring">'没有第三个选项'</span>, <span class="codestring">'请选择：'</span>,
 <span class="codestring">'生存'</span>, <span class="codestring">'死亡'</span>)
 
 <p>（24）sendCustomForm</p>
@@ -739,7 +759,7 @@
 // 参数类型：字符串，字符串<br/>
 // 参数详解：uuid - 在线玩家的uuid字符串，json - 自定义表单的json字符串（要使用自定义表单类型，参考nk、pm格式或minebbs专栏）<br/>
 // 返回值：创建的表单id，为 0 表示发送失败</span><br/>
-[例] <span class="codelet">let</span> fid = sendCustomForm(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> fid = sendCustomForm(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="ctitle1">'{"content":[{"type":"label","text":"这是一个文本标签"},{"placeholder":"水印文本","default":"","type":"input","text":""},{"default":true,"type":"toggle","text":"开关~或许是吧"},{"min":0.0,"max":10.0,"step":2.0,"default":3.0,"type":"slider","text":"游标滑块！？"},{"default":1,"steps":["Step 1","Step 2","Step 3"],"type":"step_slider","text":"矩阵滑块？!"},{"default":1,"options":["Option 1","Option 2","Option 3"],"type":"dropdown","text":"如你所见，下拉框"}], "type":"custom_form","title":"这是一个自定义窗体"}'</span>)
 
 <p>（25）releaseForm</p>
@@ -760,7 +780,7 @@
 // 参数详解：uuid - 在线玩家的uuid字符串，title - 侧边栏标题，list - 列表字符串数组<br/>
 // 返回值：是否设置成功<br/>
 // （注：列表总是从第1行开始，总计不超过15行）<br/>
-</span>[例] <span class="codelet">let</span> r = setPlayerSidebar(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+</span>[例] <span class="codelet">let</span> r = setPlayerSidebar(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'自定义侧边栏'</span>, <span class="codestring">'["第一行", "第二行", "我在哪行?    "]'</span>)<br/>
 
 <p>（27）removePlayerSidebar</p>
@@ -790,7 +810,7 @@
 // 参数详解：uuid - 在线玩家的uuid字符串，newModes - 新权限或模式json数据字符串<br/>
 // 返回值：是否设置成功<br/>
 // （备注：特定条件下可能不会变更游戏内实际能力）</span><br/>
-[例] <span class="codelet">let</span> r = setPlayerPermissionAndGametype(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> r = setPlayerPermissionAndGametype(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'{"gametype" : 3}'</span>)
 
 <p>（30）disconnectClient</p>
@@ -800,7 +820,7 @@
 // 参数类型：字符串，字符串<br/>
 // 参数详解：uuid - 在线玩家的uuid字符串，tips - 断开提示（设空值则为默认值）<br/>
 // 返回值：是否成功断开连接</span><br/>
-[例] <span class="codelet">let</span> r = disconnectClient(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> r = disconnectClient(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'这个消息来自测试'</span>)
 
 <p>（31）sendText</p>
@@ -810,7 +830,7 @@
 // 参数类型：字符串，字符串<br/>
 // 参数详解：uuid - 在线玩家的uuid字符串，msg - 文本内容，空白内容则不予发送<br/>
 // 返回值：是否发送成功</span><br/>
-[例] <span class="codelet">let</span> r = sendText(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> r = sendText(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'这个文本来自测试'</span>)
 
 <p>（32）getscoreboard</p>
@@ -820,7 +840,7 @@
 // 参数类型：字符串，字符串<br/>
 // 参数详解：uuid - 在线玩家的uuid字符串，objname - 计分板登记的名称<br/>
 // 返回值：获取的目标值，若目标不存在则返回0</span><br/>
-[例] <span class="codelet">let</span> m = getscoreboard(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> m = getscoreboard(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'money'</span>)
 
 <p>（33）setscoreboard</p>
@@ -831,7 +851,7 @@
 // 参数详解：uuid - 在线玩家的uuid字符串，objname - 计分板登记的名称，count - 待设定的目标值<br/>
 // 返回值：是否设置成功<br/>
 // （备注：特定条件下可能不会变更游戏内实际能力）</span><br/>
-[例] <span class="codelet">let</span> t = setscoreboard(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>, 
+[例] <span class="codelet">let</span> t = setscoreboard(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>,
 <span class="codestring">'money'</span>, 3)
 
 <p>（34）getPlayerIP</p>
@@ -1151,7 +1171,7 @@
  <span class="codestring">dimensionid</span> – 爆炸者所处维度ID<br/>
  <span class="codestring">dimension</span> – 爆炸者所处维度<br/>
  <span class="codestring">explodepower</span> – 爆炸强度
- 
+
  <p class="listen">（27）"onEquippedArmor" - 玩家切换护甲监听（含主副手）</p>
 拦截可否：否<br/>
 回传数据：<br/>
@@ -1176,7 +1196,7 @@
  <span class="codestring">dimension</span> – 玩家所在维度<br/>
  <span class="codestring">isstand</span> – 玩家是否立足于方块/悬空<br/>
  <span class="codestring">XYZ</span> – 玩家所处位置
- 
+
 <p class="listen">（29）"onPistonPush" - 活塞推方块监听</p>
 拦截可否：是<br/>
 回传数据：<br/>
@@ -1189,7 +1209,7 @@
  <span class="codestring">targetposition</span> – 目标方块所在位置<br/>
  <span class="codestring">targetblockid</span> – 目标方块ID<br/>
  <span class="codestring">targetblockname</span> – 目标方块名称
- 
+
 <p class="listen">（30）"onChestPair" - 箱子合并事件</p>
 拦截可否：是<br/>
 回传数据：<br/>
