@@ -267,7 +267,6 @@ namespace BDSJSR2
                                   exitTime = cli.ExitTime,
                                   exitCode = cli.ExitCode,
                                   msElapsed = Math.Round((cli.ExitTime - cli.StartTime).TotalMilliseconds),
-                                  HandleCount = cli.HandleCount,
                                   Id = cli.Id
                               }));
                           }
