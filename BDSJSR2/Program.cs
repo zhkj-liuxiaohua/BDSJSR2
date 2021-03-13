@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Timers;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -23,6 +24,7 @@ namespace BDSJSR2
         static JavaScriptSerializer ser = new JavaScriptSerializer();
         static Hashtable jsfiles = new Hashtable();
         static Hashtable jsengines = new Hashtable();
+        static List<System.Timers.Timer> timerIds = new List<System.Timers.Timer>();
 
         static string JSString(object o)
         {
@@ -50,6 +52,8 @@ namespace BDSJSR2
         delegate object REMOVESHAREDATA(object key);
         delegate void REQUEST(object url, object mode, object param, ScriptObject f);
         delegate void SETTIMEOUT(object o, object ms);
+        delegate int SETINTERVAL(object o, object ms);
+        delegate void CLEARINTERVAL(object id);
         delegate bool MKDIR(object dirname);
         delegate string GETWORKINGPATH();
         delegate int STARTLOCALHTTPLISTEN(object port, ScriptObject f);
@@ -344,6 +348,66 @@ namespace BDSJSR2
                 }).Start();
             }
         };
+
+        /// <summary>
+        /// 循环执行一段JS代码
+        /// </summary>
+        static SETINTERVAL cs_setInterval = (o, ms) =>
+        {
+            if (o != null && ms != null)
+            {
+                var eng = ScriptEngine.Current;
+                System.Timers.Timer timer = new System.Timers.Timer();
+                timerIds.Add(timer);
+                timer.Enabled = true;
+                timer.Interval = int.Parse(JSString(ms));
+                timer.Elapsed += new ElapsedEventHandler((object sender,ElapsedEventArgs e)=> {
+                    try
+                    {
+                        if (object.Equals(o.GetType(), typeof(string)))
+                        {
+                            eng.Execute(o.ToString());
+                        }
+                        else
+                        {
+                            var so = o as ScriptObject;
+                            if (so != null)
+                                so.Invoke(false);
+                        }
+                    }
+                    catch (Exception err)
+                    {
+                        Console.WriteLine("[JS] File " + jsengines[eng] + " Script err by call [setInterval].");
+                        if (err is ScriptEngineException ex)
+                        {
+                            Console.WriteLine(ex.ErrorDetails);
+                        }
+                    }
+                });
+                timer.Start();
+                return timerIds.FindIndex(obj=>obj.Equals(timer));
+            }
+            return -1;
+        };
+
+        /// <summary>
+        /// 关闭一个计时器并释放资源
+        /// </summary>
+        static CLEARINTERVAL cs_clearInterval = (id) =>
+        {
+            try
+            {
+                System.Timers.Timer timer = timerIds[int.Parse(JSString(id))];
+                if (timer != null)
+                {
+                    timer.Stop();
+                    timer.Dispose();
+                    timer = null;
+                }
+            }
+            catch{}
+        };
+
         /// <summary>
         /// 创建文件夹
         /// </summary>
@@ -1215,6 +1279,8 @@ namespace BDSJSR2
             eng.AddHostObject("removeShareData", cs_removeShareData);
             eng.AddHostObject("request", cs_request);
             eng.AddHostObject("setTimeout", cs_setTimeout);
+            eng.AddHostObject("setInterval", cs_setInterval);
+            eng.AddHostObject("clearInterval", cs_clearInterval);
             eng.AddHostObject("mkdir", cs_mkdir);
             eng.AddHostObject("getWorkingPath", cs_getWorkingPath);
             eng.AddHostObject("startLocalHttpListen", cs_startLocalHttpListen);
