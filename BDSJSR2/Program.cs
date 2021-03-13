@@ -43,6 +43,7 @@ namespace BDSJSR2
         delegate bool DIREXISTS(object d);
         delegate bool DIRDELETE(object d);
         delegate bool DIRMOVE(object f, object t);
+        delegate bool SYSTEMCMD(object f, object t);
 
         delegate string TIMENOW();
         delegate void SETSHAREDATA(object key, object o);
@@ -133,7 +134,7 @@ namespace BDSJSR2
         {
             try
             {
-                File.Copy(JSString(f), JSString(t));                                                                                            
+                File.Copy(JSString(f), JSString(t));
                 return true;
             }
             catch { }
@@ -187,7 +188,7 @@ namespace BDSJSR2
         {
             try
             {
-                Directory.Delete(JSString(d),true);
+                Directory.Delete(JSString(d), true);
                 return true;
             }
             catch { }
@@ -201,6 +202,54 @@ namespace BDSJSR2
             try
             {
                 Directory.Move(JSString(f), JSString(t));
+                return true;
+            }
+            catch { }
+            return false;
+        };
+        /// <summary>
+        /// 运行系统命令
+        /// </summary>
+        static SYSTEMCMD cs_systemCmd = (c, cb) =>
+        {
+            try
+            {
+                var cli = new System.Diagnostics.Process
+                {
+                    StartInfo = new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = "cmd",
+                        WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory,
+                        UseShellExecute = false,
+                        CreateNoWindow = false,
+                        Arguments = $"/C \"{JSString(c)}\""
+                    }
+                };
+                cli.Start();
+                _ = System.Threading.Tasks.Task.Run(() =>
+                  {
+                      try
+                      {
+                          cli.WaitForExit();
+                          if (cb != null)
+                          {
+                              cb.Invoke(false, ser.Serialize(new
+                              {
+                                  startTime = cli.StartTime,
+                                  exitTime = cli.ExitTime,
+                                  exitCode = cli.ExitCode,
+                                  msElapsed = Math.Round((cli.ExitTime - cli.StartTime).TotalMilliseconds),
+                                  HandleCount = cli.HandleCount,
+                                  Id = cli.Id
+                              }));
+                          }
+                          cli.Dispose();
+                      }
+                      catch
+                      {
+                          Console.WriteLine("[JS] File " + jsengines[cb.Engine] + " Script err by call [systemCmd].");
+                      }
+                  });
                 return true;
             }
             catch { }
@@ -275,7 +324,7 @@ namespace BDSJSR2
             var reader = new StreamReader(stream); // 初始化读取器
             string result = reader.ReadToEnd();    // 读取，存储结果
             reader.Close(); // 关闭读取器，释放资源
-            stream.Close();	// 关闭流，释放资源
+            stream.Close(); // 关闭流，释放资源
             return result;
         }
         /// <summary>
@@ -297,7 +346,7 @@ namespace BDSJSR2
                     {
                         f.Invoke(false, new string[] { ret });
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         Console.WriteLine("[JS] File " + jsengines[f.Engine] + " Script err by call [request].");
                         if (e is ScriptEngineException ex)
@@ -378,7 +427,8 @@ namespace BDSJSR2
                     byteList.AddRange(byteArr);
                 } while (readLen != 0);
                 return c.GetString(byteList.ToArray(), 0, len);
-            } catch(Exception e){ Console.WriteLine(e.StackTrace);}
+            }
+            catch (Exception e) { Console.WriteLine(e.StackTrace); }
             return string.Empty;
         }
         // 读url携带参数
@@ -527,7 +577,9 @@ namespace BDSJSR2
                 h.BeginGetContext(cb, h);
                 hid = new Random().Next();
                 httplis[hid] = h;
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 if (!(e is HttpListenerException))
                     Console.WriteLine(e.StackTrace);
             }
@@ -616,7 +668,8 @@ namespace BDSJSR2
                 var e = BaseEvent.getFrom(x);
                 var info = ser.Serialize(e);
                 bool ret = true;
-                if (f != null) {
+                if (f != null)
+                {
                     try
                     {
                         object oret = f.Invoke(false, new string[] { info });
@@ -658,7 +711,7 @@ namespace BDSJSR2
                         object oret = f.Invoke(false, new string[] { info });
                         ret = !object.Equals(oret, false);
                     }
-                    catch(Exception ae)
+                    catch (Exception ae)
                     {
                         Console.WriteLine("[JS] File " + jsengines[f.Engine] + " Script err by call [addAfterActListener] [{0}].", JSString(k));
                         if (ae is ScriptEngineException aex)
@@ -808,7 +861,7 @@ namespace BDSJSR2
         };
         /// <summary>
         /// 设置服务器的显示名信息<br/>
-		/// （注：服务器名称加载时机在地图完成载入之后）
+        /// （注：服务器名称加载时机在地图完成载入之后）
         /// </summary>
         static SETSERVERMOTD cs_setServerMotd = (motd, isShow) =>
         {
@@ -816,7 +869,7 @@ namespace BDSJSR2
         };
         /// <summary>
         /// 使用官方脚本引擎新增一段行为包脚本并执行<br/>
-		/// （注：每次调用都会新增脚本环境，请避免多次重复调用此方法）
+        /// （注：每次调用都会新增脚本环境，请避免多次重复调用此方法）
         /// </summary>
         static JSERUNSCRIPT cs_JSErunScript = (js, f) =>
         {
@@ -861,7 +914,7 @@ namespace BDSJSR2
         };
         /// <summary>
         /// 设置所有计分板计分项<br/>
-		/// 注：设置过程会清空原有数据
+        /// 注：设置过程会清空原有数据
         /// </summary>
         static RUNCMD cs_setAllScore = (jdata) =>
         {
@@ -870,7 +923,7 @@ namespace BDSJSR2
         };
         /// <summary>
         /// 获取一个指定位置处区块的颜色数据<br/>
-		/// 注：如区块未处于活动状态，可能返回无效颜色数据
+        /// 注：如区块未处于活动状态，可能返回无效颜色数据
         /// </summary>
         static GETMAPCOLORS cs_getMapColors = (x, y, z, did) =>
         {
@@ -1151,7 +1204,7 @@ namespace BDSJSR2
         };
         /// <summary>
         /// 获取指定玩家指定计分板上的数值<br/>
-		/// 注：特定情况下会自动创建计分板
+        /// 注：特定情况下会自动创建计分板
         /// </summary>
         static GETSCOREBOARD cs_getscoreboard = (uuid, a) =>
         {
@@ -1208,6 +1261,7 @@ namespace BDSJSR2
             eng.AddHostObject("dirExists", cs_dirExists);
             eng.AddHostObject("dirDelete", cs_dirDelete);
             eng.AddHostObject("dirMove", cs_dirMove);
+            eng.AddHostObject("systemCmd", cs_systemCmd);
 
             eng.AddHostObject("TimeNow", cs_TimeNow);
             eng.AddHostObject("setShareData", cs_setShareData);
@@ -1319,7 +1373,8 @@ namespace BDSJSR2
                     WritePrivateProfileStringA("NETJS", "jsdir", JSPATH, settingpath);
                 }
                 catch { }
-            } else
+            }
+            else
                 JSPATH = Encoding.UTF8.GetString(path, 0, len);
             // 此处装载所有js文件
             try
@@ -1346,7 +1401,8 @@ namespace BDSJSR2
                         try
                         {
                             eng.Execute(jsfiles[n].ToString());
-                        } catch(Exception e)
+                        }
+                        catch (Exception e)
                         {
                             Console.WriteLine("[JS] File " + n + " Script err by loading [runtime].");
                             if (e is ScriptEngineException ex)
@@ -1356,7 +1412,8 @@ namespace BDSJSR2
                         }
                     }
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
