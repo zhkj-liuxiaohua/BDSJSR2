@@ -175,7 +175,23 @@ https://www.w3school.com.cn/jsref/index.asp
 // 参数详解：code - 待延时执行的指令字符串/函数对象，millisec - 延时毫秒数
 [例] setTimeout('log("你好 js")', 1000)
 
-（20）mkdir (同dirCreate)
+（20）setInterval
+// 函数名：setInterval
+// 功能：计时器-循环执行一条指令
+// 参数个数：2个
+// 参数类型：字符串/函数，整型
+// 参数详解：code - 循环时执行的指令字符串/函数对象，millisec - 延时毫秒数
+[例] let id = setInterval('log("你好 js")', 1000)
+
+（21）clearInterval
+// 函数名：clearInterval
+// 功能：清除计时器
+// 参数个数：1个
+// 参数类型：整型
+// 参数详解：id - 计时器返回的id
+[例] clearInterval(id)
+
+（22）mkdir (同dirCreate)
 // 函数名：mkdir
 // 功能：创建文件夹
 // 参数个数：1个
@@ -184,14 +200,14 @@ https://www.w3school.com.cn/jsref/index.asp
 // 返回值：True - 目录创建成功/已存在，False - 创建失败
 [例] let r = mkdir('C:\\newdir')
 
-（21）getWorkingPath
+（23）getWorkingPath
 // 函数名：getWorkingPath
 // 功能：获取工作目录
 // 参数个数：0个
 // 返回值：当前应用程序的工作目录
 [例] let d = getWorkingPath()
 
-（22）startLocalHttpListen
+（24）startLocalHttpListen
 // 函数名：startLocalHttpListen
 // 功能：开启一个本地http监听
 // 参数个数：2个
@@ -201,7 +217,7 @@ https://www.w3school.com.cn/jsref/index.asp
 // （备注：仅限本地服务使用localhost或127.0.0.1访问）
 [例] let h = startLocalHttpListen(8081, function(req){ return 'OK' })
 
-（23）stopLocalHttpListen
+（25）stopLocalHttpListen
 // 函数名：stopLocalHttpListen
 // 功能：关闭一个http监听
 // 参数个数：1个
@@ -210,7 +226,7 @@ https://www.w3school.com.cn/jsref/index.asp
 // 返回值：是否关闭成功
 [例] let r = stopLocalHttpListen(12345678)
 
-（24）resetLocalHttpListener
+（26）resetLocalHttpListener
 // 函数名：resetLocalHttpListener
 // 功能：重设一个监听器的处理函数
 // 参数个数：2个
