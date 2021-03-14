@@ -254,8 +254,9 @@
 // 参数个数：2个<br/>
 // 参数类型：字符串/函数，整型<br/>
 // 参数详解：code - 循环时执行的指令字符串/函数对象，millisec - 延时毫秒数<br/>
+// 返回值：开启成功将为计时器id，失败则为-1<br/>
 </span>
-[例] setInterval(<span class="codestring">'log("你好 js")'</span>, 1000)
+[例] <span class="codelet">let</span> id = setInterval(<span class="codestring">'log("你好 js")'</span>, 1000)
 
 <p>（21）clearInterval</p>
 <span class="zhushi">

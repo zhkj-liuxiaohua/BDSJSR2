@@ -181,6 +181,7 @@ https://www.w3school.com.cn/jsref/index.asp
 // 参数个数：2个
 // 参数类型：字符串/函数，整型
 // 参数详解：code - 循环时执行的指令字符串/函数对象，millisec - 延时毫秒数
+// 返回值：开启成功将为计时器id，失败则为-1
 [例] let id = setInterval('log("你好 js")', 1000)
 
 （21）clearInterval
