@@ -5,6 +5,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>JSRDoc</title>
 <style type="text/css">
+html {
+	font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+}
+a {
+	text-decoration: none;
+}
+a:hover {
+	color: red;
+}
+a:hover::before {
+	content: "🔗"
+}
 .ctitle1 {
 				text-align: center;
 }
@@ -43,7 +55,8 @@
 <a href="#register">三、注册机制</a><br/>
 &nbsp;<a href="#reg_t1">1.注册范例</a><br/>
 &nbsp;<a href="#reg_t2">2.所有事件</a><br/>
-<a href="#others">四、杂项</a>
+<a href="#others">四、杂项</a><br/>
+<a href="#api">五、系统，模块接口</a>
 </p>
 </div>
 <div style="width: 85%; margin-left: 15%;">
@@ -55,7 +68,8 @@
 <a href="#explain">一、说明</a><br/>
 <a href="#apititle">二、API接口定义</a><br/>
 <a href="#register">三、注册机制</a><br/>
-<a href="#others">四、杂项</a>
+<a href="#others">四、杂项</a><br/>
+<a href="#api">五、系统，模块接口</a>
 
 <h1 class="ctitle1"><a name="t_help">帮助文档</a></h1>
 <h2><a name="explain">一、说明</a></h2>
@@ -864,6 +878,13 @@
 // 返回值：玩家IP</span><br/>
 [例] <span class="codelet">let</span> i = getPlayerIP(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>)
 
+<p>（35）getJSRVersion</p>
+<span class="zhushi">// 函数名：getJSRVersion<br/>
+// 功能：获取NJSRDll的版本,方便JS开发者进行版本管理<br/>
+// 参数个数：0个<br/>
+// 返回值：字符串型版本信息：如 <span class="codestring">'1.16.210.06'</span></span><br/>
+[例] <span class="codelet">let</span> v = getJSRVersion();
+
 <br />
 
 <h2><a name="register">三、注册机制</a></h2>
@@ -1323,7 +1344,20 @@ importPlayersData
 涉及的事件监听包含：（<br/>onMobHurt，<br/>
 onBlockCmd，<br/>
 onNpcCmd，<br/>
-onCommandBlockUpdate<br/>）</div>
+onCommandBlockUpdate<br/>）
+
+<br/>
+<br/>
+<br/>
+<h2><a name="api">五、系统，模块接口</a></h2>
+	(1) "<b>api</b>" - 继承自: ClearScriptJSR.csr.dll(BDSJSR2) "<b>mapi</b>" <br/>
+	可查文档: <a href="https://github.com/zhkj-liuxiaohua/BDSNetRunner/blob/master/CSRDemo/BDS/MCCSAPI.cs">MCCSAPI.cs</a><br/>
+	示例:<br/>
+	<span class="codelet">let</span> v = api.VERSION;<br/>
+	<span class="codelet">let</span> t = api.getPlayerPermissionAndGametype(<span class="codestring">'8f976e22-78bc-3fe1-8ee5-cf5ff56347b9'</span>);<br/>
+	api.runcmd(<span class="codestring">'list'</span>);<br/>
+	……
+</div>
 <hr/>
 <p align="center">Writting for BDSNetRunner, All Rights Reserved.<br/>2020-2023</p>
 </body>

@@ -746,6 +746,7 @@ namespace BDSJSR2
         delegate int GETSCOREBYID(object id, object stitle);
         delegate int SETSCOREBYID(object id, object stitle, object count);
         delegate string GETMAPCOLORS(object x, object y, object z, object did);
+        delegate string GETJSRVERSION();
 
         /// <summary>
         /// 设置事件发生前监听
@@ -1336,10 +1337,19 @@ namespace BDSJSR2
             }
             return string.Empty;
         };
+        /// <summary>
+        /// 获取NJSR的版本
+        /// </summary>
+        static GETJSRVERSION cs_getJSRVersion = () =>
+        {
+            return mapi.VERSION;
+        };
         #endregion
 
         static void initJsEngine(ScriptEngine eng)
         {
+            eng.AddHostObject("api", mapi);
+
             eng.AddHostObject("log", cs_log);
             eng.AddHostObject("fileReadAllText", cs_fileReadAllText);
             eng.AddHostObject("fileWriteAllText", cs_fileWriteAllText);
@@ -1367,6 +1377,7 @@ namespace BDSJSR2
             eng.AddHostObject("startLocalHttpListen", cs_startLocalHttpListen);
             eng.AddHostObject("resetLocalHttpListener", cs_resetLocalHttpListener);
             eng.AddHostObject("stopLocalHttpListen", cs_stopLocalHttpListen);
+            eng.AddHostObject("getJSRVersion", cs_getJSRVersion);
 
             eng.AddHostObject("addBeforeActListener", cs_addBeforeActListener);
             eng.AddHostObject("removeBeforeActListener", cs_removeBeforeActListener);
@@ -1480,6 +1491,9 @@ namespace BDSJSR2
                 string[] jss = Directory.GetFiles(JSPATH, "*.js");
                 if (jss.Length > 0)
                 {
+                    var maineng = new V8ScriptEngine();
+                    initJsEngine(maineng);
+
                     // 初始化JS引擎
                     foreach (string n in jss)
                     {
@@ -1488,12 +1502,31 @@ namespace BDSJSR2
                     }
                     foreach (string n in jss)
                     {
+                        if (n.EndsWith(".main.js"))  //如果以.main.js结尾 单独处理
+                        {
+                            jsengines[maineng] += "["+ n +"]";
+                            try
+                            {
+                                maineng.Execute(jsfiles[n].ToString());
+                            }
+                            catch (Exception err)
+                            {
+                                Console.WriteLine("[JS] File " + n + " Script err by loading [runtime].");
+                                if (err is ScriptEngineException ex)
+                                {
+                                    Console.WriteLine(ex.ErrorDetails);
+                                }
+                            }
+                            continue;
+                        }
+
                         var eng = new V8ScriptEngine();
                         initJsEngine(eng);
                         jsengines[eng] = n;
                         try
                         {
                             eng.Execute(jsfiles[n].ToString());
+
                         }
                         catch (Exception e)
                         {
