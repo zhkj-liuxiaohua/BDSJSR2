@@ -65,7 +65,7 @@ function afterUseItem(e) {
 			' 于(' + je.XYZ.x + ',' + je.XYZ.y + ',' + je.XYZ.z + ')位置' +
 			(!je.isstand ? ' 悬空地' : '') + ' 在 ' + je.dimension +
 			' (' + je.position.x + ',' + je.position.y + ',' + je.position.z + ') 处使用了 '
-			+ je.itemname + ' 物品。';
+			+ je.itemname + ' 物品，类型' + getItemRawname(je.itemid) + '。';
 		examplelog(str);
 		flogs.push(str);
 		setTimeout(saveOneLog, 1);

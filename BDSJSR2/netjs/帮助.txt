@@ -422,6 +422,15 @@ https://www.w3school.com.cn/jsref/index.asp
 // （备注：设置过程会替换原有玩家数据；在线情况下可能不会生效）
 [例] let r = importPlayersData(fileReadAllText('players.json'))
 
+（22）getItemRawname
+// 函数名：getItemRawname
+// 功能：获取物品原始标识字符
+// 参数个数：1个
+// 参数类型：整型
+// 参数详解：id - 物品id
+// 返回值：物品原始标识字符，反查失败则返回unknown
+[例] let n = getItemRawname(387)
+
 3.MC玩家互动相关功能
 
 （1）reNameByUuid

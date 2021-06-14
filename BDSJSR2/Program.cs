@@ -746,6 +746,7 @@ namespace BDSJSR2
         delegate int GETSCOREBYID(object id, object stitle);
         delegate int SETSCOREBYID(object id, object stitle, object count);
         delegate string GETMAPCOLORS(object x, object y, object z, object did);
+        delegate string GETITEMRAWNAME(object id);
 
         /// <summary>
         /// 设置事件发生前监听
@@ -1036,6 +1037,13 @@ namespace BDSJSR2
         {
             assertCommercial("importPlayersData");
             return mapi.importPlayersData(JSString(jstr));
+        };
+        /// <summary>
+        /// 获取物品原始标识字符
+        /// </summary>
+        static GETITEMRAWNAME cs_getItemRawname = (id) =>
+        {
+            return mapi.getItemRawname(int.Parse(JSString(id)));
         };
         #endregion
 
@@ -1389,6 +1397,7 @@ namespace BDSJSR2
             eng.AddHostObject("getMapColors", cs_getMapColors);
             eng.AddHostObject("exportPlayersData", cs_exportPlayersData);
             eng.AddHostObject("importPlayersData", cs_importPlayersData);
+            eng.AddHostObject("getItemRawname", cs_getItemRawname);
 
             eng.AddHostObject("reNameByUuid", cs_reNameByUuid);
             eng.AddHostObject("getPlayerAbilities", cs_getPlayerAbilities);
