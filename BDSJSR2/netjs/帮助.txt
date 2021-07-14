@@ -1016,6 +1016,7 @@ XYZ – 玩家所处位置
 （25）"onAttack" - 攻击监听
 拦截可否：是
 回传数据：
+dmcase – 伤害类型
 actorname – 被攻击实体名称
 actortype – 被攻击实体类型
 position – 玩家所处位置
