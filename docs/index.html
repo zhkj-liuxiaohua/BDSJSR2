@@ -125,7 +125,7 @@
 // 参数详解：from - 待复制的文件路径（相对BDS位置），to - 目标位置（相对BDS位置）<br/>
 // 返回值：True - 复制文件成功，False - 复制失败</span><br/>
 [例] <span class="codelet">let</span> w = fileCopy(<span class="codestring">'jslog.txt'</span>,
-<span class="codestring">'.\\log\\output.log</span>)
+<span class="codestring">'.\\log\\output.log'</span>)
 
 <p>（7）fileMove</p>
 <span class="zhushi">// 函数名：fileMove<br/>
@@ -135,9 +135,19 @@
 // 参数详解：from - 待移动的文件路径（相对BDS位置），to - 目标位置（相对BDS位置）<br/>
 // 返回值：True - 移动文件成功，False - 移动失败</span><br/>
 [例] <span class="codelet">let</span> w = fileMove(<span class="codestring">'jslog.txt'</span>,
-<span class="codestring">'.\\log\\output.log</span>)
+<span class="codestring">'.\\log\\output.log'</span>)
 
-<p>（8）dirCreate</p>
+<p>（8）getDirFiles</p>
+<span class="zhushi">// 函数名：getDirFiles<br/>
+// 功能：查询目录下的指定类型文件<br/>
+// 参数个数：2个<br/>
+// 参数类型：字符串，字符串<br/>
+// 参数详解：path - 待查找的文件夹路径（相对BDS位置），search - 格式通配符<br/>
+// 返回值：字符串数组，未找到时长度为0</span><br/>
+[例] <span class="codelet">let</span> s = getDirFiles(<span class="codestring">'NETJS'</span>,
+<span class="codestring">'*.js'</span>)
+
+<p>（9）dirCreate</p>
 <span class="zhushi">
 // 函数名：dirCreate<br/>
 // 功能：创建文件夹<br/>
@@ -147,7 +157,7 @@
 // 返回值：True - 目录创建成功/已存在，False - 创建失败</span><br/>
 [例] <span class="codelet">let</span> r = dirCreate(<span class="codestring">'C:\\newdir'</span>)
 
-<p>（9）dirExists</p>
+<p>（10）dirExists</p>
 <span class="zhushi">// 函数名：dirExists<br/>
 // 功能：判断文件夹是否存在<br/>
 // 参数个数：1个<br/>
@@ -156,7 +166,7 @@
 // 返回值：True - 文件夹存在，False - 文件夹不存在</span><br/>
 [例] <span class="codelet">let</span> e = dirExists(<span class="codestring">'C:\\config'</span>)
 
-<p>（10）dirDelete</p>
+<p>（11）dirDelete</p>
 <span class="zhushi">// 函数名：dirDelete<br/>
 // 功能：删除指定文件夹，如果其中有内容将一并删除<br/>
 // 参数个数：1个<br/>
@@ -165,7 +175,7 @@
 // 返回值：True - 删除文件夹成功，False - 删除失败</span><br/>
 [例] <span class="codelet">let</span> e = dirDelete(<span class="codestring">'C:\\config'</span>)
 
-<p>（11）dirMove</p>
+<p>（12）dirMove</p>
 <span class="zhushi">// 函数名：dirMove<br/>
 // 功能：移动指定文件夹<br/>
 // 参数个数：2个<br/>
@@ -175,7 +185,17 @@
 [例] <span class="codelet">let</span> w = dirMove(<span class="codestring">'C:\\config'</span>,
 <span class="codestring">'C:\\bak\\conf</span>)
 
-<p>（12）systemCmd</p>
+<p>（13）getDirs</p>
+<span class="zhushi">// 函数名：getDirs<br/>
+// 功能：查询目录下所有的指定文件夹<br/>
+// 参数个数：2个<br/>
+// 参数类型：字符串，字符串<br/>
+// 参数详解：path - 待查找的文件夹路径（相对BDS位置），search - 格式通配符<br/>
+// 返回值：字符串数组，未找到时长度为0</span><br/>
+[例] <span class="codelet">let</span> s = getDirs(<span class="codestring">'NETJS'</span>,
+<span class="codestring">'*'</span>)
+
+<p>（14）systemCmd</p>
 <span class="zhushi">// 函数名：systemCmd<br/>
 // 功能：调用系统命令提示符执行系统命令<br/>
 // 参数个数：2个<br/>
@@ -184,7 +204,7 @@
 // 返回值：True - 执行成功，False - 执行失败</span><br/>
 [例] <span class="codelet">let</span> w = systemCmd(<span class="codestring">'del release-notes.txt'</span>, (e)=>{log(e);})
 
-<p>（13）log</p>
+<p>（15）log</p>
 <span class="zhushi">// 函数名：log<br/>
 // 功能：标准输出流打印消息<br/>
 // 参数个数：1个<br/>
@@ -192,14 +212,14 @@
 // 参数详解：待输出至标准流字符串</span><br/>
 [例] log(<span class="codestring">'你好 js'</span>)
 
-<p>（14）TimeNow</p>
+<p>（16）TimeNow</p>
 <span class="zhushi">// 函数名：TimeNow<br/>
 // 功能：返回一个当前时间的字符串<br/>
 // 参数个数：0个<br/>
 // 返回值：字符串</span><br/>
 [例] <span class="codelet">let</span> t = TimeNow()
 
-<p>（15）setShareData</p>
+<p>（17）setShareData</p>
 <span class="zhushi">// 函数名：setShareData<br/>
 // 功能：存入共享数据<br/>
 // 参数个数：2个<br/>
@@ -208,7 +228,7 @@
 [例] setShareData(<span class="codestring">'TEXT_HELLO'</span>,
 <span class="codestring">'你好 js'</span>)
 
-<p>（16）getShareData</p>
+<p>（18）getShareData</p>
 <span class="zhushi">// 函数名：getShareData<br/>
 // 功能：获取共享数据<br/>
 // 参数个数：1个<br/>
@@ -217,7 +237,7 @@
 // 返回值：共享数据</span><br/>
 [例] <span class="codelet">let</span> t = getShareData(<span class="codestring">'TEXT_HELLO'</span>)
 
-<p>（17）removeShareData</p>
+<p>（19）removeShareData</p>
 <span class="zhushi">// 函数名：removeShareData<br/>
 // 功能：删除共享数据<br/>
 // 参数个数：1个<br/>
@@ -226,7 +246,7 @@
 // 返回值：旧数据</span><br/>
 [例] <span class="codelet">let</span> oldt = removeShareData(<span class="codestring">'TEXT_HELLO'</span>)
 
-<p>（18）request</p>
+<p>（20）request</p>
 <span class="zhushi">// 函数名：request<br/>
 // 功能：发起一个远程HTTP请求<br/>
 // 参数个数：4个<br/>
@@ -237,7 +257,7 @@
 <span class="codelet">function</span> (e) { })<br/>
 （注：mode可使用GET和POST两种方式）
 
-<p>（19）setTimeout</p>
+<p>（21）setTimeout</p>
 <span class="zhushi">
 // 函数名：setTimeout<br/>
 // 功能：延时执行一条指令<br/>
@@ -247,7 +267,7 @@
 </span>
 [例] setTimeout(<span class="codestring">'log("你好 js")'</span>, 1000)
 
-<p>（20）setInterval</p>
+<p>（22）setInterval</p>
 <span class="zhushi">
 // 函数名：setInterval<br/>
 // 功能：计时器-循环执行一条指令<br/>
@@ -258,7 +278,7 @@
 </span>
 [例] <span class="codelet">let</span> id = setInterval(<span class="codestring">'log("你好 js")'</span>, 1000)
 
-<p>（21）clearInterval</p>
+<p>（23）clearInterval</p>
 <span class="zhushi">
 // 函数名：clearInterval<br/>
 // 功能：延时执行一条指令<br/>
@@ -268,7 +288,7 @@
 </span>
 [例] clearInterval(id)
 
-<p>（22）mkdir (同dirCreate)</p>
+<p>（24）mkdir (同dirCreate)</p>
 <span class="zhushi">
 // 函数名：mkdir<br/>
 // 功能：创建文件夹<br/>
@@ -278,7 +298,7 @@
 // 返回值：True - 目录创建成功/已存在，False - 创建失败</span><br/>
 [例] <span class="codelet">let</span> r = mkdir(<span class="codestring">'C:\\newdir'</span>)
 
-<p>（23）getWorkingPath</p>
+<p>（25）getWorkingPath</p>
 <span class="zhushi">
 // 函数名：getWorkingPath<br/>
 // 功能：获取工作目录<br/>
@@ -286,7 +306,7 @@
 // 返回值：当前应用程序的工作目录</span><br/>
 [例] <span class="codelet">let</span> d = getWorkingPath()
 
-<p>（24）startLocalHttpListen</p>
+<p>（26）startLocalHttpListen</p>
 <span class="zhushi">
 // 函数名：startLocalHttpListen<br/>
 // 功能：开启一个本地http监听<br/>
@@ -298,7 +318,7 @@
 [例] <span class="codelet">let</span> h = startLocalHttpListen(8081,
 <span class="codelet">function</span>(req){ return <span class="codestring">'OK'</span> })
 
-<p>（25）stopLocalHttpListen</p>
+<p>（27）stopLocalHttpListen</p>
 <span class="zhushi">
 // 函数名：stopLocalHttpListen<br/>
 // 功能：关闭一个http监听<br/>
@@ -308,7 +328,7 @@
 // 返回值：是否关闭成功<br/></span>
 [例] <span class="codelet">let</span> r = stopLocalHttpListen(12345678)
 
-<p>（26）resetLocalHttpListener</p>
+<p>（28）resetLocalHttpListener</p>
 <span class="zhushi">
 // 函数名：resetLocalHttpListener<br/>
 // 功能：重设一个监听器的处理函数<br/>

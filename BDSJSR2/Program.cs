@@ -62,10 +62,12 @@ namespace BDSJSR2
         delegate bool FILEDELETE(object f);
         delegate bool FILECOPY(object f, object t);
         delegate bool FILEMOVE(object f, object t);
+        delegate string[] GETDIRFILES(object p,object s);
         delegate bool DIRCREATE(object d);
         delegate bool DIREXISTS(object d);
         delegate bool DIRDELETE(object d);
         delegate bool DIRMOVE(object f, object t);
+        delegate string[] GETDIRS(object p,object s);
         delegate bool SYSTEMCMD(object f, ScriptObject t);
 
         delegate string TIMENOW();
@@ -178,6 +180,23 @@ namespace BDSJSR2
             catch { }
             return false;
         };
+
+        /// <summary>
+        /// 获取文件夹中符合要求的文件列表
+        /// </summary>
+        static GETDIRFILES cs_getDirFiles = (d, s) =>
+        {
+            try
+            {
+                string[] list = Directory.GetFiles(JSString(d), JSString(s));
+                return list;
+            }
+            catch
+            {
+                return new string[0];
+            }
+        };
+
         /// <summary>
         /// 创建文件夹
         /// </summary>
@@ -231,6 +250,21 @@ namespace BDSJSR2
             }
             catch { }
             return false;
+        };
+        /// <summary>
+        /// 获取目录下的所有符合条件的文件夹
+        /// </summary>
+        static GETDIRS cs_getDirs = (p, s) =>
+        {
+            try
+            {
+                string[] list = Directory.GetDirectories(JSString(p), JSString(s));
+                return list;
+            }
+            catch
+            {
+                return new string[0];
+            }
         };
         /// <summary>
         /// 运行系统命令
@@ -1356,10 +1390,12 @@ namespace BDSJSR2
             eng.AddHostObject("fileDelete", cs_fileDelete);
             eng.AddHostObject("fileCopy", cs_fileCopy);
             eng.AddHostObject("fileMove", cs_fileMove);
+            eng.AddHostObject("getDirFiles", cs_getDirFiles);
             eng.AddHostObject("dirCreate", cs_dirCreate);
             eng.AddHostObject("dirExists", cs_dirExists);
             eng.AddHostObject("dirDelete", cs_dirDelete);
             eng.AddHostObject("dirMove", cs_dirMove);
+            eng.AddHostObject("getDirs", cs_getDirs);
             eng.AddHostObject("systemCmd", cs_systemCmd);
 
             eng.AddHostObject("TimeNow", cs_TimeNow);
